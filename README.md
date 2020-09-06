@@ -14,18 +14,18 @@ Organizations registered on the application can provide a description of themsel
 Charitable’s most important features include: 
 
 1. The Search Engine: 
-- users can research specific causes, learn about new causes, and use filters to find organizations that they are interested in
+  - users can research specific causes, learn about new causes, and use filters to find organizations that they are interested in
 
 2. The Trending Page: 
-- users can discover popular global causes and organizations in the nation
+  - users can discover popular global causes and organizations in the nation
 
 3. User Profile: 
-- users maintain a profile with which they can save their favorite charities and other opportunities
-- users receive updates and notifications from their saved organizations
+  - users maintain a profile with which they can save their favorite charities and other opportunities
+  - users receive updates and notifications from their saved organizations
 
 4. Creating a Social Media Environment
-- users have the ability to connect with other users and share charities and opportunities with each other
-- users can create “events” (donations or volunteer plans) that other users can join from official organizations on the app 
+  - users have the ability to connect with other users and share charities and opportunities with each other
+  - users can create “events” (donations or volunteer plans) that other users can join from official organizations on the app 
 
 ### Hardware/Software it requires:
 To use this application, any device that can run a web browser is required. For developmental purposes, the app will need a database holding registered users as a backend. We will also potentially use the Charity Navigator API to aid us in accessing data about charities.
