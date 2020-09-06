@@ -5,7 +5,7 @@
 ### High Level Overview:
 Charitable is a web application that raises awareness for humanitarian causes and provides opportunities for users to give back to their community. We want to create a space where users looking to contribute to society can learn about legitimate organizations that they can donate to or volunteer at.
 
-###Compare to other Software:
+### Compare to other Software:
 Charitable can best be described as the “LinkedIn” for charities. Charitable models the web application known as Charity Navigator, but adds an element of social media to promote and encourage involvement. 
 
 Organizations registered on the application can provide a description of themselves by answering guiding questions that will outline to users what the organization does, why their cause is important, what donations are used for, and what the organization has accomplished. 
