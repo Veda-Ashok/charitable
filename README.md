@@ -44,4 +44,4 @@ Charitable means a lot to all of our team’s members- we wanted to embrace LMU�
 
 From a developmental standpoint, we can apply our learnings from Databases, Networks, Interaction Design, and UI/UX Design. We are excited to use this opportunity to utilize each of our strengths and also expand our skill sets. This project will help us understand what software development is like in industry. Our workflow plan organizes our tasks such that we challenge ourselves to learn, but also make the work manageable so that we stay motivated. We are aiming to complete this project within a semester’s timeframe.
 
-We are looking forward to making your day for Charitable.
+## We are looking forward to making your day for Charitable.
