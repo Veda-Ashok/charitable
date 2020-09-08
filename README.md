@@ -8,26 +8,28 @@ Charitable is a web application that raises awareness for humanitarian causes an
 ### Compare to other Software:
 Charitable can best be described as the “LinkedIn” for charities. Charitable models the web application known as Charity Navigator, but adds an element of social media to promote and encourage involvement. 
 
-Organizations registered on the application can provide will have information that outlines to users what the organization does, why their cause is important, what donations are used for, and what the organization has accomplished. 
+Organizations  on the application will display information that outlines to users what the organization does, why their cause is important, what donations are used for, and what the organization has accomplished. The information provided for each organization will answer the same set of guiding questions so that users can easily understand the difference between each charity.
 
 ### Most Important Features: 
 Charitable’s most important features include: 
 
-1. The Search Engine: 
+#### 1. The Search Engine: 
   - users can research specific causes, learn about new causes, and use filters to find organizations that they are interested in
 
-2. The Trending Page: 
+#### 2. The Trending Page: 
   - users can discover popular global causes and organizations in the nation
 
-3. User Profile: 
+#### 3. User Profile: 
   - users maintain a profile with which they can save their favorite charities and other opportunities
 
-4. Creating a Social Media Environment
+#### 4. Creating a Social Media Environment
   - users have the ability to connect with other users and share charities and opportunities with each other
   - users can create “events” (donations or volunteer plans) that other users can join from official organizations on the app 
 
 ### Hardware/Software it requires:
-To use this application, any device that can run a web browser is required. For developmental purposes, the app will need a database holding registered users as a backend. We will also potentially use the Charity Navigator API to aid us in accessing data about charities.
+To use this application, any device that can run a web browser is required. Users will also need a web browser. 
+
+For developmental purposes, we will potentially use the Charity Navigator API to aid us in accessing data about charities. Our application will be developed using React and we will utilize VS Code to collaborate on our work. We will be using a SCRUM development framework to manage our tasks. To do this, we will use Jira. Additionally, we will be using Adobe XD to create protoypes and mock-ups of our ideas.
 
 ### End User:
 The target users are people in the U.S. who have the means to donate their time or money, and want to make a positive contribution to society. Users of this application are also likely people who are comfortable navigating social media.  
