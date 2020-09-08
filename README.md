@@ -8,7 +8,7 @@ Charitable is a web application that raises awareness for humanitarian causes an
 ### Compare to other Software:
 Charitable can best be described as the “LinkedIn” for charities. Charitable models the web application known as Charity Navigator, but adds an element of social media to promote and encourage involvement. 
 
-Organizations registered on the application can provide a description of themselves by answering guiding questions that will outline to users what the organization does, why their cause is important, what donations are used for, and what the organization has accomplished. 
+Organizations registered on the application can provide will have information that outlines to users what the organization does, why their cause is important, what donations are used for, and what the organization has accomplished. 
 
 ### Most Important Features: 
 Charitable’s most important features include: 
@@ -21,7 +21,6 @@ Charitable’s most important features include:
 
 3. User Profile: 
   - users maintain a profile with which they can save their favorite charities and other opportunities
-  - users receive updates and notifications from their saved organizations
 
 4. Creating a Social Media Environment
   - users have the ability to connect with other users and share charities and opportunities with each other
