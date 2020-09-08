@@ -36,7 +36,7 @@ For developmental purposes, we may use the Charity Navigator API to aid us in ac
 
 ### Who is Charitable?
 
-Charitable is for people in the U.S. who have the means to donate their time or money, and want to make a positive contribution to society. Users are also likely people who are comfortable navigating social media.
+Charitable is for people in the U.S. who have the means to donate their time or money and want to make a positive contribution to society. Users are also likely people who are comfortable navigating social media.
 
 ### Why Charitable?
 
