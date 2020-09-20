@@ -40,7 +40,6 @@
   "lint-staged": {
     "*.+(js|jsx)": [
       "prettier --write",
-      "git add",
       "jest --findRelatedTests",
       "eslint"
     ]
