@@ -1,9 +1,9 @@
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import App from '../../pages/index'
 
 describe('App', () => {
-  it('renders without crashing', () => {
-    render(<App />)
-    expect(screen.getByRole('heading', { name: 'Welcome to Charitable!' })).toBeInTheDocument()
+  it('renders default page without crashing', () => {
+    const { getByText } = render(<App />)
+    expect(getByText('Landing Page')).toBeInTheDocument()
   })
 })
