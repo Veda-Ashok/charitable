@@ -4,6 +4,9 @@ import Link from 'next/link'
 export default function NavBar() {
   return (
     <div>
+      <Link href="/search">
+        <a>Search</a>
+      </Link>
       <Link href="/timeline">
         <a>Timeline</a>
       </Link>

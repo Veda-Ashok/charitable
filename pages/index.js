@@ -11,7 +11,7 @@ export default function Trending() {
       <div>
         <NavBar />
         <h1>Landing Page</h1>
-        <h1>Trending/Search</h1>
+        <h1>Trending</h1>
       </div>
     </div>
   )
