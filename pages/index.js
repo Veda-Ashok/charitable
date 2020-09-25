@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import NavBar from '../src/components/navbar'
 import auth0 from '../utils/auth0'
 import PropTypes from 'prop-types'
@@ -6,10 +5,6 @@ import PropTypes from 'prop-types'
 export default function Trending({ user }) {
   return (
     <div className="container">
-      <Head>
-        <title>Charitable</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <main>
         <nav>
           <div>{user ? <a href="/api/logout">Logout</a> : <a href="/api/login">Login</a>}</div>
