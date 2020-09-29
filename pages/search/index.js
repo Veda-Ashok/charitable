@@ -1,12 +1,13 @@
 import React from 'react'
-import NavBar from '../../src/components/navbar'
+import NavBar from '../../src/components/Navbar'
+import Typography from '@material-ui/core/Typography'
 
 export default function Search() {
   return (
     <div className="container">
       <div>
-        <NavBar />
-        <h1>Search</h1>
+        <NavBar page="Search" />
+        <Typography variant="h1">Search</Typography>
       </div>
     </div>
   )
