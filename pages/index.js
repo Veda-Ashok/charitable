@@ -1,4 +1,4 @@
-import NavBar from '../src/components/NavBar'
+import NavigationBar from '../src/components/NavigationBar'
 import auth0 from '../utils/auth0'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
@@ -8,7 +8,7 @@ export default function Trending({ user }) {
     <div className="container">
       <main>
         <nav>
-          <NavBar user={user} page="Trending" />
+          <NavigationBar user={user} page="Trending" />
         </nav>
         <div>
           <Typography variant="h1">Trending</Typography>

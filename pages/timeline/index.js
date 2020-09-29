@@ -1,11 +1,11 @@
 import React from 'react'
-import NavBar from '../../src/components/Navbar'
+import NavigationBar from '../../src/components/NavigationBar'
 import Typography from '@material-ui/core/Typography'
 
 export default function TimelinePage() {
   return (
     <div>
-      <NavBar page="Timeline" />
+      <NavigationBar page="Timeline" />
       <Typography variant="h1">Timeline</Typography>
     </div>
   )

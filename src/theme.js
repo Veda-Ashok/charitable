@@ -36,6 +36,9 @@ const theme = createMuiTheme({
     info: {
       main: jasmine,
     },
+    jet: {
+      main: jet,
+    },
     background: {
       default: '#fff',
     },
