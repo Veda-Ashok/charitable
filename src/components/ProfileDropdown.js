@@ -1,4 +1,5 @@
 import React from 'react'
+import { useEffect, useRef } from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import Grow from '@material-ui/core/Grow'
@@ -7,8 +8,8 @@ import Popper from '@material-ui/core/Popper'
 import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
 import PersonIcon from '@material-ui/icons/Person'
-import Link from './Link'
 import PropTypes from 'prop-types'
+import Link from '@material-ui/core/Link'
 
 export default function ProfileDropdown({ user, page }) {
   const [open, setOpen] = React.useState(false)
@@ -35,8 +36,8 @@ export default function ProfileDropdown({ user, page }) {
   }
 
   // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open)
-  React.useEffect(() => {
+  const prevOpen = useRef(open)
+  useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus()
     }
