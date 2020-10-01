@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import PropTypes from 'prop-types'
 
 const useStyles = makeStyles({
   root: {
@@ -17,7 +18,7 @@ const useStyles = makeStyles({
   },
 })
 
-export default function MediaCard() {
+export default function DescriptionBox({ orgDetails }) {
   const classes = useStyles()
 
   return (
@@ -25,7 +26,7 @@ export default function MediaCard() {
       <CardActionArea>
         <CardMedia className={classes.media} image="/media/unicef.png" title="fakeorg" />
         <Typography gutterBottom variant="h4">
-          Organization
+          {orgDetails.name}Organization
         </Typography>
         <CardActions>
           <Button size="small" color="primary">
@@ -33,10 +34,14 @@ export default function MediaCard() {
           </Button>
         </CardActions>
         <CardContent>
-          <Typography variant="body2">Classification</Typography>
-          <Typography variant="body2">Mission Statement</Typography>
+          <Typography variant="body2">Classification: {orgDetails.category}</Typography>
+          <Typography variant="body2">Mission Statement: {orgDetails.mission}</Typography>
         </CardContent>
       </CardActionArea>
     </Card>
   )
+}
+
+DescriptionBox.propTypes = {
+  orgDetails: PropTypes.object,
 }
