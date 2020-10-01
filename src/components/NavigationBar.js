@@ -17,12 +17,7 @@ export default function NavigationBar({ user, page }) {
   return (
     <div>
       <Link href="/search">Search</Link>
-      <IconButton
-        aria-label="Trending Button"
-        color={trendingColor}
-        component={Link}
-        naked="true"
-        href="/">
+      <IconButton aria-label="Trending Button" color={trendingColor} component={Link} href="/">
         <TrendingUp />
       </IconButton>
       <IconButton
