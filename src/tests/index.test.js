@@ -4,6 +4,6 @@ import App from '../../pages/index'
 describe('App', () => {
   it('renders default page without crashing', () => {
     const { getByText } = render(<App />)
-    expect(getByText('Landing Page')).toBeInTheDocument()
+    expect(getByText('Trending')).toBeInTheDocument()
   })
 })
