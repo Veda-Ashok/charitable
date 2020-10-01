@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from '@material-ui/core/Link'
+import Link from './Link'
 import ProfileDropdown from './ProfileDropdown'
 import PropTypes from 'prop-types'
 import TrendingUp from '@material-ui/icons/TrendingUp'
@@ -17,14 +17,19 @@ export default function NavigationBar({ user, page }) {
   return (
     <div>
       <Link href="/search">Search</Link>
-      <IconButton aria-label="Trending Button" color={trendingColor} component={Link} href="/">
+      <IconButton
+        aria-label="Trending Button"
+        naked
+        color={trendingColor}
+        component={Link}
+        href="/">
         <TrendingUp />
       </IconButton>
       <IconButton
         aria-label="Timeline Button"
         color={timelineColor}
         component={Link}
-        naked="true"
+        naked
         href="/timeline">
         <Home />
       </IconButton>
