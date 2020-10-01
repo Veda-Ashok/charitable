@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import Link from '@material-ui/core/Link'
+import Link from './Link'
 
 const useStyles = makeStyles({
   root: {
@@ -35,7 +35,7 @@ export default function MediaCard() {
             color="primary"
             href="https://www.unicefusa.org/"
             component={Link}
-            naked="true">
+            naked>
             Donate Here
           </Button>
         </CardActions>

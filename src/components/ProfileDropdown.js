@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
 import PersonIcon from '@material-ui/icons/Person'
 import PropTypes from 'prop-types'
-import Link from '@material-ui/core/Link'
+import Link from './Link'
 
 export default function ProfileDropdown({ user, page }) {
   const [open, setOpen] = React.useState(false)
