@@ -10,18 +10,14 @@ export default function NavigationBar({ user, page }) {
   const trendingColor = page === 'Trending' ? 'primary' : 'inherit'
   const timelineColor = page === 'Timeline' ? 'primary' : 'inherit'
 
-  /*TODO: The user prop isnt passed out of the trending page...
+  /*
+  TODO: The user prop isnt passed out of the trending page...
    */
 
   return (
     <div>
       <Link href="/search">Search</Link>
-      <IconButton
-        aria-label="Trending Button"
-        color={trendingColor}
-        component={Link}
-        naked="true"
-        href="/">
+      <IconButton aria-label="Trending Button" color={trendingColor} component={Link} href="/">
         <TrendingUp />
       </IconButton>
       <IconButton
