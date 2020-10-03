@@ -7,11 +7,11 @@ export default function TalkToFlask() {
   const request = () => {
     axios
       .get(`http://127.0.0.1:5000/flask`)
-      .then(function (response) {
+      .then((response) => {
         console.log(response)
-        setMessage(response['data'])
+        setMessage(response.data.data)
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error)
       })
   }
