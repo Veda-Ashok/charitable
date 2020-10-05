@@ -18,8 +18,8 @@ export default function ScrollView({ orgs }) {
   // }, [])
 
   const listItems = orgs.map((org) => (
-    <ListItem key={org.name}>
-      <Button onClick={() => setOrg(org)}>{org.name}</Button>
+    <ListItem key={org.organization.name}>
+      <Button onClick={() => setOrg(org)}>{org.organization.name}</Button>
     </ListItem>
   ))
 
