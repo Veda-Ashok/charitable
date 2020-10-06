@@ -12,6 +12,13 @@
 /.next/
 /out/
 
+# vscode
+.vscode/
+
+# pycache
+__pycache__/
+
+
 # production
 /build
 
