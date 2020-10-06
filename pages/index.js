@@ -3,6 +3,7 @@ import DescriptionBox from '../src/components/DescriptionBox'
 import auth0 from '../utils/auth0'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
+import TalkToFlask from '../src/components/TalkToFlask'
 
 export default function Trending({ user }) {
   return (
@@ -13,6 +14,7 @@ export default function Trending({ user }) {
         </nav>
         <div>
           <Typography variant="h1">Trending</Typography>
+          <TalkToFlask />
         </div>
         <div>
           <DescriptionBox />
