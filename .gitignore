@@ -18,10 +18,6 @@
 # pycache
 __pycache__/
 
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 # production
 /build
 
