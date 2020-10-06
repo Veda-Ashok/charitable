@@ -1,0 +1,45 @@
+
+
+CMSI 401 Section 01 ~ Fall Semester 2020
+Group 1: [5 souls] *
+   Veda Ashok, Sam Gibson, Rachel Nguyen, Bridget O'Connor, Krysten Tachiyama
+   synopsis:   Charitable ~ web app to centralize ways to give back to your community
+=====================================================================================
+VERY nice job on this document.  I like that you have put the entire SDF into
+a single document.  That will make it easier to maintain, and also should
+help with making sure that things are consistent across sections.
+
+The schedule is very well done, and it's impressive that you elected to use
+the PERT chart approach!  You've done a MOST EXCELLENT job of handling the
+complexities of that method and it's quite clear, based on the table you've
+included what each of the tasks will do and where they will fit in the
+overall development process!
+
+One thing you will see in the industry, especially if the sections are split
+apart into separate documents, is that in section 5.1 you'll find a brief
+re-cap of what the project is.  In your case, perhaps part of the first
+paragraph of your proposal document.  Don't worry about that here, though.
+
+This is a stellar document!  You have really captured the intent here!  The
+one place that needs some additional information is the Server CSC.  What
+you can/should add to that section is what the data structures will look
+like in the communications between the front end and the back end.  Will you
+have to do any translation from what is sent by the front end to what is
+processed by the back end?  What information is in those data structures?
+Will the communication be over TCP/IP link?  Does the application need to
+specify a host address and port number to connect?  There are a myriad of
+items that you can [and probably should] specify here, unless it is all
+transparent even to the development team in the fact that you are using
+Next.js and Flask.  If that is the case, then modify 5.3.2.1 to say that
+"Because the server application is using Next.js and Flask, the details of
+transmission between the front and back ends is hidden and requires no other
+specification here."  Kind of a cop-out, but it works, if that's the case.
+
+Other than that, GREAT JOB!!!
+
+For evaluation purposes, you can consider this one completed with nothing
+further required.
+
+Evaluation score:
+
+    10% out of 10% for this deliverable:  A-plus
