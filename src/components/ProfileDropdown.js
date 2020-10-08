@@ -1,6 +1,5 @@
 import React from 'react'
-import { useEffect, useRef } from 'react'
-import IconButton from '@material-ui/core/IconButton'
+import { useEffect, useRef, useState } from 'react'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import Grow from '@material-ui/core/Grow'
 import Paper from '@material-ui/core/Paper'
@@ -10,11 +9,22 @@ import MenuList from '@material-ui/core/MenuList'
 import PersonIcon from '@material-ui/icons/Person'
 import PropTypes from 'prop-types'
 import Link from './Link'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles(() => ({
+  buttonLabel: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+}))
 
 export default function ProfileDropdown({ user, page }) {
-  const [open, setOpen] = React.useState(false)
-  const anchorRef = React.useRef(null)
+  const [open, setOpen] = useState(false)
+  const anchorRef = useRef(null)
   const iconColor = page === 'Profile' ? 'primary' : 'inherit'
+  const classes = useStyles()
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen)
@@ -47,15 +57,17 @@ export default function ProfileDropdown({ user, page }) {
 
   return (
     <div>
-      <IconButton
+      <Button
         color={iconColor}
-        aria-label="Profile Button"
+        aria-label="ProfileButton"
         ref={anchorRef}
         aria-controls={open ? 'menu-list-grow' : undefined}
         aria-haspopup="true"
+        classes={{ label: classes.buttonLabel }}
         onClick={handleToggle}>
         <PersonIcon />
-      </IconButton>
+        <Typography variant="caption">Profile</Typography>
+      </Button>
       <Popper
         //Popper adds an inline-style with a transform: translate3d() which causes blurriness
         modifiers={{

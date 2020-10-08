@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import Link from './Link'
 import ProfileDropdown from './ProfileDropdown'
 import PropTypes from 'prop-types'
 import TrendingUp from '@material-ui/icons/TrendingUp'
 import Home from '@material-ui/icons/Home'
-import IconButton from '@material-ui/core/IconButton'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import { fade, makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
+import IconWithLabelPath from './IconWithLabelPath'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -115,22 +114,20 @@ export default function NavigationBar({ user, page }) {
             </div>
           </form>
           <div className={classes.grow} />
-          <IconButton
-            aria-label="Trending Button"
-            naked
-            color={trendingColor}
-            component={Link}
-            href="/">
-            <TrendingUp />
-          </IconButton>
-          <IconButton
-            aria-label="Timeline Button"
-            color={timelineColor}
-            component={Link}
-            naked
-            href="/timeline">
-            <Home />
-          </IconButton>
+          <IconWithLabelPath
+            icon={<TrendingUp />}
+            label="Trending"
+            trendingColor={trendingColor}
+            path="/"
+            ariaLabel="Trending Button"
+          />
+          <IconWithLabelPath
+            icon={<Home />}
+            label="Timeline"
+            trendingColor={timelineColor}
+            path="/timeline"
+            ariaLabel="Timeline Button"
+          />
           <ProfileDropdown user={user} page={page} />
         </Toolbar>
       </AppBar>
