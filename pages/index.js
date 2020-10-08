@@ -4,6 +4,7 @@ import auth0 from '../utils/auth0'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import { searchFeatured } from '../src/api/globalGivingApi'
+import TalkToFlask from '../src/components/TalkToFlask'
 
 export default function Trending({ user, orgs }) {
   // let orgs = [
@@ -27,6 +28,7 @@ export default function Trending({ user, orgs }) {
         </nav>
         <div>
           <Typography variant="h1">Trending</Typography>
+          <TalkToFlask />
         </div>
         <div>
           <Scrollview orgs={orgs.projects.project}></Scrollview>
