@@ -87,7 +87,11 @@ export default function ProfileDropdown({ user, page }) {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                  <MenuItem onClick={handleClose} component={Link} naked href="/profile">
+                  <MenuItem
+                    onClick={handleClose}
+                    component={Link}
+                    naked
+                    href={user ? '/profile' : '/api/login'}>
                     My Profile
                   </MenuItem>
                   {user ? (

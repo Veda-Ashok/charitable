@@ -118,14 +118,14 @@ export default function NavigationBar({ user, page }) {
             icon={<TrendingUp />}
             label="Trending"
             trendingColor={trendingColor}
-            path="/"
+            path={'/'}
             ariaLabel="Trending Button"
           />
           <IconWithLabelPath
             icon={<Home />}
             label="Timeline"
             trendingColor={timelineColor}
-            path="/timeline"
+            path={user ? '/timeline' : '/api/login'}
             ariaLabel="Timeline Button"
           />
           <ProfileDropdown user={user} page={page} />
