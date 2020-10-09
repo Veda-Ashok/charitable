@@ -18,6 +18,7 @@ def getAllElements(m, s1, s2):
      return results
 
 for i in root.findall('organization'):
+    org_id = getAttributeText(i, 'id')
     name = getAttributeText(i, 'name')
     mission = getAttributeText(i, 'mission')
     logo_url = getAttributeText(i, 'logoUrl')
@@ -28,7 +29,7 @@ for i in root.findall('organization'):
     all_themes = getAllElements(i, 'themes', 'theme')
 
    
-    print('name: ', name, '\n', 'mission:', mission, '\n', 
+    print('id: ', ord_id, '\n', 'name: ', name, '\n', 'mission:', mission, '\n', 
     'logo_url: ', logo_url, '\n', 'url: ', url, '\n', 'countries: ', all_countries, '\n',
     'themes: ', all_themes, '\n', '\n')
 
