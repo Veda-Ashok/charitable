@@ -31,7 +31,7 @@ export default function Trending({ user, orgs }) {
           <TalkToFlask />
         </div>
         <div>
-          <Scrollview orgs={orgs.projects.project}></Scrollview>
+          <Scrollview orgs={orgs ? orgs.projects.project : null}></Scrollview>
         </div>
       </main>
     </div>
@@ -75,19 +75,20 @@ export default function Trending({ user, orgs }) {
 // }
 
 export async function getServerSideProps({ req }) {
-  console.log('in serverSide props')
   // pass the request that comes on the context object into auth0
   const session = await auth0.getSession(req)
   let tempOrgs
-  await searchFeatured('featured/projects').then((result) => {
-    tempOrgs = result
-    console.log('TEMP ORGS: ', tempOrgs)
-  })
+  await searchFeatured('featured/projects')
+    .then((result) => {
+      tempOrgs = result
+    })
+    .catch((e) => console.log(e))
 
+  console.log(tempOrgs)
   return {
     props: {
       user: session?.user || null,
-      orgs: tempOrgs,
+      orgs: tempOrgs ? tempOrgs : null,
     },
   }
 }
