@@ -16,7 +16,7 @@ if __name__ == "__main__":
     app.run()
 
 '''
-from flask import Flask, request, render_template
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from datetime import datetime
