@@ -18,7 +18,9 @@ python app.py
 
 ## SqlAlchemy
 make sure you're in your virtual environment
+
 pip install flask-sqlalchemy
+
 open python terminal and access test-database.db :D
 
 
