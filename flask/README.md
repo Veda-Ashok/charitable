@@ -16,6 +16,9 @@ see the requirements.txt if you are confused about requirements
 to run the app do: 
 python app.py
 
-
+## SqlAlchemy
+make sure you're in your virtual environment
+pip install flask-sqlalchemy
+open python terminal and access test-database.db :D
 
 
