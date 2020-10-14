@@ -65,6 +65,8 @@ export default function CreatePostBox() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    setInput('')
   }
 
   return (
