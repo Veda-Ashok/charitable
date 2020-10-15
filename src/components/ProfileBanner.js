@@ -101,5 +101,5 @@ ProfileBanner.propTypes = {
   friendCount: PropTypes.number,
   bio: PropTypes.string,
   location: PropTypes.location,
-  isMe: PropTypes.boolean,
+  isMe: PropTypes.bool,
 }
