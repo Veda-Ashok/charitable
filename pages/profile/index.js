@@ -6,7 +6,7 @@ import auth0 from '../../utils/auth0'
 export default function Profile({ user }) {
   return (
     <div>
-      <ProfilePage user={user} />
+      <ProfilePage user={user} isMe={true} isFriend={false} />
     </div>
   )
 }

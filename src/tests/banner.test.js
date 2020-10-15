@@ -18,7 +18,6 @@ describe('ProfileBanner', () => {
     expect(getByText('I love volunteering')).toBeTruthy()
     expect(getByText('Los Angeles')).toBeTruthy()
     expect(getByAltText('BJ Johnson')).toBeTruthy()
-    expect(getByText('100 Friends')).toBeTruthy()
     expect(getByText('Edit Profile')).toBeInTheDocument()
     expect(queryByText('Add Friend')).toBeNull()
   })
@@ -28,7 +27,6 @@ describe('ProfileBanner', () => {
       <ProfileBanner
         name="BJ Johnson"
         icon="/media/BJIcon.jpg"
-        friendCount={100}
         bio="I love volunteering"
         location="Los Angeles"
         isMe={false}
@@ -39,7 +37,6 @@ describe('ProfileBanner', () => {
     expect(getByText('I love volunteering')).toBeTruthy()
     expect(getByText('Los Angeles')).toBeTruthy()
     expect(getByAltText('BJ Johnson')).toBeTruthy()
-    expect(getByText('100 Friends')).toBeTruthy()
     expect(getByText('Add Friend')).toBeInTheDocument()
     expect(queryByText('Edit Profile')).toBeNull()
   })
@@ -49,7 +46,6 @@ describe('ProfileBanner', () => {
       <ProfileBanner
         name="BJ Johnson"
         icon="/media/BJIcon.jpg"
-        friendCount={100}
         bio="I love volunteering"
         location="Los Angeles"
         isMe={false}
@@ -66,7 +62,6 @@ describe('ProfileBanner', () => {
       <ProfileBanner
         name="BJ Johnson"
         icon="/media/BJIcon.jpg"
-        friendCount={100}
         bio="I love volunteering"
         location="Los Angeles"
         isMe={false}

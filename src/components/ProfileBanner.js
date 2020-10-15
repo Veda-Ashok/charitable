@@ -6,7 +6,6 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import PeopleAltIcon from '@material-ui/icons/PeopleAlt'
 import EditIcon from '@material-ui/icons/Edit'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
@@ -34,9 +33,6 @@ const useStyles = makeStyles((theme) => ({
   },
   editIcon: {
     marginRight: theme.spacing(1),
-  },
-  friendText: {
-    paddingRight: theme.spacing(1),
   },
   bioText: {
     marginRight: theme.spacing(2),
@@ -110,10 +106,6 @@ export default function ProfileBanner(props) {
             )}
           </div>
           <CardContent className={classes.content}>
-            <PeopleAltIcon fontSize="small" />
-            <Typography variant="body2" className={classes.friendText}>
-              {props.friendCount} Friends
-            </Typography>
             <LocationOnIcon fontSize="small" />
             <Typography variant="body2">{props.location}</Typography>
           </CardContent>
@@ -126,7 +118,6 @@ export default function ProfileBanner(props) {
 ProfileBanner.propTypes = {
   name: PropTypes.string,
   icon: PropTypes.string,
-  friendCount: PropTypes.number,
   bio: PropTypes.string,
   location: PropTypes.string,
   isMe: PropTypes.bool,
