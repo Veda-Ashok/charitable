@@ -29,7 +29,7 @@ for i in root.findall('organization'):
     all_themes = getAllElements(i, 'themes', 'theme')
 
    
-    print('id: ', ord_id, '\n', 'name: ', name, '\n', 'mission:', mission, '\n', 
+    print('id: ', org_id, '\n', 'name: ', name, '\n', 'mission:', mission, '\n', 
     'logo_url: ', logo_url, '\n', 'url: ', url, '\n', 'countries: ', all_countries, '\n',
     'themes: ', all_themes, '\n', '\n')
 
