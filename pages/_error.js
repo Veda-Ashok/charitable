@@ -16,5 +16,5 @@ Error.getInitialProps = ({ res, err }) => {
 export default Error
 
 Error.propTypes = {
-  statusCode: PropTypes.string,
+  statusCode: PropTypes.number,
 }
