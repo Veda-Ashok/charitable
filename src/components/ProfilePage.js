@@ -18,6 +18,7 @@ export default function ProfilePage({ user }) {
   const friendCount = 100
   const location = 'Los Angeles, CA'
   const isMe = false
+  const isFriend = false
   const icon = '/media/BJIcon.jpg'
   return (
     <div className={classes.banner}>
@@ -29,6 +30,7 @@ export default function ProfilePage({ user }) {
         location={location}
         isMe={isMe}
         icon={icon}
+        isFriend={isFriend}
       />
     </div>
   )

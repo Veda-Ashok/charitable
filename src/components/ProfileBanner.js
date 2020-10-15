@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import ProfileBannerAvatar from './ProfileBannerAvatar'
 import Card from '@material-ui/core/Card'
@@ -10,6 +10,7 @@ import PeopleAltIcon from '@material-ui/icons/PeopleAlt'
 import EditIcon from '@material-ui/icons/Edit'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle'
 import PropTypes from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
@@ -52,6 +53,28 @@ const useStyles = makeStyles((theme) => ({
 export default function ProfileBanner(props) {
   const classes = useStyles()
 
+  const removeIcon = <RemoveCircleIcon fontSize="small" className={classes.editIcon} />
+  const addIcon = <PersonAddIcon fontSize="small" className={classes.editIcon} />
+
+  const [friendMessage, setFriendMessage] = useState(
+    props.isFriend ? 'Delete Friend' : 'Add Friend'
+  )
+  const [friendIcon, setIcon] = useState(props.isFriend ? removeIcon : addIcon)
+  const [friendColor, setFriendColor] = useState(props.isFriend ? 'secondary' : 'primary')
+
+  function handleFriend() {
+    if (friendMessage === 'Add Friend') {
+      setFriendMessage('Delete Friend')
+      setIcon(removeIcon)
+      setFriendColor('secondary')
+    } else {
+      setFriendMessage('Add Friend')
+      setIcon(addIcon)
+      setFriendColor('primary')
+    }
+    //TODO: We are gonna need to send a request to the DB to remove and add friend on click
+  }
+
   return (
     <div className={classes.grow}>
       <Card>
@@ -75,9 +98,14 @@ export default function ProfileBanner(props) {
                 Edit Profile
               </Button>
             ) : (
-              <Button size="small" variant="contained" className={classes.button} color="primary">
-                <PersonAddIcon fontSize="small" className={classes.editIcon} />
-                Add Friend
+              <Button
+                onClick={handleFriend}
+                size="small"
+                variant="contained"
+                className={classes.button}
+                color={friendColor}>
+                {friendIcon}
+                {friendMessage}
               </Button>
             )}
           </div>
@@ -100,6 +128,7 @@ ProfileBanner.propTypes = {
   icon: PropTypes.string,
   friendCount: PropTypes.number,
   bio: PropTypes.string,
-  location: PropTypes.location,
+  location: PropTypes.string,
   isMe: PropTypes.bool,
+  isFriend: PropTypes.bool,
 }
