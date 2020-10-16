@@ -1,16 +1,12 @@
 import React from 'react'
-import NavigationBar from '../../src/components/NavigationBar'
-import Typography from '@material-ui/core/Typography'
-import auth0 from '../../utils/auth0'
+import ProfilePage from '../../src/components/ProfilePage'
 import PropTypes from 'prop-types'
-import CreatePostBox from '../../src/components/CreatePostBox'
+import auth0 from '../../utils/auth0'
 
 export default function Profile({ user }) {
   return (
     <div>
-      <NavigationBar page="Profile" user={user} />
-      <Typography variant="h1">Profile</Typography>
-      <CreatePostBox />
+      <ProfilePage user={user} isMe={true} isFriend={false} />
     </div>
   )
 }

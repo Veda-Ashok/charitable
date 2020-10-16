@@ -7,22 +7,21 @@ import { grey } from '@material-ui/core/colors'
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary'
 import AttachFileIcon from '@material-ui/icons/AttachFile'
 import EventNoteIcon from '@material-ui/icons/EventNote'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
+import PropTypes from 'prop-types'
 
 const useStyles = makeStyles({
   root: {
     display: 'flex',
-    margin: '0 30px',
     color: grey,
-    backgroundColor: 'white',
     flexDirection: 'column',
-    border: 15,
-    maxWidth: 450,
-    boxShadow: '0px 5px 7px -7px rgba(0, 0, 0, .75)',
+    maxWidth: '30rem',
   },
   top: {
     display: 'flex',
     borderBottom: '1px solid #eff2f5',
-    padding: '15px',
+    padding: '1rem',
   },
   topForm: {
     flex: 1,
@@ -32,34 +31,28 @@ const useStyles = makeStyles({
     flex: 1,
     outlineWidth: 0,
     border: 'none',
-    padding: '5px 30px',
-    margin: '0 10spx',
+    padding: '.5rem 1rem',
+    margin: '0 .5rem',
     borderRadius: '999px',
     backgroundColor: '#eff2f5',
-  },
-  topButton: {
-    outlineWidth: 0,
-    border: 'none',
-    padding: '5px 30px',
-    margin: '0 10px',
-    borderRadius: '999px',
-    backgroundColor: 'primary',
   },
   bottom: {
     display: 'flex',
     justifyContent: 'space-evenly',
   },
   attachOption: {
-    fontSize: 10,
-    padding: '20px',
+    paddingRight: '1rem',
+    paddingLeft: '1rem',
     display: 'flex',
     alignItems: 'center',
     color: grey,
-    margin: '5px',
+    margin: '.2rem',
+    textTransform: 'none',
+    fontSize: '.7rem',
   },
 })
 
-export default function CreatePostBox() {
+export default function CreatePostBox(props) {
   const [input, setInput] = useState('')
   const classes = useStyles()
 
@@ -70,9 +63,9 @@ export default function CreatePostBox() {
   }
 
   return (
-    <div className={classes.root}>
+    <Paper className={classes.root}>
       <div className={classes.top}>
-        <Avatar>N</Avatar>
+        <Avatar alt={props.name} src={props.icon}></Avatar>
         <form className={classes.topForm}>
           <input
             value={input}
@@ -86,19 +79,33 @@ export default function CreatePostBox() {
         </Button>
       </div>
       <div className={classes.bottom}>
-        <div className={classes.attachOption}>
+        <Button className={classes.attachOption}>
           <PhotoLibraryIcon />
-          <h5>Attach Image</h5>
-        </div>
-        <div className={classes.attachOption}>
+          <Typography variant="subtitle">Attach Image</Typography>
+        </Button>
+        <label htmlFor="upload-photo">
+          <input
+            name="upload-photo"
+            id="upload-photo"
+            accept="image/*"
+            style={{ display: 'none' }}
+            type="file"
+          />
+          {/* <Button className={classes.attachOption}> */}
           <AttachFileIcon />
-          <h5>Attach File</h5>
-        </div>
-        <div className={classes.attachOption}>
+          <Typography variant="subtitle">Attach File</Typography>
+          {/* </Button> */}
+        </label>
+        <Button className={classes.attachOption}>
           <EventNoteIcon />
-          <h5>Include Organization/Event</h5>
-        </div>
+          <Typography variant="subtitle">Include Organization/Event</Typography>
+        </Button>
       </div>
-    </div>
+    </Paper>
   )
+}
+
+CreatePostBox.propTypes = {
+  name: PropTypes.string,
+  icon: PropTypes.string,
 }
