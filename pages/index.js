@@ -7,18 +7,6 @@ import { searchFeatured } from '../src/api/globalGivingApi'
 import TalkToFlask from '../src/components/TalkToFlask'
 
 export default function Trending({ user, orgs }) {
-  // let orgs = [
-  //   // { name: 'unicef', mission: 'have fun', category: '4' },
-  //   // { name: 'red cross', mission: 'git gud', category: '2' },
-  //   // { name: 'ukoweokewkocef', mission: 'havun', category: '1' },
-  //   // { name: "Sam Gibson's College Tuition Fund", mission: 'give sam money', category: '69420' },
-  //   // { name: "Rachel's College Tuition Fund", mission: 'give rachel money', category: '0' },
-  // ]
-
-  // const [orgs, setOrgs] = useState()
-
-  // useEffect(() => {, [])
-
   return (
     <div className="container">
       <main>
@@ -36,42 +24,6 @@ export default function Trending({ user, orgs }) {
     </div>
   )
 }
-
-// export async function getServerSideProps({ req }) {
-//   // pass the request that comes on the context object into auth0
-//   const session = await auth0.getSession(req)
-//   let tempOrgs = []
-
-//   await fetch(
-//     'https://api.globalgiving.org/api/public/projectservice/featured/projects?api_key=e9d51f98-4e9f-4dcb-8df9-45f2ae9abff9',
-//     {
-//       headers: {
-//         Accept: 'application/JSON',
-//       },
-//     }
-//   )
-//     .then((res) => res.json())
-//     .then((res) => {
-//       console.log('res: ', res)
-//       for (const project of res.projects.project) {
-//         console.log('project: ', project)
-//         tempOrgs.push(project)
-//       }
-//     })
-//     .catch((e) => console.log(e))
-
-//   return {
-//     props: {
-//       user: session?.user || null,
-//       orgs: tempOrgs,
-//     },
-//   }
-// }
-
-// Trending.propTypes = {
-//   user: PropTypes.object,
-//   orgs: PropTypes.array,
-// }
 
 export async function getServerSideProps({ req }) {
   // pass the request that comes on the context object into auth0
