@@ -1,10 +1,10 @@
 import os
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Date, ForeignKey, Sequence
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Date, ForeignKey, Sequence, LargeBinary, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import select, func
 from sqlalchemy.orm import sessionmaker, relationship
 
-db = create_engine(os.environ[process.env.DB_URL])
+db = create_engine(os.environ['DB_URL'])
 metadata = MetaData(db)
 organization_table = Table('organization', metadata, autoload=True)
 organization_theme_table = Table('organization_theme', metadata, autoload=True)
@@ -12,12 +12,12 @@ theme_table = Table('theme', metadata, autoload=True)
 activity_theme = Table('activity_theme', metadata, autoload=True)
 organization_country = Table('organization_country', metadata, autoload=True)
 activity_country = Table('activity_country', metadata, autoload=True)
-user_organization = Table('user_organization', metadata, autoload=True)
-user_user = Table('user_user', metadata, autoload=True)
+member_organization = Table('member_organization', metadata, autoload=True)
+member_member = Table('member_member', metadata, autoload=True)
 activity_table = Table('activity', metadata, autoload=True)
 country_table = Table('country', metadata, autoload=True)
 post_table = Table('post', metadata, autoload=True)
-user_table = Table('user', metadata, autoload=True)
+member_table = Table('member', metadata, autoload=True)
 
 
 # Raw SQL-style implementation of a movie query.
@@ -77,19 +77,18 @@ class Organization(ORM_Base):
 
 class Activity(ORM_Base):
     __tablename__ = 'activity'
-
     id = Column(Integer, primary_key=True)
     organization_id = Column(Integer, ForeignKey('organization.id'), primary_key=True) # ForeignKey takes table properties…
     street_address = Column(String)
-    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True) # ForeignKey takes table properties…
+    member_id = Column(Integer, ForeignKey('member.id'), primary_key=True) # ForeignKey takes table properties…
     description = Column(String)
     city = Column(String)
     url = Column(String)
     zipcode = Column(String)
     organization = relationship('Organization') # …but relationship takes the mapped class
-    user = relationship('User') # …but relationship takes the mapped class
+    member = relationship('Member') # …but relationship takes the mapped class
 
-class Country(ORM_BASE):
+class Country(ORM_Base):
     __tablename__ = 'country'
     country_code = Column(String, primary_key=True) #this is the id
     name = Column(String)
@@ -101,53 +100,52 @@ class OrganizationCountry(ORM_Base):
     organization = relationship('Organization')
     country = relationship('Country')
 
-class UserOrganization(ORM_Base):
-    __tablename__ = 'user_organization'
-    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True) 
+class MemberOrganization(ORM_Base):
+    __tablename__ = 'member_organization'
+    member_id = Column(Integer, ForeignKey('member.id'), primary_key=True) 
     organization_id = Column(Integer, ForeignKey('organization.id'), primary_key=True)
     organization = relationship('Organization')
-    user = relationship('User')
+    member = relationship('Member')
     
-class User(ORM_Base):
-    __tablename__ = 'user' 
+class Member(ORM_Base):
+    __tablename__ = 'member' 
     id = Column(Integer, Sequence('post_id_seq'), primary_key=True)
-    organization_id = Column(Integer, ForeignKey('organization.id'), primary_key=True) 
-    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True) # this can be null and normally should be null
-    city = Column(String)
-    url = Column(String)
-    zipcode = Column(Integer)
-    user = relationship('User')
+    member_name = Column(String)
+    display_name = Column(String)
+    profile_picture = Column(LargeBinary)
+    banner_picture = Column(LargeBinary)
+    bio = Column(String)
 
-class UserUser(ORM_Base):
-    __tablename__ = 'user_user'
-    # do we need two users here??? 
-    # Dondi please help
-    user1_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
-    user2_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
-    user = relationship('User')
+# class MemberMember(ORM_Base):
+#     __tablename__ = 'member_member'
+#     # do we need two members here??? 
+#     member1_id = Column(Integer, ForeignKey('member.id'), primary_key=True)
+#     member2_id = Column(Integer, ForeignKey('member.id'), primary_key=True)
+#     member1 = relationship('Member', primaryjoin = "member1_id == member.id")
+#     member2 = relationship('Member', primaryjoin = "member2_id == member.id")
     
 class Post(ORM_Base):
     __tablename__ = 'post'
     id = Column(Integer, Sequence('post_id_seq'), primary_key=True)
-    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True) 
+    member_id = Column(Integer, ForeignKey('member.id'), primary_key=True) 
     time = Column(DateTime)
     typed_content = Column(String)
-    # attached_image = Column(String)
+    attached_image = Column(LargeBinary)
     organization_id = Column(Integer, ForeignKey('organization.id'), primary_key=True) 
     activity_id = Column(Integer, ForeignKey('activity.id'), primary_key=True)
     organization = relationship('Organization')
     activity = relationship('Activity')
-    user = relationship('User')
+    member = relationship('Member')
     
 class Theme(ORM_Base):
     __tablename__ = 'theme'
-    id = Column(Integer, Sequence('post_id_seq'), primary_key=True)
+    id = Column(String, primary_key=True)
     name = Column(String)
     
 class ActivityTheme(ORM_Base):
     __tablename__ = 'activity_theme'
     activity_id = Column(Integer, ForeignKey('activity.id'), primary_key=True) 
-    theme_id = Column(Integer, ForeignKey('organization.id'), primary_key=True) 
+    theme_id = Column(String, ForeignKey('theme.id'), primary_key=True) 
     activity = relationship('Activity')
     theme = relationship('Theme')
 
@@ -161,7 +159,7 @@ class ActivityCountry(ORM_Base):
 class OrganizationTheme(ORM_Base):
     __tablename__ = 'organization_theme'
     organization_id = Column(Integer, ForeignKey('organization.id'), primary_key=True)
-    theme_id = Column(Integer, ForeignKey('theme.id'), primary_key=True)
+    theme_id = Column(String, ForeignKey('theme.id'), primary_key=True)
     organization = relationship('Organization')
     theme = relationship('Theme')
 
@@ -209,32 +207,32 @@ def insert_country(country_code, name):
     current_session.commit()
     return country
 
-def insert_user(id, username, nickname, profile_picture, banner_picture, bio):
+def insert_member(id, membername, nickname, profile_picture, banner_picture, bio, location):
     # do we want to use auth0's idas input here
-    user = User(id=id, username=username, nickname=nickname, profile_picture=profile_picture, banner_picture=banner_picture, bio)
-    current_session.add(user)
+    member = Member(id=id, membername=membername, nickname=nickname, profile_picture=profile_picture, banner_picture=banner_picture, bio=bio, location=location)
+    current_session.add(member)
     current_session.commit()
-    return user
+    return member
 
-def insert_post(user_id, time, typed_content, attached_image, organization_id, activity_id):
-    post = Post(user_id=user_id, time=time, typed_content=typed_content attached_image=attached_image, organization_id=organization_id, activity_id=activity_id)
+def insert_post(member_id, time, typed_content, attached_image, organization_id, activity_id):
+    post = Post(member_id=member_id, time=time, typed_content=typed_content, attached_image=attached_image, organization_id=organization_id, activity_id=activity_id)
     current_session.add(post)
     current_session.commit()
     return post
 
-def insert_theme(name):
-    theme = Theme(name=name)
+def insert_theme(id, name):
+    theme = Theme(id=id, name=name)
     current_session.add(theme)
     current_session.commit()
     return theme
 
-def insert_activity(organization_id, street_address, user_id, description, city, url, zipcode ):
-    activity = Activity(organization_id=organization_id, street_address=street_address, user_id=user_id, description=description, city=city, url=url, zipcode=zipcode)
+def insert_activity(organization_id, street_address, member_id, description, city, url, zipcode ):
+    activity = Activity(organization_id=organization_id, street_address=street_address, member_id=member_id, description=description, city=city, url=url, zipcode=zipcode)
     current_session.add(activity)
     current_session.commit()
     return activity
 
-def insert_organization_country(organization_id, courtry_code):
+def insert_organization_country(organization_id, country_code):
     organization_country = OrganizationCountry(organization_id=organization_id, country_code=country_code)
     current_session.add(organization_country)
     current_session.commit() # Make the change permanent.
@@ -252,17 +250,17 @@ def insert_organization_theme(organization_id, theme_id):
     current_session.commit()
     return organization_theme
 
-def insert_user_organization(user_id, organization_id):
-    user_organization = UserOrganization(user_id=user_id, organization_id=organization_id)
-    current_session.add(user_organization)
+def insert_member_organization(member_id, organization_id):
+    member_organization = MemberOrganization(member_id=member_id, organization_id=organization_id)
+    current_session.add(member_organization)
     current_session.commit()
-    return user_organization
+    return member_organization
 
-def insert_user_user(user1_id, user2_id):
-    user_user = UserUSer(user1_id=user_id, user2_id=user2_id)
-    current_session.add(user_user)
+def insert_member_member(member1_id, member2_id):
+    member_member = MemberMember(member1_id=member_id, member2_id=member2_id)
+    current_session.add(member_member)
     current_session.commit()
-    return user_user
+    return member_member
 
 def insert_activity_theme(activity_id, theme_id):
     activity_theme = ActivityTheme(activity_id=activity_id, theme_id=theme_id)
