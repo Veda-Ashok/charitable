@@ -3,12 +3,14 @@ import NavigationBar from '../../src/components/NavigationBar'
 import Typography from '@material-ui/core/Typography'
 import auth0 from '../../utils/auth0'
 import PropTypes from 'prop-types'
+import CreatePostBox from '../../src/components/CreatePostBox'
 
 export default function Profile({ user }) {
   return (
     <div>
       <NavigationBar page="Profile" user={user} />
       <Typography variant="h1">Profile</Typography>
+      <CreatePostBox />
     </div>
   )
 }

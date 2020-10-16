@@ -27,7 +27,7 @@ export default function DescriptionBox({ orgDetails }) {
       <CardActionArea>
         <CardMedia className={classes.media} image="/media/unicef.png" title="fakeorg" />
         <Typography gutterBottom variant="h4">
-          {orgDetails.organization.name}Organization
+          {orgDetails.organization.name}
         </Typography>
         <Typography variant="body2">Location</Typography>
         <CardActions>

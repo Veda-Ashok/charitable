@@ -23,7 +23,6 @@ export default function Trending({ user, orgs }) {
     <div className="container">
       <main>
         <nav>
-          {console.log(user)}
           <NavigationBar user={user} page="Trending" />
         </nav>
         <div>
@@ -84,7 +83,6 @@ export async function getServerSideProps({ req }) {
     })
     .catch((e) => console.log(e))
 
-  console.log(tempOrgs)
   return {
     props: {
       user: session?.user || null,
