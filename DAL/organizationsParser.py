@@ -25,9 +25,9 @@ for i in root.findall('organization'):
     logo_url = getAttributeText(i, 'logoUrl')
     url = getAttributeText(i, 'url')
     countries = getAttributeText(i, 'countries')
-    all_countries = getAllElements(i, 'countries', 'country')
+    all_countries = getAllElements(i, 'countries', 'country', 'iso3166CountryCode')
     themes = getAttributeText(i, 'themes')
-    all_themes = getAllElements(i, 'themes', 'theme')
+    all_themes = getAllElements(i, 'themes', 'theme', 'id')
 
    
     print('id: ', org_id, '\n', 'name: ', name, '\n', 'mission:', mission, '\n', 
