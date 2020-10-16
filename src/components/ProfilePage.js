@@ -2,11 +2,15 @@ import React from 'react'
 import NavigationBar from '../../src/components/NavigationBar'
 import ProfileBanner from './ProfileBanner'
 import { makeStyles } from '@material-ui/core/styles'
+import CreatePostBox from './CreatePostBox'
 import PropTypes from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
     marginTop: theme.spacing(8),
+  },
+  postBox: {
+    marginTop: theme.spacing(1),
   },
 }))
 
@@ -28,6 +32,9 @@ export default function ProfilePage(props) {
         icon={icon}
         isFriend={props.isFriend}
       />
+      <div className={classes.postBox}>
+        <CreatePostBox icon={icon} name={name} />
+      </div>
     </div>
   )
 }
