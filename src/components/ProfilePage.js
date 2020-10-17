@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import CreatePostBox from './CreatePostBox'
 import PropTypes from 'prop-types'
 import Post from './Post'
+import { mockTrending } from '../tests/MockAPI/MockTrending'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(3),
-      maxWidth: '40rem',
+      maxWidth: '50rem',
     },
   },
 }))
@@ -63,6 +64,16 @@ export default function ProfilePage(props) {
           time={'10/20/2020 8:00pm'}
           typedContent={'Hi my name is BJ nice to meet everyone '}
           image={null}
+        />
+      </div>
+      <div className={classes.post}>
+        <Post
+          icon={icon}
+          name={name}
+          time={'10/20/2020 8:00pm'}
+          typedContent={'AHHHHHHHHH'}
+          image={null}
+          orgDetails={mockTrending.projects.project[0]}
         />
       </div>
     </div>
