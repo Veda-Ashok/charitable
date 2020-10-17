@@ -5,18 +5,19 @@ import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import { grey } from '@material-ui/core/colors'
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary'
-import AttachFileIcon from '@material-ui/icons/AttachFile'
+import LocationCityIcon from '@material-ui/icons/LocationCity'
 import EventNoteIcon from '@material-ui/icons/EventNote'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
+import Fab from '@material-ui/core/Fab'
 
 const useStyles = makeStyles({
   root: {
     display: 'flex',
     color: grey,
     flexDirection: 'column',
-    maxWidth: '30rem',
+    maxWidth: '50rem',
   },
   top: {
     display: 'flex',
@@ -35,6 +36,9 @@ const useStyles = makeStyles({
     margin: '0 .5rem',
     borderRadius: '999px',
     backgroundColor: '#eff2f5',
+  },
+  button: {
+    borderRadius: '999px',
   },
   bottom: {
     display: 'flex',
@@ -71,18 +75,14 @@ export default function CreatePostBox(props) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             className={classes.topInput}
-            placeHolder={'Share with the community!'}
+            placeholder={'Share with the community!'}
           />
         </form>
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
+        <Fab variant="contained" color="primary" onClick={handleSubmit} className={classes.button}>
           Post
-        </Button>
+        </Fab>
       </div>
       <div className={classes.bottom}>
-        <Button className={classes.attachOption}>
-          <PhotoLibraryIcon />
-          <Typography variant="subtitle">Attach Image</Typography>
-        </Button>
         <label htmlFor="upload-photo">
           <input
             name="upload-photo"
@@ -91,14 +91,18 @@ export default function CreatePostBox(props) {
             style={{ display: 'none' }}
             type="file"
           />
-          {/* <Button className={classes.attachOption}> */}
-          <AttachFileIcon />
-          <Typography variant="subtitle">Attach File</Typography>
-          {/* </Button> */}
+          <Button className={classes.attachOption} component="div">
+            <PhotoLibraryIcon />
+            <Typography variant="subtitle">Attach Image</Typography>
+          </Button>
         </label>
+        <Button className={classes.attachOption} component="div">
+          <LocationCityIcon />
+          <Typography variant="subtitle">Attach Organization</Typography>
+        </Button>
         <Button className={classes.attachOption}>
           <EventNoteIcon />
-          <Typography variant="subtitle">Include Organization/Event</Typography>
+          <Typography variant="subtitle">Attach Activity</Typography>
         </Button>
       </div>
     </Paper>
