@@ -4,6 +4,7 @@ import ProfileBanner from './ProfileBanner'
 import { makeStyles } from '@material-ui/core/styles'
 import CreatePostBox from './CreatePostBox'
 import PropTypes from 'prop-types'
+import Post from './Post'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
@@ -11,6 +12,16 @@ const useStyles = makeStyles((theme) => ({
   },
   postBox: {
     marginTop: theme.spacing(1),
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+    },
+  },
+  post: {
+    margin: theme.spacing(1),
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      maxWidth: '40rem',
+    },
   },
 }))
 
@@ -34,6 +45,25 @@ export default function ProfilePage(props) {
       />
       <div className={classes.postBox}>
         <CreatePostBox icon={icon} name={name} />
+      </div>
+      <div className={classes.post}>
+        <Post
+          icon={icon}
+          name={name}
+          time={'10/20/2020 8:00pm'}
+          typedContent={`A pancake (or hotcake, griddlecake, or flapjack) is a flat cake, often thin and round, 
+            prepared from a starch-based batter that may contain eggs, milk and butter. YUM`}
+          image={'/media/pancake.png'}
+        />
+      </div>
+      <div className={classes.post}>
+        <Post
+          icon={icon}
+          name={name}
+          time={'10/20/2020 8:00pm'}
+          typedContent={'Hi my name is BJ nice to meet everyone '}
+          image={null}
+        />
       </div>
     </div>
   )
