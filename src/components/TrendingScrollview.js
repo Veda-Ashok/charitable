@@ -6,7 +6,7 @@ import { ListItem } from '@material-ui/core'
 import DescriptionBox from './DescriptionBox'
 import Button from '@material-ui/core/Button'
 
-export default function ScrollView({ orgs }) {
+export default function TrendingScrollview({ orgs }) {
   if (orgs) {
     const [org, setOrg] = useState(orgs[0])
 
@@ -29,6 +29,6 @@ export default function ScrollView({ orgs }) {
   }
 }
 
-ScrollView.propTypes = {
+TrendingScrollview.propTypes = {
   orgs: PropTypes.array,
 }

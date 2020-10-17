@@ -1,5 +1,5 @@
 import NavigationBar from './NavigationBar'
-import Scrollview from './Scrollview'
+import TrendingScrollview from './TrendingScrollview'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import { searchFeatured } from '../api/globalGivingApi'
@@ -45,7 +45,7 @@ export default function TrendingPage({ user }) {
           {isLoading ? (
             <div>Loading</div>
           ) : (
-            <Scrollview orgs={orgs ? orgs.projects.project : null}></Scrollview>
+            <TrendingScrollview orgs={orgs ? orgs.projects.project : null} />
           )}
         </div>
       </main>
