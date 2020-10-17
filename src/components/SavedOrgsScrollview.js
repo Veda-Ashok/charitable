@@ -8,11 +8,11 @@ import OrgDialog from './OrgDialog'
 
 export default function SavedOrgsScrollview({ orgs }) {
   if (orgs) {
-    // const [org, setOrg] = useState(null)
+    const [org, setOrg] = useState(orgs[0])
     const [open, setOpen] = useState(false)
 
-    const handleClickOpen = () => {
-      //   setOrg(org)
+    const handleClickOpen = (org) => {
+      setOrg(org)
       setOpen(true)
     }
 
@@ -22,8 +22,7 @@ export default function SavedOrgsScrollview({ orgs }) {
 
     const listItems = orgs.map((org) => (
       <ListItem key={org.organization.name}>
-        <Button onClick={handleClickOpen}>{org.organization.name}</Button>
-        <OrgDialog org={org} open={open} onClose={handleClose}></OrgDialog>
+        <Button onClick={() => handleClickOpen(org)}>{org.organization.name}</Button>
       </ListItem>
     ))
 
@@ -31,6 +30,7 @@ export default function SavedOrgsScrollview({ orgs }) {
       <div>
         <Paper style={{ maxHeight: 200, overflow: 'auto' }}>
           <List>{listItems}</List>
+          <OrgDialog org={org} open={open} onClose={handleClose} />
         </Paper>
       </div>
     )
