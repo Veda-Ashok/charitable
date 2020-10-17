@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
-import OrgInfoSmallBox from './OrgInfoSmallBox'
+import InfoSmallBox from './InfoSmallBox'
 
 const useStyles = makeStyles({
   root: {
@@ -51,7 +51,8 @@ export default function PostBox(props) {
         //TODO: In the future this image will be binary data sooo... we need to know what kind
         props.image && <img alt="postPhoto" src={props.image} />
       }
-      {props.orgDetails && <OrgInfoSmallBox orgDetails={props.orgDetails} />}
+      {props.orgDetails && <InfoSmallBox orgDetails={props.orgDetails} />}
+      {props.activityDetails && <InfoSmallBox activityDetails={props.activityDetails} />}
     </Paper>
   )
 }
@@ -63,4 +64,5 @@ PostBox.propTypes = {
   typedContent: PropTypes.string,
   image: PropTypes.string,
   orgDetails: PropTypes.object,
+  activityDetails: PropTypes.object,
 }

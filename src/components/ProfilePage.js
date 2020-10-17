@@ -71,9 +71,17 @@ export default function ProfilePage(props) {
           icon={icon}
           name={name}
           time={'10/20/2020 8:00pm'}
-          typedContent={'AHHHHHHHHH'}
-          image={null}
+          typedContent={'Check out this great organization I found!'}
           orgDetails={mockTrending.projects.project[0]}
+        />
+      </div>
+      <div className={classes.post}>
+        <Post
+          icon={icon}
+          name={name}
+          time={'10/20/2020 8:00pm'}
+          typedContent={'Going to be volunteering here tomorrow at 3pm!'}
+          activityDetails={mockTrending.projects.project[3]}
         />
       </div>
     </div>
