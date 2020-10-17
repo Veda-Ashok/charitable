@@ -4,15 +4,33 @@ import ProfileBanner from './ProfileBanner'
 import { makeStyles } from '@material-ui/core/styles'
 import CreatePostBox from './CreatePostBox'
 import PropTypes from 'prop-types'
+import Post from './Post'
+import { mockTrending } from '../tests/MockAPI/MockTrending'
 import SavedOrgsScrollview from './SavedOrgsScrollview'
 import { searchFeatured } from '..//api/globalGivingApi'
-// import auth0 from '../../utils/auth0'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
     marginTop: theme.spacing(8),
   },
   postBox: {
+    marginTop: theme.spacing(1),
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+    },
+  },
+  post: {
+    margin: theme.spacing(1),
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+    },
+  },
+  content: {
+    display: 'flex',
+  },
+  savedOrg: {
+    marginRight: theme.spacing(3),
+    marginLeft: theme.spacing(3),
     marginTop: theme.spacing(1),
   },
 }))
@@ -47,10 +65,53 @@ export default function ProfilePage(props) {
         icon={icon}
         isFriend={props.isFriend}
       />
-      <div className={classes.postBox}>
-        <CreatePostBox icon={icon} name={name} />
+      <div className={classes.content}>
+        <div>
+          <div className={classes.postBox}>
+            <CreatePostBox icon={icon} name={name} />
+          </div>
+          <div className={classes.post}>
+            <Post
+              icon={icon}
+              name={name}
+              time={'10/20/2020 8:00pm'}
+              typedContent={`A pancake (or hotcake, griddlecake, or flapjack) is a flat cake, often thin and round, 
+            prepared from a starch-based batter that may contain eggs, milk and butter. YUM`}
+              image={'/media/pancake.png'}
+            />
+          </div>
+          <div className={classes.post}>
+            <Post
+              icon={icon}
+              name={name}
+              time={'10/20/2020 8:00pm'}
+              typedContent={'Hi my name is BJ nice to meet everyone '}
+              image={null}
+            />
+          </div>
+          <div className={classes.post}>
+            <Post
+              icon={icon}
+              name={name}
+              time={'10/20/2020 8:00pm'}
+              typedContent={'Check out this great organization I found!'}
+              orgDetails={mockTrending.projects.project[0]}
+            />
+          </div>
+          <div className={classes.post}>
+            <Post
+              icon={icon}
+              name={name}
+              time={'10/20/2020 8:00pm'}
+              typedContent={'Going to be volunteering here tomorrow at 3pm!'}
+              activityDetails={mockTrending.projects.project[3]}
+            />
+          </div>
+        </div>
+        <div className={classes.savedOrg}>
+          <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null}></SavedOrgsScrollview>
+        </div>
       </div>
-      <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null}></SavedOrgsScrollview>
     </div>
   )
 }
