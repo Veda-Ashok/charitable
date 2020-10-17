@@ -184,15 +184,6 @@ def get_ratings_by_viewer(viewer_id, limit=100):
 
     return query.all()
 
-
-# # ORM-style implementation of a movie inserter.
-# def insert_movie(title, year):
-#     movie = Movie(title=title, year=year)
-#     current_session.add(movie)
-#     current_session.commit() # Make the change permanent.
-#     return movie
-
-
 # ORM-style implementation of a movie inserter.
 def insert_organization(name, mission, logo_url, url):
     organization = Organization(name=name, mission=mission, logo_url=logo_url, url=url)
