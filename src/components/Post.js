@@ -31,7 +31,6 @@ const useStyles = makeStyles({
 
 export default function PostBox(props) {
   const classes = useStyles()
-  console.log(props.orgDetails)
 
   return (
     <Paper className={classes.root}>
