@@ -1,5 +1,5 @@
 import NavigationBar from '../src/components/NavigationBar'
-import Scrollview from '../src/components/Scrollview'
+import TrendingScrollview from '../src/components/TrendingScrollview'
 import auth0 from '../utils/auth0'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
@@ -18,7 +18,7 @@ export default function Trending({ user, orgs }) {
           <TalkToFlask />
         </div>
         <div>
-          <Scrollview orgs={orgs ? orgs.projects.project : null}></Scrollview>
+          <TrendingScrollview orgs={orgs ? orgs.projects.project : null}></TrendingScrollview>
         </div>
       </main>
     </div>
