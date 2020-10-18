@@ -41,7 +41,7 @@ const theme = createMuiTheme({
     },
     text: {
       primary: jet,
-      secondary: '#fff',
+      secondary: '#9e9e9e',
     },
   },
   typography: {
