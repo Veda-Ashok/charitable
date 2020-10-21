@@ -9,13 +9,18 @@ def getAttributeText(n, s):
         attributetext = 'Not Specified.' if checkattribute is None else checkattribute.text
         return attributetext
 
-def getAllElements(m, s1, s2):
+ef getAllElements(m, s1, s2, s3, s4):
      results = []
      for s1 in m.iter(s1):
         for x in s1.findall(s2):
-            attribute = getAttributeText(x, 'name')
-            results.append(attribute)
+            element_id = getAttributeText(x, s3)
+            attribute = getAttributeText(x, s4)
+            results.append((element_id, attribute))
      return results
+
+
+super_duper_all_countries = set()
+super_duper_all_themes = set()
 
 for i in root.findall('project'):
     project_id = getAttributeText(i, 'id')
@@ -23,6 +28,15 @@ for i in root.findall('project'):
     description = getAttributeText(i, 'activities')
     additional_documentation = getAttributeText(i, 'additionalDocumentation')
     date_approved = getAttributeText(i, 'approvedDate')
+    donation_options = getAttributeText(i, 'donationOptions')
+    all_donation_options = getAllElements(i, 'donationOptions', 'donationOption', 'amount', 'description')
+    current_funding = getAttributeText(i, 'funding')
+    goal_funding = getAttributeText(i, 'goal')
+    purpose = getAttributeText(i, 'need')
+    organization = getAttributeText(i, 'organization')
+    #organication_name = getAllElements
+
+    #contact info
     contact_name = getAttributeText(i, 'contactName')
     contact_title = getAttributeText(i, 'contactTitle')
     contact_url = getAttributeText(i, 'contactUrl')
@@ -34,12 +48,7 @@ for i in root.findall('project'):
     contact_address_state = getAttributeText(i, 'contactState')
     countries = getAttributeText(i, 'countries')
     all_countries = getAllElements(i, 'countries', 'country')
-    donation_options = getAttributeText(i, 'dontationOptions')
-    all_donation_options = getAllElements(i, 'donationOptions', 'donationOption')
-    current_funding = getAttributeText(i, 'funding')
-    goal_funding = getAttributeText(i, 'goal')
-    purpose = getAttributeText(i, 'need')
-
+    
 
 
     print('id: ', project_id, '\n',
