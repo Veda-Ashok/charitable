@@ -59,8 +59,15 @@ CREATE TABLE member_organization (
 CREATE TABLE member_member (
     member1_id INT REFERENCES member(id),
     member2_id INT REFERENCES member(id)
-    friend_status ENUM('0', '1', '2') -- 0 means no request, 1 means pending, and 2 means accepted
+    friend_status VARCHAR,
     PRIMARY KEY(member1_id, member2_id),
+-- StackOverflow: https://stackoverflow.com/questions/379236/database-design-best-table-structure-for-capturing-the-user-friend-relationship
+-- pending_first_second
+-- pending_second_first
+-- friends
+-- block_first_second
+-- block_second_first
+-- block_both
 );
 
 CREATE TABLE activity_theme (
