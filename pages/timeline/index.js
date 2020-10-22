@@ -3,6 +3,8 @@ import NavigationBar from '../../src/components/NavigationBar'
 import Typography from '@material-ui/core/Typography'
 import auth0 from '../../utils/auth0'
 import PropTypes from 'prop-types'
+import TimelineScrollview from '../../src/components/TrendingScrollview'
+import { mockPosts } from '../../src/tests/MockAPI/MockPosts'
 
 export default function Timeline({ user }) {
   useEffect(() => {
@@ -16,6 +18,8 @@ export default function Timeline({ user }) {
     <div>
       <NavigationBar page="Timeline" user={user} />
       <Typography variant="h1">Timeline</Typography>
+      {/* {console.log(mockPosts.posts)} */}
+      <TimelineScrollview posts={mockPosts.posts}></TimelineScrollview>
     </div>
   )
 }
