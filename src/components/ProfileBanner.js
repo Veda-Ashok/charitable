@@ -11,6 +11,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle'
 import PropTypes from 'prop-types'
+import EditProfile from './EditProfile'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,6 +59,16 @@ export default function ProfileBanner(props) {
   const [friendIcon, setIcon] = useState(props.isFriend ? removeIcon : addIcon)
   const [friendColor, setFriendColor] = useState(props.isFriend ? 'secondary' : 'primary')
 
+  const [open, setOpen] = useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   function handleFriend() {
     if (friendMessage === 'Add Friend') {
       setFriendMessage('Delete Friend')
@@ -89,10 +100,18 @@ export default function ProfileBanner(props) {
             </Typography>
             <div className={classes.grow}></div>
             {props.isMe ? (
-              <Button size="small" variant="contained" className={classes.button} color="primary">
-                <EditIcon fontSize="small" className={classes.editIcon} />
-                Edit Profile
-              </Button>
+              <div>
+                <Button
+                  size="small"
+                  variant="contained"
+                  className={classes.button}
+                  color="primary"
+                  onClick={handleClickOpen}>
+                  <EditIcon fontSize="small" className={classes.editIcon} />
+                  Edit Profile
+                </Button>
+                <EditProfile userInfo={props} open={open} onClose={handleClose} />
+              </div>
             ) : (
               <Button
                 onClick={handleFriend}
