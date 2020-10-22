@@ -19,29 +19,6 @@ country_table = Table('country', metadata, autoload=True)
 post_table = Table('post', metadata, autoload=True)
 member_table = Table('member', metadata, autoload=True)
 
-
-# Raw SQL-style implementation of a movie query.
-# def select_movie_by_title(query, limit=100):
-#     with db.connect() as connection:
-#         # We want actual %'s so need to escape them in the string.
-#         result_set = connection.execute(f"""
-#             SELECT * FROM movie WHERE title ILIKE '%%{query}%%' ORDER BY title LIMIT {limit}
-#         """)
-#         result = result_set.fetchall()
-#         return list(result)
-
-
-# SQL builder-style implementation of an aggregate query.
-# def get_average_rating_of_movie(movie_id):
-#     with db.connect() as connection:
-#         statement = select([func.avg(rating_table.c.rating)]).where(rating_table.c.movie_id == movie_id)
-#         result_set = connection.execute(statement)
-
-#         # We know in advance that this will be a single row with a single column so we feel safe about hardcoding this.
-#         # A non-existent movie will yield `None` for this expression.
-#         return result_set.fetchone()[0]
-
-
 # For ORM-style implementations, we need to define a few things first.
 ORM_Base = declarative_base()
 
@@ -53,27 +30,6 @@ class Organization(ORM_Base):
     mission = Column(String)
     logo_url = Column(String)
     url = Column(String)
-    
-# class Movie(ORM_Base):
-#     __tablename__ = 'movie'
-#     id = Column(Integer, Sequence('movie_id_seq'), primary_key=True)
-#     title = Column(String)
-#     year = Column(Integer)
-
-# class Rating(ORM_Base):
-#     __tablename__ = 'rating'
-
-#     # ORM requires some way to guarantee the uniqueness of a row, even if the table itself doesn’t have an official
-#     # primary key. By marking multiple columns as a “primary_key,” we’re telling ORM that the _combination_ of these
-#     # values can uniquely identify a row.
-#     #
-#     # In our case, we are making the explicit choice that no viewer can rate the same movie more than once.
-#     # Fortunately, this appears to be true for the given dataset.
-#     movie_id = Column(Integer, ForeignKey('movie.id'), primary_key=True) # ForeignKey takes table properties…
-#     viewer_id = Column(Integer, primary_key=True)
-#     rating = Column(Integer)
-#     date_rated = Column(Date)
-#     movie = relationship('Movie') # …but relationship takes the mapped class
 
 class Activity(ORM_Base):
     __tablename__ = 'activity'
