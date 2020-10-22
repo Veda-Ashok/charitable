@@ -110,7 +110,7 @@ export default function ProfileBanner(props) {
                   <EditIcon fontSize="small" className={classes.editIcon} />
                   Edit Profile
                 </Button>
-                <EditProfile open={open} onClose={handleClose} />
+                <EditProfile userInfo={props} open={open} onClose={handleClose} />
               </div>
             ) : (
               <Button
