@@ -59,8 +59,10 @@ CREATE TABLE member_organization (
 CREATE TABLE member_member (
     member1_id INT REFERENCES member(id),
     member2_id INT REFERENCES member(id)
+    friend_status ENUM('0', '1', '2') -- 0 means no request, 1 means pending, and 2 means accepted
+    PRIMARY KEY(member1_id, member2_id),
 );
-        
+
 CREATE TABLE activity_theme (
     activity_id INT REFERENCES activity(id),
     theme_id VARCHAR REFERENCES theme(id)
