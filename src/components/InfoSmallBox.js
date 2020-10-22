@@ -34,7 +34,11 @@ export default function InfoSmallBox({ orgDetails, activityDetails }) {
   return (
     <Paper variant="outlined" className={classes.root}>
       <div className={classes.leftSymbols}>
-        <Avatar className={classes.avatar} src={details.organization.logoUrl} />
+        <Avatar
+          className={classes.avatar}
+          src={details.organization.logoUrl}
+          alt={details.organization.name}
+        />
         <div className={classes.text}>
           <Typography variant="body1">{details.organization.name}</Typography>
           <Typography color="textSecondary" variant="caption">
