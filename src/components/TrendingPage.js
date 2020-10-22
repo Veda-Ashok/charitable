@@ -2,7 +2,7 @@ import NavigationBar from './NavigationBar'
 import TrendingScrollview from './TrendingScrollview'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
-import { searchFeatured } from '../api/globalGivingApi'
+import { searchFeatured } from '../apicalls/globalGivingApi'
 import Paper from '@material-ui/core/Paper'
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
@@ -35,6 +35,7 @@ export default function TrendingPage({ user }) {
   const classes = useStyles()
   const [isLoading, setIsLoading] = useState(false)
   const [orgs, setOrgs] = useState(null)
+  const [error, setError] = useState(undefined)
 
   useEffect(() => {
     let didCancel = false
@@ -46,7 +47,7 @@ export default function TrendingPage({ user }) {
         setOrgs(response)
         setIsLoading(false)
       } catch (error) {
-        console.error(error)
+        setError(error.statusText)
       } finally {
         !didCancel && setIsLoading(false)
       }
@@ -69,8 +70,13 @@ export default function TrendingPage({ user }) {
         <div>
           {isLoading ? (
             <Loading />
+          ) : error ? (
+            <Typography>{error}</Typography>
           ) : (
-            <TrendingScrollview orgs={orgs ? orgs.projects.project : null} />
+            <TrendingScrollview
+              className={classes.scrollView}
+              orgs={orgs ? orgs.projects.project : null}
+            />
           )}
         </div>
       </Paper>

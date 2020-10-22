@@ -1,43 +1,80 @@
 import React, { useState } from 'react'
-import Paper from '@material-ui/core/Paper'
 import PropTypes from 'prop-types'
 import List from '@material-ui/core/List'
 import { ListItem } from '@material-ui/core'
 import DescriptionBox from './DescriptionBox'
-import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
+import TrendingListItems from './TrendingListItems'
+import Loading from './Loading'
+import OrgDialog from './OrgDialog'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     margin: theme.spacing(1),
+    height: '70vh',
+  },
+  scroll: {
+    overflow: 'auto',
+    width: '100%',
   },
 }))
 
-export default function TrendingScrollview({ orgs }) {
+function TrendingScrollview(props) {
   const classes = useStyles()
-  if (orgs) {
-    const [org, setOrg] = useState(orgs[0])
+  if (props.orgs) {
+    const [org, setOrg] = useState(props.orgs[0])
+    const [open, setOpen] = useState(false)
 
-    const listItems = orgs.map((org) => (
-      <ListItem key={org.organization.name}>
-        <Button onClick={() => setOrg(org)}>{org.organization.name}</Button>
-      </ListItem>
-    ))
+    const handleClickOpen = (org) => {
+      if (isWidthUp('sm', props.width)) {
+        setOrg(org)
+      } else {
+        setOpen(true)
+        setOrg(org)
+      }
+    }
+
+    const handleClose = () => {
+      setOpen(false)
+    }
+    //Filter gets rid of duplicates
+    let orgSet = new Set()
+    const listItems = props.orgs
+      .filter((org) => {
+        let exists = orgSet.has(org.organization.id)
+        orgSet.add(org.organization.id)
+        return !exists
+      })
+      .map((org) => (
+        <ListItem key={org.organization.name}>
+          <TrendingListItems onClick={() => handleClickOpen(org)} orgDetails={org} saved={false} />
+        </ListItem>
+      ))
 
     return (
       <div className={classes.root}>
-        <Paper>
+        <div className={classes.scroll}>
           <List>{listItems}</List>
-        </Paper>
-        <DescriptionBox orgDetails={org} />
+          {!isWidthUp('sm', props.width) && (
+            <OrgDialog org={org} open={open} onClose={handleClose} />
+          )}
+        </div>
+        {isWidthUp('sm', props.width) && (
+          <div className={classes.scroll}>
+            <DescriptionBox orgDetails={org} />
+          </div>
+        )}
       </div>
     )
   } else {
-    return <h3>Loading...</h3>
+    return <Loading />
   }
 }
 
 TrendingScrollview.propTypes = {
   orgs: PropTypes.array,
 }
+
+export default withWidth()(TrendingScrollview)
