@@ -1,4 +1,5 @@
 import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import Dialog from '@material-ui/core/Dialog'
 import Button from '@material-ui/core/Button'
@@ -9,7 +10,19 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 import Paper from '@material-ui/core/Paper'
 import Fab from '@material-ui/core/Fab'
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(4),
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  text: {
+    marginBottom: theme.spacing(3),
+  },
+}))
 export default function EditProfile(props) {
+  const classes = useStyles()
+
   const { onClose, open, userInfo } = props
 
   const handleClose = () => {
@@ -19,37 +32,50 @@ export default function EditProfile(props) {
   return (
     <Paper>
       <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-        <Button onClick={handleClose}>X</Button>
-        <div>
-          <label htmlFor="upload-photo">
-            <input
-              name="upload-photo"
-              id="upload-photo"
-              accept="image/*"
-              style={{ display: 'none' }}
-              type="file"
-            />
-            <Badge
-              overlap="circle"
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              badgeContent={<AddCircleIcon />}>
-              {/* <Avatar src={userInfo.icon} /> */}
-              <ProfileBannerAvatar icon={userInfo.icon} />
-            </Badge>
-          </label>
+        <div className={classes.root}>
+          <Button onClick={handleClose}>X</Button>
+          <div>
+            <label htmlFor="upload-photo">
+              <input
+                name="upload-photo"
+                id="upload-photo"
+                accept="image/*"
+                style={{ display: 'none' }}
+                type="file"
+              />
+              <Badge
+                overlap="circle"
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                badgeContent={<AddCircleIcon />}>
+                {/* <Avatar src={userInfo.icon} /> */}
+                <ProfileBannerAvatar icon={userInfo.icon} />
+              </Badge>
+            </label>
+          </div>
+          {/* <div> */}
+          <TextField
+            id="standard-basic"
+            label="Edit Name"
+            defaultValue={userInfo.name}
+            className={classes.text}
+          />
+          <TextField
+            id="standard-basic"
+            label="Edit Bio"
+            defaultValue={userInfo.bio}
+            multiline
+            rows={4}
+            rowsMax={10}
+            className={classes.text}
+          />
+          <Fab variant="extended" color="primary">
+            Save
+          </Fab>
+          {/* </div> */}
         </div>
-        <TextField id="standard-basic" label="Edit Name" placeholder={userInfo.name}></TextField>
-        <TextField id="standard-basic" label="Edit Bio" placeholder={userInfo.bio}></TextField>
-        <TextField
-          id="standard-basic"
-          label="Edit Location"
-          placeholder={userInfo.location}></TextField>
-        <Fab variant="extended" color="primary">
-          Save
-        </Fab>
       </Dialog>
     </Paper>
   )

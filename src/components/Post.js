@@ -44,7 +44,7 @@ export default function PostBox(props) {
         </div>
       </div>
       <div className={classes.bottom}>
-        <Typography variant="body">{props.typedContent}</Typography>
+        <Typography variant="body1">{props.typedContent}</Typography>
       </div>
       {
         //TODO: In the future this image will be binary data sooo... we need to know what kind
