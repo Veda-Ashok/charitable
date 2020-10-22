@@ -131,9 +131,6 @@ export default function ProfilePage(props) {
             />
           </div>
         </div>
-        <div className={classes.savedOrg}>
-          <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null}></SavedOrgsScrollview>
-        </div>
       </div>
       {isLoading ? (
         <div>Loading</div>
