@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+# DAL
+/DAL
+
 # vscode
 .vscode/
 
@@ -25,7 +28,7 @@ __pycache__/
 .DS_Store
 *.pem
 
-# debug
+# debug#
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

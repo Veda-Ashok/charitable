@@ -78,7 +78,7 @@ export default function CreatePostBox(props) {
             placeholder={'Share with the community!'}
           />
         </form>
-        <Fab variant="contained" color="primary" onClick={handleSubmit} className={classes.button}>
+        <Fab variant="extended" color="primary" onClick={handleSubmit} className={classes.button}>
           Post
         </Fab>
       </div>
@@ -93,16 +93,16 @@ export default function CreatePostBox(props) {
           />
           <Button className={classes.attachOption} component="div">
             <PhotoLibraryIcon />
-            <Typography variant="subtitle">Attach Image</Typography>
+            <Typography variant="subtitle2">Attach Image</Typography>
           </Button>
         </label>
         <Button className={classes.attachOption} component="div">
           <LocationCityIcon />
-          <Typography variant="subtitle">Attach Organization</Typography>
+          <Typography variant="subtitle2">Attach Organization</Typography>
         </Button>
         <Button className={classes.attachOption}>
           <EventNoteIcon />
-          <Typography variant="subtitle">Attach Activity</Typography>
+          <Typography variant="subtitle2">Attach Activity</Typography>
         </Button>
       </div>
     </Paper>

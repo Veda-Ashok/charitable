@@ -36,16 +36,39 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function ProfilePage(props) {
-  const [orgs, setOrgs] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [orgs, setOrgs] = useState(null)
 
-  useEffect(async () => {
-    // Check that a new route is OK
-    await searchFeatured('featured/projects')
-      .then((result) => {
-        setOrgs(result)
-      })
-      .catch((e) => console.log(e))
+  //  FIX THIS TO BE REAL ORGS FROM OUT DATABASE
+  useEffect(() => {
+    let didCancel = false
+    async function fetchData() {
+      !didCancel && setIsLoading(true)
+      try {
+        setIsLoading(true)
+        const response = await searchFeatured('featured/projects')
+        setOrgs(response)
+        setIsLoading(false)
+      } catch (error) {
+        console.error(error)
+      } finally {
+        !didCancel && setIsLoading(false)
+      }
+    }
+    fetchData()
+    return () => {
+      didCancel = true
+    }
   }, [])
+
+  // useEffect(async () => {
+  //   // Check that a new route is OK
+  //   await searchFeatured('featured/projects')
+  //     .then((result) => {
+  //       setOrgs(result)
+  //     })
+  //     .catch((e) => console.log(e))
+  // }, [])
 
   const classes = useStyles()
   const name = 'BJ Johnson'
@@ -112,6 +135,11 @@ export default function ProfilePage(props) {
           <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null}></SavedOrgsScrollview>
         </div>
       </div>
+      {isLoading ? (
+        <div>Loading</div>
+      ) : (
+        <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null}></SavedOrgsScrollview>
+      )}
     </div>
   )
 }
