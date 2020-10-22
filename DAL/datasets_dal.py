@@ -72,13 +72,14 @@ class Member(ORM_Base):
     banner_picture = Column(LargeBinary)
     bio = Column(String)
 
-# class MemberMember(ORM_Base):
-#     __tablename__ = 'member_member'
-#     # do we need two members here??? 
-#     member1_id = Column(Integer, ForeignKey('member.id'), primary_key=True)
-#     member2_id = Column(Integer, ForeignKey('member.id'), primary_key=True)
-#     member1 = relationship('Member', primaryjoin = "member1_id == member.id")
-#     member2 = relationship('Member', primaryjoin = "member2_id == member.id")
+class MemberMember(ORM_Base):
+    __tablename__ = 'member_member'
+    # do we need two members here??? 
+    member1_id = Column(Integer, ForeignKey('member.id'), primary_key=True)
+    member2_id = Column(Integer, ForeignKey('member.id'), primary_key=True)
+    friend_status = Column(Integer)
+    # member1 = relationship('Member', primaryjoin = "member1_id == member.id")
+    # member2 = relationship('Member', primaryjoin = "member2_id == member.id")
     
 class Post(ORM_Base):
     __tablename__ = 'post'

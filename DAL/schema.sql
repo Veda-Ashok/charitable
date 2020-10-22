@@ -59,13 +59,13 @@ CREATE TABLE member_organization (
 CREATE TABLE member_member (
     member1_id INT REFERENCES member(id),
     member2_id INT REFERENCES member(id)
-    friend_status ENUM('0', '1', '2'), -- 0= no relation, 1 = pending request, 2 = accepted request
-    PRIMARY KEY(member1_id, member2_id),
+    friend_status ENUM('0', '1'), -- 0= pending request, 1 = accepted request
+    PRIMARY KEY(member1_id, member2_id)
 -- StackOverflow: https://stackoverflow.com/questions/379236/database-design-best-table-structure-for-capturing-the-user-friend-relationship
 -- pending_first_second
 -- pending_second_first
 -- friends
--- block_first_second
+-- block_first_second // probably are not going to deal with blocks for our app
 -- block_second_first
 -- block_both
 );
