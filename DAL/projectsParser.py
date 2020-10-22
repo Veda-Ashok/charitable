@@ -22,6 +22,10 @@ def getAllElements(m, s1, s2, s3, s4):
             results.append((element_id, attribute))
      return results
 
+def getOrganiation(m, s1, s2):
+    for s1 in m.iter(s1):
+        organization_id = getAttributeText(s1, s2)
+
 
 super_duper_all_countries = set()
 super_duper_all_themes = set()
@@ -35,21 +39,26 @@ for i in root.findall('project'):
     # donation_options = getAttributeText(i, 'donationOptions')
     # all_donation_options = getAllElements(i, 'donationOptions', 'donationOption', 'amount', 'description')
     # current_funding = getAttributeText(i, 'funding')
-    goal_funding = getAttributeText(i, 'goal')
+    # goal_funding = getAttributeText(i, 'goal')
+    # numberOfDonations = getAttributeText(i, 'numberOfDonations')
     # purpose = getAttributeText(i, 'need')
-    # organization = getAttributeText(i, 'organization')
-    # organization_id= getAllElements
+    org = getOrganiation(i, 'organization', 'id')
+    print(org)
+    # if(i.find('organization')):
+    #     print('it exists')
+    #     if(i.get('organization').find('activeProjects')):
+    #         print('yes')
+    # organization = getAttributeText(i, i.get('organization').find('id').text)
+    # organization_id= getAllElements(i, 'organization', 'id' )
     # themes = getAttributeText(i, 'themes')
     # all_themes = getAllElements(i, 'themes', 'theme', 'id')
+    # impact = getAttributeText(i, 'longTermImpact')
+    # progressLink = getAttributeText(i, 'progressReportLink')
+    # projectLink = getAttributeText(i, 'projectLink')
+    # region = getAttributeText(i, 'region')
+    # status = getAttributeText(i, 'status')
+    # summary = getAttributeText(i, 'summary')
 
-
-# longTermImpact
-# numberOfDonations
-# progressReportLink
-# projectLink
-# region
-# status
-# summary
 
     #contact info
     # contact_name = getAttributeText(i, 'contactName')
@@ -65,7 +74,7 @@ for i in root.findall('project'):
     # all_countries = getAllElements(i, 'countries', 'country')
     
 
-    print(goal_funding)
+    # print(organization)
     # print('id: ', project_id, '\n',
     # 'active: ', is_active, '\n',
     # 'purpose: ', purpose, '\n',
