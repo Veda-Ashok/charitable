@@ -2,10 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Dialog from '@material-ui/core/Dialog'
 import DescriptionBox from './DescriptionBox'
-import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton'
+import { makeStyles } from '@material-ui/core/styles'
+import CloseIcon from '@material-ui/icons/Close'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+})
 
 export default function OrgDialog(props) {
-  //   const classes = useStyles()
+  const classes = useStyles()
   const { onClose, open, org } = props
 
   const handleClose = () => {
@@ -14,8 +25,16 @@ export default function OrgDialog(props) {
 
   return (
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-      <Button onClick={handleClose}>X</Button>
-      <DescriptionBox orgDetails={org}></DescriptionBox>
+      <div className={classes.root}>
+        <DialogActions>
+          <IconButton onClick={handleClose} aria-label="Close" size="small">
+            <CloseIcon />
+          </IconButton>
+        </DialogActions>
+        <DialogContent>
+          <DescriptionBox orgDetails={org}></DescriptionBox>
+        </DialogContent>
+      </div>
     </Dialog>
   )
 }

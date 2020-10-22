@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import Post from './Post'
 import { mockTrending } from '../tests/MockAPI/MockTrending'
 import SavedOrgsScrollview from './SavedOrgsScrollview'
-import { searchFeatured } from '..//api/globalGivingApi'
+import { searchFeatured } from '../apicalls/globalGivingApi'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
