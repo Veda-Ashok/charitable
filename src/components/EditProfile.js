@@ -7,6 +7,7 @@ import ProfileBannerAvatar from './ProfileBannerAvatar'
 import Badge from '@material-ui/core/Badge'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import Paper from '@material-ui/core/Paper'
+import Fab from '@material-ui/core/Fab'
 
 export default function EditProfile(props) {
   const { onClose, open, userInfo } = props
@@ -46,6 +47,9 @@ export default function EditProfile(props) {
           id="standard-basic"
           label="Edit Location"
           placeholder={userInfo.location}></TextField>
+        <Fab variant="extended" color="primary">
+          Save
+        </Fab>
       </Dialog>
     </Paper>
   )
