@@ -15,12 +15,12 @@ def getAttributeText(n, s):
         attributetext = 'Not Specified.' if checkattribute is None else checkattribute.text
         return attributetext
 
-def getAllElements(m, s1, s2, s3):
+def getAllElements(m, s1, s2, s3, s4):
      results = []
      for s1 in m.iter(s1):
         for x in s1.findall(s2):
             element_id = getAttributeText(x, s3)
-            attribute = getAttributeText(x, 'name')
+            attribute = getAttributeText(x, s4)
             results.append((element_id, attribute))
      return results
 
@@ -34,9 +34,17 @@ for i in root.findall('organization'):
     logo_url = getAttributeText(i, 'logoUrl')
     url = getAttributeText(i, 'url')
     countries = getAttributeText(i, 'countries')
-    all_countries = getAllElements(i, 'countries', 'country', 'iso3166CountryCode')
+    all_countries = getAllElements(i, 'countries', 'country', 'iso3166CountryCode', 'name')
     themes = getAttributeText(i, 'themes')
-    all_themes = getAllElements(i, 'themes', 'theme', 'id')
+    all_themes = getAllElements(i, 'themes', 'theme', 'id', 'name')
+
+    # print('gg_organization_id: ', gg_organization_id, '\n',
+    # 'name: ', name, '\n',
+    # 'mission: ', mission, '\n',
+    # 'logo_url: ', logo_url, '\n',
+    # 'url: ', url, '\n',
+    # 'all_countries: ', all_countries, '\n',
+    # 'all_themes: ', all_themes, '\n')
     
     organization = insert_organization(name, mission, logo_url, url)
     
