@@ -26,7 +26,6 @@ export default function DescriptionBox({ orgDetails }) {
   const classes = useStyles()
   const themes = orgDetails.themes.theme
   const countries = orgDetails.countries.country
-  console.log(countries)
 
   return (
     <Card className={classes.root}>
