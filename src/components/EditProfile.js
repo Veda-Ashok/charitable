@@ -2,13 +2,15 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import Dialog from '@material-ui/core/Dialog'
-import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import ProfileBannerAvatar from './ProfileBannerAvatar'
 import Badge from '@material-ui/core/Badge'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import Paper from '@material-ui/core/Paper'
 import Fab from '@material-ui/core/Fab'
+import DialogActions from '@material-ui/core/DialogActions'
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,8 +34,12 @@ export default function EditProfile(props) {
   return (
     <Paper>
       <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+        <DialogActions>
+          <IconButton onClick={handleClose} aria-label="Close" size="small">
+            <CloseIcon />
+          </IconButton>
+        </DialogActions>
         <div className={classes.root}>
-          <Button onClick={handleClose}>X</Button>
           <div>
             <label htmlFor="upload-photo">
               <input
@@ -55,7 +61,6 @@ export default function EditProfile(props) {
               </Badge>
             </label>
           </div>
-          {/* <div> */}
           <TextField
             id="standard-basic"
             label="Edit Name"
@@ -74,7 +79,6 @@ export default function EditProfile(props) {
           <Fab variant="extended" color="primary">
             Save
           </Fab>
-          {/* </div> */}
         </div>
       </Dialog>
     </Paper>

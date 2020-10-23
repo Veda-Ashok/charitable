@@ -43,7 +43,6 @@ describe('ProfileBanner', () => {
         name="BJ Johnson"
         icon="/media/BJIcon.jpg"
         bio="I love volunteering"
-        location="Los Angeles"
         isMe={false}
         isFriend={false}
       />
@@ -59,7 +58,6 @@ describe('ProfileBanner', () => {
         name="BJ Johnson"
         icon="/media/BJIcon.jpg"
         bio="I love volunteering"
-        location="Los Angeles"
         isMe={false}
         isFriend={true}
       />
