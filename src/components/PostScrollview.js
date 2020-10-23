@@ -5,7 +5,7 @@ import List from '@material-ui/core/List'
 import { ListItem } from '@material-ui/core'
 import PostBox from './Post'
 
-export default function TimelineScrollview({ posts }) {
+export default function PostScrollview({ posts }) {
   console.log('HELLLLOOOO')
   console.log('component posts:', posts)
   if (posts) {
@@ -24,7 +24,7 @@ export default function TimelineScrollview({ posts }) {
 
     return (
       <div>
-        <Paper style={{ maxHeight: 200, overflow: 'auto' }}>
+        <Paper style={{ maxHeight: 2000, overflow: 'auto' }}>
           <List>{listItems}</List>
         </Paper>
       </div>
@@ -34,6 +34,6 @@ export default function TimelineScrollview({ posts }) {
   }
 }
 
-TimelineScrollview.propTypes = {
+PostScrollview.propTypes = {
   posts: PropTypes.array,
 }
