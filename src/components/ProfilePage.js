@@ -64,16 +64,14 @@ export default function ProfilePage(props) {
   const name = 'BJ Johnson'
   const bio =
     'I love to volunteer at the food bank and please join me in volunteering if you would like and also add me as a friend.'
-  const location = 'Los Angeles, CA'
   const icon = '/media/BJIcon.jpg'
-  console.log(orgs)
+
   return (
     <div className={classes.banner}>
       <NavigationBar page="Profile" user={props.user} />
       <ProfileBanner
         bio={bio}
         name={name}
-        location={location}
         isMe={props.isMe}
         icon={icon}
         isFriend={props.isFriend}

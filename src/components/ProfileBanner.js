@@ -2,12 +2,10 @@ import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import ProfileBannerAvatar from './ProfileBannerAvatar'
 import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import EditIcon from '@material-ui/icons/Edit'
-import LocationOnIcon from '@material-ui/icons/LocationOn'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle'
 import PropTypes from 'prop-types'
@@ -37,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bioText: {
     marginRight: theme.spacing(2),
+    paddingBottom: theme.spacing(3),
   },
   button: {
     minWidth: '6rem',
@@ -124,10 +123,6 @@ export default function ProfileBanner(props) {
               </Button>
             )}
           </div>
-          <CardContent className={classes.content}>
-            <LocationOnIcon fontSize="small" />
-            <Typography variant="body2">{props.location}</Typography>
-          </CardContent>
         </div>
       </Card>
     </div>
@@ -138,7 +133,6 @@ ProfileBanner.propTypes = {
   name: PropTypes.string,
   icon: PropTypes.string,
   bio: PropTypes.string,
-  location: PropTypes.string,
   isMe: PropTypes.bool,
   isFriend: PropTypes.bool,
 }
