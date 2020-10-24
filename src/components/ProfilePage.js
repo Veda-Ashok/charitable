@@ -4,7 +4,7 @@ import ProfileBanner from './ProfileBanner'
 import { makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import SavedOrgsScrollview from './SavedOrgsScrollview'
-import { searchFeatured } from '..//api/globalGivingApi'
+import { searchFeatured } from '../apicalls/globalGivingApi'
 import PostScrollview from './PostScrollview'
 import { mockPosts } from '../tests/MockAPI/MockPosts'
 
