@@ -3,7 +3,8 @@ CREATE TABLE organization (
     name VARCHAR,
     mission VARCHAR,
     logo_url VARCHAR,
-    url VARCHAR
+    url VARCHAR,
+    gg_id INT
 );
 
 CREATE TABLE member (

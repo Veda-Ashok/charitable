@@ -28,7 +28,7 @@ super_duper_all_countries = set()
 super_duper_all_themes = set()
 
 for i in root.findall('organization'):
-    gg_organization_id = getAttributeText(i, 'id')
+    gg_id = getAttributeText(i, 'id')
     name = getAttributeText(i, 'name')
     mission = getAttributeText(i, 'mission')
     logo_url = getAttributeText(i, 'logoUrl')
@@ -46,7 +46,7 @@ for i in root.findall('organization'):
     # 'all_countries: ', all_countries, '\n',
     # 'all_themes: ', all_themes, '\n')
     
-    organization = insert_organization(name, mission, logo_url, url)
+    organization = insert_organization(name, mission, logo_url, url, gg_id)
     
     print(f'Organization “{organization.name}” ({organization.url}) added with ID {organization.id}.')
     

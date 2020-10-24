@@ -30,6 +30,7 @@ class Organization(ORM_Base):
     mission = Column(String)
     logo_url = Column(String)
     url = Column(String)
+    gg_id = Column(Integer)
 
 class Activity(ORM_Base):
     __tablename__ = 'activity'
@@ -130,20 +131,27 @@ class OrganizationTheme(ORM_Base):
 Session = sessionmaker(bind=db)
 current_session = Session()
 
+def get_countries_by_organization(org_id, limit=100):
+    query = current_session.query(Country).\
+        join(OrganizationCountry).\
+        filter(OrganizationCountry.organization_id == org_id).\
+        order_by(Country.name).\
+        limit(limit)
+    return query.all()
 
 # ORM-style implementation of a rating query.
-def get_ratings_by_viewer(viewer_id, limit=100):
-    query = current_session.query(Rating).\
-        join(Movie).\
-        filter(Rating.viewer_id == viewer_id).\
-        order_by(Rating.date_rated, Movie.title).\
-        limit(limit)
+# def get_ratings_by_viewer(viewer_id, limit=100):
+#     query = current_session.query(Rating).\
+#         join(Movie).\
+#         filter(Rating.viewer_id == viewer_id).\
+#         order_by(Rating.date_rated, Movie.title).\
+#         limit(limit)
 
-    return query.all()
+#     return query.all()
 
 # ORM-style implementation of a movie inserter.
 def insert_organization(name, mission, logo_url, url):
-    organization = Organization(name=name, mission=mission, logo_url=logo_url, url=url)
+    organization = Organization(name=name, mission=mission, logo_url=logo_url, url=url, gg_id=gg_id)
     current_session.add(organization)
     current_session.commit() # Make the change permanent.
     return organization
@@ -186,12 +194,6 @@ def insert_organization_country(organization_id, country_code):
     current_session.commit() # Make the change permanent.
     return organization_country
 
-def insert_activity_theme(id, theme_id):
-    activity_theme = ActivityTheme(activity_id=activity_id, theme_id=theme_id)
-    current_session.add(activity_theme)
-    current_session.commit()
-    return activity_theme
-
 def insert_organization_theme(organization_id, theme_id):
     organization_theme = OrganizationTheme(organization_id=organization_id, theme_id=theme_id)
     current_session.add(organization_theme)
@@ -205,7 +207,7 @@ def insert_member_organization(member_id, organization_id):
     return member_organization
 
 def insert_member_member(member1_id, member2_id):
-    member_member = MemberMember(member1_id=member_id, member2_id=member2_id)
+    member_member = MemberMember(member1_id=member1_id, member2_id=member2_id)
     current_session.add(member_member)
     current_session.commit()
     return member_member
