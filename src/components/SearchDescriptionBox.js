@@ -37,17 +37,18 @@ export default function SearchDescriptionBox({ result }) {
     description = result.mission
     location = result.countries
     themes = result.themes
+    url = result.url
   } else if (type === 'activity') {
     imageSrc = undefined
     description = result.description
     location.push(result.street_address)
     location.push(result.country)
     themes = result.themes
+    url = result.url
   } else if (type === 'user') {
     imageSrc = result.profile_picture
     description = result.bio
-
-    // url = `profile/${name}`
+    url = ''
   }
 
   return (

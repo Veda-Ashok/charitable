@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
 
 function SearchScrollview(props) {
   const classes = useStyles()
-  if (props.result) {
-    const [result, setResult] = useState([])
+  if (props.results) {
+    const [result, setResult] = useState(props.results[0])
     const [open, setOpen] = useState(false)
 
     const handleClickOpen = (result) => {

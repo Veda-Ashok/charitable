@@ -32,14 +32,17 @@ const useStyles = makeStyles((theme) => ({
 export default function SearchListItems({ result, onClick, saved }) {
   let imageSrc = ''
   let name = result.name
-  let type = result.type
+  let type = ''
 
-  if (type === 'organization') {
+  if (result.type === 'organization') {
     imageSrc = result.logo_url
-  } else if (type === 'activity') {
+    type = 'Organization'
+  } else if (result.type === 'activity') {
     imageSrc = undefined
-  } else if (type === 'user') {
+    type = 'Activity'
+  } else if (result.type === 'user') {
     imageSrc = result.profile_picture
+    type = 'User'
   }
 
   const handleSaved = () => {
