@@ -1,13 +1,11 @@
 import React from 'react'
-import Paper from '@material-ui/core/Paper'
 import PropTypes from 'prop-types'
 import List from '@material-ui/core/List'
 import { ListItem } from '@material-ui/core'
 import PostBox from './Post'
+import Loading from './Loading'
 
 export default function PostScrollview({ posts }) {
-  console.log('HELLLLOOOO')
-  console.log('component posts:', posts)
   if (posts) {
     const listItems = posts.map((post) => (
       <ListItem key={post.name}>
@@ -24,13 +22,13 @@ export default function PostScrollview({ posts }) {
 
     return (
       <div>
-        <Paper style={{ maxHeight: 2000, overflow: 'auto' }}>
+        <div style={{ maxHeight: '70vh', overflow: 'auto' }}>
           <List>{listItems}</List>
-        </Paper>
+        </div>
       </div>
     )
   } else {
-    return <h3>Loading...</h3>
+    return <Loading />
   }
 }
 

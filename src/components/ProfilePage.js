@@ -4,7 +4,7 @@ import ProfileBanner from './ProfileBanner'
 import { makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import SavedOrgsScrollview from './SavedOrgsScrollview'
-import { searchFeatured } from '..//api/globalGivingApi'
+import { searchFeatured } from '../apicalls/globalGivingApi'
 import PostScrollview from './PostScrollview'
 import { mockPosts } from '../tests/MockAPI/MockPosts'
 
@@ -79,14 +79,13 @@ export default function ProfilePage(props) {
       <div className={classes.content}>
         <PostScrollview posts={mockPosts.posts}></PostScrollview>
         <div className={classes.savedOrg}>
-          <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null}></SavedOrgsScrollview>
+          {isLoading ? (
+            <div>Loading</div>
+          ) : (
+            <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null}></SavedOrgsScrollview>
+          )}
         </div>
       </div>
-      {isLoading ? (
-        <div>Loading</div>
-      ) : (
-        <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null}></SavedOrgsScrollview>
-      )}
     </div>
   )
 }

@@ -3,8 +3,8 @@ import Paper from '@material-ui/core/Paper'
 import PropTypes from 'prop-types'
 import List from '@material-ui/core/List'
 import { ListItem } from '@material-ui/core'
-import Button from '@material-ui/core/Button'
 import OrgDialog from './OrgDialog'
+import TrendingListItems from './TrendingListItems'
 
 export default function SavedOrgsScrollview({ orgs }) {
   if (orgs) {
@@ -20,15 +20,22 @@ export default function SavedOrgsScrollview({ orgs }) {
       setOpen(false)
     }
 
-    const listItems = orgs.map((org) => (
-      <ListItem key={org.organization.name}>
-        <Button onClick={() => handleClickOpen(org)}>{org.organization.name}</Button>
-      </ListItem>
-    ))
+    let orgSet = new Set()
+    const listItems = orgs
+      .filter((org) => {
+        let exists = orgSet.has(org.organization.id)
+        orgSet.add(org.organization.id)
+        return !exists
+      })
+      .map((org) => (
+        <ListItem key={org.organization.name}>
+          <TrendingListItems onClick={() => handleClickOpen(org)} orgDetails={org} saved={false} />
+        </ListItem>
+      ))
 
     return (
       <div>
-        <Paper style={{ maxHeight: 200, overflow: 'auto' }}>
+        <Paper style={{ maxHeight: '70vh', overflow: 'auto' }}>
           <List>{listItems}</List>
           <OrgDialog org={org} open={open} onClose={handleClose} />
         </Paper>
