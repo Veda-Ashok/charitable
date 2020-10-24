@@ -79,14 +79,13 @@ export default function ProfilePage(props) {
       <div className={classes.content}>
         <PostScrollview posts={mockPosts.posts}></PostScrollview>
         <div className={classes.savedOrg}>
-          <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null}></SavedOrgsScrollview>
+          {isLoading ? (
+            <div>Loading</div>
+          ) : (
+            <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null}></SavedOrgsScrollview>
+          )}
         </div>
       </div>
-      {isLoading ? (
-        <div>Loading</div>
-      ) : (
-        <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null}></SavedOrgsScrollview>
-      )}
     </div>
   )
 }
