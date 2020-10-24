@@ -1,16 +1,12 @@
 import React from 'react'
-import NavigationBar from '../../src/components/NavigationBar'
-import Typography from '@material-ui/core/Typography'
 import auth0 from '../../utils/auth0'
 import PropTypes from 'prop-types'
+import SearchPage from '../../src/components/SearchPage'
 
 export default function Search({ user }) {
   return (
-    <div className="container">
-      <div>
-        <NavigationBar page="Search" user={user} />
-        <Typography variant="h1">Search</Typography>
-      </div>
+    <div>
+      <SearchPage user={user} searchedWord={'Hello'} />
     </div>
   )
 }

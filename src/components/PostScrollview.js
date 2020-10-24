@@ -6,8 +6,6 @@ import { ListItem } from '@material-ui/core'
 import PostBox from './Post'
 
 export default function PostScrollview({ posts }) {
-  console.log('HELLLLOOOO')
-  console.log('component posts:', posts)
   if (posts) {
     const listItems = posts.map((post) => (
       <ListItem key={post.name}>

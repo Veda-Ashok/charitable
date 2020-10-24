@@ -8,7 +8,6 @@ export default function TalkToFlask() {
     axios
       .get(`http://127.0.0.1:5000/flask`)
       .then((response) => {
-        console.log(response)
         setMessage(response.data.data)
       })
       .catch((error) => {
