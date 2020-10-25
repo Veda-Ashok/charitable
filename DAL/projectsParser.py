@@ -45,6 +45,7 @@ for i in root.findall('project'):
     numberOfDonations = getAttributeText(i, 'numberOfDonations')
     purpose = getAttributeText(i, 'need')
     organization_id = getOrganization(i, 'organization', 'id')
+    organization_name = getOrganization(i, 'organization', 'name')
     themes = getAttributeText(i, 'themes')
     all_themes = getAllElements(i, 'themes', 'theme', 'id', 'name')
     impact = getAttributeText(i, 'longTermImpact')
