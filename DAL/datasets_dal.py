@@ -150,7 +150,7 @@ def get_countries_by_organization(org_id, limit=100):
 #     return query.all()
 
 # ORM-style implementation of a movie inserter.
-def insert_organization(name, mission, logo_url, url):
+def insert_organization(name, mission, logo_url, url, gg_id):
     organization = Organization(name=name, mission=mission, logo_url=logo_url, url=url, gg_id=gg_id)
     current_session.add(organization)
     current_session.commit() # Make the change permanent.

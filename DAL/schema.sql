@@ -57,10 +57,11 @@ CREATE TABLE member_organization (
     organization_id INT REFERENCES organization(id)
 );
 
+CREATE TYPE friendship AS ENUM ('pending', 'accepted', 'rejected');
 CREATE TABLE member_member (
     member1_id INT REFERENCES member(id),
-    member2_id INT REFERENCES member(id)
-    friend_status ENUM('0', '1'), -- 0= pending request, 1 = accepted request
+    member2_id INT REFERENCES member(id),
+    friend_status friendship, -- 0= pending request, 1 = accepted request
     PRIMARY KEY(member1_id, member2_id)
 -- StackOverflow: https://stackoverflow.com/questions/379236/database-design-best-table-structure-for-capturing-the-user-friend-relationship
 -- pending_first_second
