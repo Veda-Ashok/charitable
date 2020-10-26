@@ -4,8 +4,19 @@ import List from '@material-ui/core/List'
 import { ListItem } from '@material-ui/core'
 import PostBox from './Post'
 import Loading from './Loading'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme) => ({
+  post: {
+    marginTop: theme.spacing(1),
+    maxHeight: '70vh',
+    overflow: 'auto',
+    maxWidth: '50rem',
+  },
+}))
 
 export default function PostScrollview({ posts }) {
+  const classes = useStyles()
   if (posts) {
     const listItems = posts.map((post) => (
       <ListItem key={post.name}>
@@ -21,10 +32,8 @@ export default function PostScrollview({ posts }) {
     ))
 
     return (
-      <div>
-        <div style={{ maxHeight: '70vh', overflow: 'auto' }}>
-          <List>{listItems}</List>
-        </div>
+      <div className={classes.post}>
+        <List>{listItems}</List>
       </div>
     )
   } else {

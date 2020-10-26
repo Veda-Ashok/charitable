@@ -7,35 +7,36 @@ import SavedOrgsScrollview from './SavedOrgsScrollview'
 import { searchFeatured } from '../apicalls/globalGivingApi'
 import PostScrollview from './PostScrollview'
 import { mockPosts } from '../tests/MockAPI/MockPosts'
+import CreatePostBox from './CreatePostBox'
+import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
+import Loading from './Loading'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
     marginTop: theme.spacing(8),
   },
-  postBox: {
-    marginTop: theme.spacing(1),
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-    },
-  },
-  post: {
-    margin: theme.spacing(1),
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-    },
-  },
   content: {
     display: 'flex',
+    marginTop: theme.spacing(1),
+    marginLeft: theme.spacing(1),
   },
   savedOrg: {
     marginRight: theme.spacing(3),
     marginLeft: theme.spacing(3),
-    marginTop: theme.spacing(1),
+  },
+  title: {
+    backgroundColor: theme.palette.text.primary,
+    color: theme.palette.common.white,
+    padding: '1rem',
+    display: 'flex',
+    justifyContent: 'center',
   },
 }))
 
-export default function ProfilePage(props) {
-  const [isLoading, setIsLoading] = useState(false)
+function ProfilePage(props) {
+  const [isLoading, setIsLoading] = useState(true)
   const [orgs, setOrgs] = useState(null)
 
   //  FIX THIS TO BE REAL ORGS FROM OUT DATABASE
@@ -77,14 +78,36 @@ export default function ProfilePage(props) {
         isFriend={props.isFriend}
       />
       <div className={classes.content}>
-        <PostScrollview posts={mockPosts.posts}></PostScrollview>
-        <div className={classes.savedOrg}>
-          {isLoading ? (
-            <div>Loading</div>
-          ) : (
-            <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null}></SavedOrgsScrollview>
+        <div>
+          <CreatePostBox name="Bj Johnson" icon="/media/BjIcon" />
+          <PostScrollview posts={mockPosts.posts}></PostScrollview>
+          {!isWidthUp('sm', props.width) && (
+            <div>
+              {isLoading ? (
+                <Loading />
+              ) : (
+                <div>
+                  <Paper className={classes.title}>
+                    <Typography variant="h6">Saved Organizations</Typography>
+                  </Paper>
+                  <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null} />
+                </div>
+              )}
+            </div>
           )}
         </div>
+        {isWidthUp('sm', props.width) && (
+          <div className={classes.savedOrg}>
+            <Paper className={classes.title}>
+              <Typography variant="h6">Saved Organizations</Typography>
+            </Paper>
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null} />
+            )}
+          </div>
+        )}
       </div>
     </div>
   )
@@ -95,4 +118,7 @@ ProfilePage.propTypes = {
   isMe: PropTypes.bool,
   isFriend: PropTypes.bool,
   orgs: PropTypes.object,
+  width: PropTypes.string,
 }
+
+export default withWidth()(ProfilePage)
