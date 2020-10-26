@@ -1,12 +1,26 @@
 import React, { useEffect } from 'react'
 import NavigationBar from '../../src/components/NavigationBar'
-import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles'
 import auth0 from '../../utils/auth0'
 import PropTypes from 'prop-types'
 import PostScrollview from '../../src/components/PostScrollview'
 import { mockPosts } from '../../src/tests/MockAPI/MockPosts'
+import CreatePostBox from '../../src/components/CreatePostBox'
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginTop: theme.spacing(11),
+    flexGrow: 1,
+  },
+  content: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+}))
 
 export default function Timeline({ user }) {
+  const classes = useStyles()
+
   useEffect(() => {
     // Check that a new route is OK
     if (!user) {
@@ -15,10 +29,14 @@ export default function Timeline({ user }) {
   }, [user])
 
   return (
-    <div>
+    <div className={classes.root}>
       <NavigationBar page="Timeline" user={user} />
-      <Typography variant="h1">Timeline</Typography>
-      <PostScrollview posts={mockPosts.posts}></PostScrollview>
+      <div className={classes.content}>
+        <div>
+          <CreatePostBox name="Bj" icon="/media/BjIcon" />
+          <PostScrollview posts={mockPosts.posts} className={classes.posts}></PostScrollview>
+        </div>
+      </div>
     </div>
   )
 }
