@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import IconWithLabelPath from './IconWithLabelPath'
+import SearchFilter from './SearchFilter'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -113,6 +114,9 @@ export default function NavigationBar({ user, page }) {
               />
             </div>
           </form>
+          <div>
+            <SearchFilter />
+          </div>
           <div className={classes.grow} />
           <IconWithLabelPath
             icon={<TrendingUp />}
