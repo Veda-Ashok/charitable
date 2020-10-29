@@ -67,5 +67,5 @@ export default function TrendingListItems({ orgDetails, saved, onClick }) {
 TrendingListItems.propTypes = {
   orgDetails: PropTypes.object,
   saved: PropTypes.bool,
-  onClick: PropTypes.function,
+  onClick: PropTypes.func,
 }
