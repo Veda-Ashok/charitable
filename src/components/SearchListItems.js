@@ -79,5 +79,5 @@ export default function SearchListItems({ result, onClick, saved }) {
 SearchListItems.propTypes = {
   result: PropTypes.object,
   saved: PropTypes.bool,
-  onClick: PropTypes.function,
+  onClick: PropTypes.func,
 }

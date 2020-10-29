@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -12,19 +13,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SearchFilter() {
+export default function SearchFilter(props) {
   const classes = useStyles()
-  const [type, setType] = React.useState('organization')
-
-  const handleChange = (e) => {
-    setType(e.target.value)
-  }
 
   return (
     <div>
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-helper-label">Filter Results</InputLabel>
-        <Select value={type} onChange={handleChange}>
+        <InputLabel id="demo-simple-select-helper-label">Filter Search</InputLabel>
+        <Select value={props.type} onChange={props.handleChange}>
           <MenuItem value={'organization'}>Organization</MenuItem>
           <MenuItem value={'activity'}>Activity</MenuItem>
           <MenuItem value={'people'}>People</MenuItem>
@@ -32,4 +28,9 @@ export default function SearchFilter() {
       </FormControl>
     </div>
   )
+}
+
+SearchFilter.propTypes = {
+  handleChange: PropTypes.func,
+  type: PropTypes.string,
 }

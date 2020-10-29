@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: fade(theme.palette.common.black, 0.07),
     },
-    marginRight: theme.spacing(2),
     marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
@@ -75,12 +74,17 @@ const useStyles = makeStyles((theme) => ({
 export default function NavigationBar({ user, page }) {
   const router = useRouter()
   const [searchValue, setSearchValue] = useState('')
+  const [type, setType] = useState('organization')
+
+  const handleChange = (e) => {
+    setType(e.target.value)
+  }
 
   const onSubmit = (e) => {
     e.preventDefault()
     router.push({
       pathname: '/search',
-      query: { query: searchValue },
+      query: { query: searchValue, type: type },
     })
   }
 
@@ -115,7 +119,7 @@ export default function NavigationBar({ user, page }) {
             </div>
           </form>
           <div>
-            <SearchFilter />
+            <SearchFilter handleChange={handleChange} type={type} />
           </div>
           <div className={classes.grow} />
           <IconWithLabelPath
