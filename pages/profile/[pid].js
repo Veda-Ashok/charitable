@@ -1,19 +1,23 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import ProfilePage from '../../src/components/ProfilePage'
 import PropTypes from 'prop-types'
+import { useRouter } from 'next/router'
 import auth0 from '../../utils/auth0'
 
 export default function Profile({ user }) {
-  useEffect(() => {
-    if (!user) {
-      window.location.href = '/api/login'
-    } else {
-      window.location.href = `/profile/${user.sub}`
-    }
-  }, [user])
+  const router = useRouter()
+  const { pid } = router.query
+
+  //Need to do the query to see if the pid is in the users Follow
 
   return (
     <div>
-      <h1>This page does not exist, rediecting you to a new page ~ </h1>
+      <ProfilePage
+        member={pid}
+        user={user}
+        isMe={user ? pid === user.sub : false}
+        isFollower={false}
+      />
     </div>
   )
 }

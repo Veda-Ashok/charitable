@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 export default function PostScrollview({ posts }) {
   const classes = useStyles()
   if (posts) {
+    console.log(posts)
     const listItems = posts.map((post) => (
       <ListItem key={post.name}>
         <PostBox

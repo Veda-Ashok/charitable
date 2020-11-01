@@ -52,11 +52,9 @@ export default function ProfileBanner(props) {
   const removeIcon = <RemoveCircleIcon fontSize="small" className={classes.editIcon} />
   const addIcon = <PersonAddIcon fontSize="small" className={classes.editIcon} />
 
-  const [friendMessage, setFriendMessage] = useState(
-    props.isFriend ? 'Delete Friend' : 'Add Friend'
-  )
-  const [friendIcon, setIcon] = useState(props.isFriend ? removeIcon : addIcon)
-  const [friendColor, setFriendColor] = useState(props.isFriend ? 'secondary' : 'primary')
+  const [FollowMessage, setFollowMessage] = useState(props.isFollower ? 'Unfollow' : 'Follow')
+  const [FollowIcon, setIcon] = useState(props.isFollower ? removeIcon : addIcon)
+  const [FollowColor, setFollowColor] = useState(props.isFollower ? 'secondary' : 'primary')
 
   const [open, setOpen] = useState(false)
 
@@ -68,17 +66,17 @@ export default function ProfileBanner(props) {
     setOpen(false)
   }
 
-  function handleFriend() {
-    if (friendMessage === 'Add Friend') {
-      setFriendMessage('Delete Friend')
+  function handleFollow() {
+    if (FollowMessage === 'Follow') {
+      setFollowMessage('Unfollow')
       setIcon(removeIcon)
-      setFriendColor('secondary')
+      setFollowColor('secondary')
     } else {
-      setFriendMessage('Add Friend')
+      setFollowMessage('Follow')
       setIcon(addIcon)
-      setFriendColor('primary')
+      setFollowColor('primary')
     }
-    //TODO: We are gonna need to send a request to the DB to remove and add friend on click
+    //TODO: We are gonna need to send a request to the DB to remove and add Follow on click
   }
 
   return (
@@ -113,13 +111,13 @@ export default function ProfileBanner(props) {
               </div>
             ) : (
               <Button
-                onClick={handleFriend}
+                onClick={handleFollow}
                 size="small"
                 variant="contained"
                 className={classes.button}
-                color={friendColor}>
-                {friendIcon}
-                {friendMessage}
+                color={FollowColor}>
+                {FollowIcon}
+                {FollowMessage}
               </Button>
             )}
           </div>
@@ -134,5 +132,5 @@ ProfileBanner.propTypes = {
   icon: PropTypes.string,
   bio: PropTypes.string,
   isMe: PropTypes.bool,
-  isFriend: PropTypes.bool,
+  isFollower: PropTypes.bool,
 }

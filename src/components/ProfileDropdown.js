@@ -91,7 +91,7 @@ export default function ProfileDropdown({ user, page }) {
                     onClick={handleClose}
                     component={Link}
                     naked
-                    href={user ? '/profile' : '/api/login'}>
+                    href={user ? `/profile` : '/api/login'}>
                     My Profile
                   </MenuItem>
                   {user ? (
