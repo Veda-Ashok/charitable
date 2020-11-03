@@ -13,6 +13,7 @@ import PostDialog from './PostDialog'
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
+    position: 'relative',
   },
   avatar: {
     height: theme.spacing(10),
@@ -20,6 +21,13 @@ const useStyles = makeStyles((theme) => ({
   },
   section: {
     paddingBottom: theme.spacing(1),
+  },
+  button: {
+    borderRadius: '999px',
+    fontSize: '12px',
+    margin: theme.spacing(1),
+    position: 'absolute',
+    right: '0',
   },
 }))
 
@@ -39,11 +47,6 @@ export default function DescriptionBox({ orgDetails }) {
 
   return (
     <Card className={classes.root}>
-      <Avatar
-        className={classes.avatar}
-        src={orgDetails.organization.logoUrl}
-        alt={orgDetails.organization.name}
-      />
       <Fab
         size="small"
         variant="extended"
@@ -52,6 +55,11 @@ export default function DescriptionBox({ orgDetails }) {
         className={classes.button}>
         Share
       </Fab>
+      <Avatar
+        className={classes.avatar}
+        src={orgDetails.organization.logoUrl}
+        alt={orgDetails.organization.name}
+      />
       <PostDialog open={open} onClose={handleClose} org={orgDetails.organization}></PostDialog>
       <Typography gutterBottom variant="h4">
         {orgDetails.organization.name}
