@@ -9,7 +9,6 @@ import PropTypes from 'prop-types'
 import Link from './Link'
 import Avatar from '@material-ui/core/Avatar'
 import PostDialog from './PostDialog'
-import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +44,13 @@ export default function DescriptionBox({ orgDetails }) {
         src={orgDetails.organization.logoUrl}
         alt={orgDetails.organization.name}
       />
-      <Button onClick={() => handleClickOpen()}>Share</Button>
+      <Fab
+        variant="extended"
+        color="primary"
+        onClick={() => handleClickOpen()}
+        className={classes.button}>
+        Share
+      </Fab>
       <PostDialog open={open} onClose={handleClose} org={orgDetails.organization}></PostDialog>
       <Typography gutterBottom variant="h4">
         {orgDetails.organization.name}
