@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
 import Link from './Link'
 import Avatar from '@material-ui/core/Avatar'
+import PostDialog from './PostDialog'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,8 +26,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DescriptionBox({ orgDetails }) {
   const classes = useStyles()
+  const [open, setOpen] = useState(false)
   const themes = orgDetails.themes.theme
   const countries = orgDetails.countries.country
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   return (
     <Card className={classes.root}>
@@ -34,6 +45,8 @@ export default function DescriptionBox({ orgDetails }) {
         src={orgDetails.organization.logoUrl}
         alt={orgDetails.organization.name}
       />
+      <Button onClick={() => handleClickOpen()}>Share</Button>
+      <PostDialog open={open} onClose={handleClose} org={orgDetails.organization}></PostDialog>
       <Typography gutterBottom variant="h4">
         {orgDetails.organization.name}
       </Typography>
