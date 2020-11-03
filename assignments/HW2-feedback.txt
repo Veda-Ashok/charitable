@@ -1,0 +1,36 @@
+
+
+HW 2 - Piloni & Miles Textbook
+Group #1: Veda, Sam, Bridget, Rachel, and Krysten
+
+Category        Weight     Earned
+===========    ========    ======
+Problem 1      [3 pts.]      3.0
+Problem 2      [4 pts.]      4.0
+Problem 3      [6 pts.]      6.0
+Problem 4      [9 pts.]      9.0
+Problem 5      [2 pts.]      2.0
+Problem 6      [7 pts.]      7.0
+Problem 7      [1 pt.]       1.0
+Problem 8      [3 pts.]      3.0
+Problem 9      [5 pts.]      5.0
+Problem 10     [4 pts.]      4.0
+
+      Subtotal [44 max]     44.0
+             Your Total    100.0
+
+         Letter grade   A-plus
+
+Great analysis on problem 10!  Vercel sounds like a good tool, and it also
+sounds like you are maximizing its strengths!
+
+You have very thoughtful answers to all the opinion questions, too.  I like
+what you said in response to problem 8, about telling the customer what you
+*CAN* have done by the deadline.  That helps to put a positive spin on the
+"bad news".  You guys are really thinking like software engineers now!
+
+In problem 5, I generally agree with your answer, but there may be times for
+which you HAVE to make an assumption, apart from customer rep availability.
+Sometimes it's OK to assume, based on the risk profile that might result.
+
+Great job on this assignment!
