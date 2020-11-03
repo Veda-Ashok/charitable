@@ -35,6 +35,10 @@ export default function TrendingListItems({ orgDetails, saved, onClick }) {
     //Hit the api and save/unsave in the DB
   }
   const classes = useStyles()
+  let themes = []
+  for (const theme of details.themes.theme) {
+    themes.push(theme.name)
+  }
 
   return (
     <Card className={classes.root}>
@@ -49,7 +53,7 @@ export default function TrendingListItems({ orgDetails, saved, onClick }) {
             <div className={classes.text}>
               <Typography variant="body1">{details.organization.name}</Typography>
               <Typography color="textSecondary" variant="caption">
-                {details.themes.theme[0].name}
+                {themes.join(', ')}
               </Typography>
             </div>
           </div>

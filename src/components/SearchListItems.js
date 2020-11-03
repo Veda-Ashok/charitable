@@ -61,6 +61,10 @@ export default function SearchListItems({ result, onClick, saved }) {
               <Typography color="textSecondary" variant="caption">
                 {type}
               </Typography>
+              <div></div>
+              <Typography color="textSecondary" variant="caption">
+                {type === 'Organization' ? result.themes.join(', ') : null}
+              </Typography>
             </div>
           </div>
         </CardContent>
