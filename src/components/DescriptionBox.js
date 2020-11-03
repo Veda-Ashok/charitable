@@ -45,6 +45,7 @@ export default function DescriptionBox({ orgDetails }) {
         alt={orgDetails.organization.name}
       />
       <Fab
+        size="small"
         variant="extended"
         color="primary"
         onClick={() => handleClickOpen()}
