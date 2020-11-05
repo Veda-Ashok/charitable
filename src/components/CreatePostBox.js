@@ -55,7 +55,7 @@ const useStyles = makeStyles({
 })
 
 export default function CreatePostBox(props) {
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState(props.defaultText)
   const classes = useStyles()
 
   const handleSubmit = (e) => {
@@ -102,4 +102,5 @@ export default function CreatePostBox(props) {
 CreatePostBox.propTypes = {
   name: PropTypes.string,
   icon: PropTypes.string,
+  defaultText: PropTypes.string,
 }
