@@ -1382,7 +1382,7 @@ export const mockTrending = {
         numberOfDonations: 3,
         status: 'active',
         need:
-          "Due to its distance from the mainland and lack of infrastructure on the island, the islanders have no means of sanitary waste disposal. Faizal was born and raised in Mantanani Island. When we first met him, he was very helpful and showed interest in our waste management program. He gathered a few of his friends to help us conduct pre-assessments of the waste situation and help run the waste management trial. He's very committed and hardworking, and his work requires a lot of patience.",
+          "Due to its distance from the mainland and lack of infrastructure on the island, the islanders have no means of sanitary waste disposal. Faizal was born and raised in Mantanani Island. When we first met him, he was very helpful and showed interest in our waste management program. He gathered a few of his Follows to help us conduct pre-assessments of the waste situation and help run the waste management trial. He's very committed and hardworking, and his work requires a lot of patience.",
         longTermImpact:
           '"Mantanani is our treasure so we need to ensure its cleanliness and safety, not only for us (humans) but also for the environment" when asked about his vision for Mantanani for the next 10 years. "Sometimes, it really upsetting to see turtles dying in front of my eyes. So, I hope we can see changes where Mantanani will be more beautiful and sustainable." Lastly, he also hopes that the community on Mantanani will work together and be unified in protecting the island.',
         activities:

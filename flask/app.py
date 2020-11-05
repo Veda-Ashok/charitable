@@ -6,7 +6,7 @@ CORS(app)
 
 
 @app.route("/flask")
-def friends():
+def Follows():
     return {
         "data": "Flask and Next.js are holding hands :)!"
     }

@@ -7,17 +7,17 @@ describe('ProfileBanner', () => {
       <ProfileBanner
         name="BJ Johnson"
         icon="/media/BJIcon.jpg"
-        friendCount={100}
+        FollowCount={100}
         bio="I love volunteering"
         isMe={true}
-        isFriend={false}
+        isFollower={false}
       />
     )
     expect(getByText('BJ Johnson')).toBeInTheDocument()
     expect(getByText('I love volunteering')).toBeTruthy()
     expect(getByAltText('BJ Johnson')).toBeTruthy()
     expect(getByText('Edit Profile')).toBeInTheDocument()
-    expect(queryByText('Add Friend')).toBeNull()
+    expect(queryByText('Add Follow')).toBeNull()
   })
 
   it('Renders other peoples Profile Banners correctly', () => {
@@ -27,43 +27,43 @@ describe('ProfileBanner', () => {
         icon="/media/BJIcon.jpg"
         bio="I love volunteering"
         isMe={false}
-        isFriend={false}
+        isFollower={false}
       />
     )
     expect(getByText('BJ Johnson')).toBeInTheDocument()
     expect(getByText('I love volunteering')).toBeTruthy()
     expect(getByAltText('BJ Johnson')).toBeTruthy()
-    expect(getByText('Add Friend')).toBeInTheDocument()
+    expect(getByText('Follow')).toBeInTheDocument()
     expect(queryByText('Edit Profile')).toBeNull()
   })
 
-  it('Changes depending on whether or not a user is a friend - not friends', () => {
+  it('Changes depending on whether or not a user is following - not following', () => {
     const { getByText } = render(
       <ProfileBanner
         name="BJ Johnson"
         icon="/media/BJIcon.jpg"
         bio="I love volunteering"
         isMe={false}
-        isFriend={false}
+        isFollower={false}
       />
     )
-    expect(getByText('Add Friend')).toBeInTheDocument()
-    fireEvent.click(getByText('Add Friend'))
-    expect(getByText('Delete Friend')).toBeInTheDocument()
+    expect(getByText('Follow')).toBeInTheDocument()
+    fireEvent.click(getByText('Follow'))
+    expect(getByText('Unfollow')).toBeInTheDocument()
   })
 
-  it('Changes depending on whether or not a user is a friend - not friends', () => {
+  it('Changes depending on whether or not a user is following - not following', () => {
     const { getByText } = render(
       <ProfileBanner
         name="BJ Johnson"
         icon="/media/BJIcon.jpg"
         bio="I love volunteering"
         isMe={false}
-        isFriend={true}
+        isFollower={true}
       />
     )
-    expect(getByText('Delete Friend')).toBeInTheDocument()
-    fireEvent.click(getByText('Delete Friend'))
-    expect(getByText('Add Friend')).toBeInTheDocument()
+    expect(getByText('Unfollow')).toBeInTheDocument()
+    fireEvent.click(getByText('Unfollow'))
+    expect(getByText('Follow')).toBeInTheDocument()
   })
 })
