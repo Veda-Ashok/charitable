@@ -9,6 +9,7 @@ import PropTypes from 'prop-types'
 import Link from './Link'
 import Avatar from '@material-ui/core/Avatar'
 
+// comment for testing
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
