@@ -7,7 +7,7 @@ export const mockProfile = {
     {
       name: 'BJ Johnson',
       bio:
-        'I love to volunteer at the food bank and please join me in volunteering if you would like and also add me as a Follow.',
+        'I love to volunteer at the food bank and please join me in volunteering if you would like and also follow me.',
       profile_picture: '/media/BjIcon.jpg',
       posts: mockPosts,
       saved_orgs: mockTrending,
