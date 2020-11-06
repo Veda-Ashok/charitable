@@ -13,6 +13,12 @@
 //     const db = client.db('charitable')
 //     const users = db.collection('users')
 
+//   const nonAlphanumeric = RegExp(/\W/g);
+//   //if there's a weird character, throw error
+//   if (nonAlphanumeric.test('user.username')) {
+//       client.close();
+//       return callback(new Error('No special characters'));
+//   }
 //     users.findOne({ email: user.username }, function (err, withSameMail) {
 //       if (err || withSameMail) {
 //         client.close()
@@ -20,12 +26,10 @@
 //       }
 //     })
 
-//     users.findOne({ username: user.email }, function (err, withSameMail) {
+//     users.findOne({ email: user.username }, function (err, withSameMail) {
 //       if (err || withSameMail) {
 //         client.close()
-//         return callback(
-//           err || new Error('email is taken as a username, please use a different one')
-//         )
+//         return callback(err || new Error('do not use spaces in username'))
 //       }
 //     })
 
@@ -55,7 +59,7 @@
 //         user.posts = []
 //         user.saved_orgs = []
 //         user.nickname = user.username
-
+//
 //         users.insert(user, function (err, inserted) {
 //           client.close()
 
