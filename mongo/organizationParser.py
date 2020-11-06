@@ -61,37 +61,37 @@ for i in root.findall('organization'):
     
     print(f'Organization “{organization_obj["name"]}” ({organization_obj["url"]}) added with ID {organization_obj["gg_id"]}.')
     
-    for country in all_countries:
-        if country not in super_duper_all_countries:
-            country_obj = {
-                "country_code":country[0],
-                "name": country[1]
-            }
-            country_collection.insert_one(country_obj)
-            print(f'Country {country_obj["name"]} added with country code {country_obj["country_code"]}.')
-            super_duper_all_countries.add(country)
-        organization_country_obj ={
-            "organization_id":gg_id,
-            "country_code":country[0]
-        }
-        organization_country_collection.insert_one(organization_country_obj)
-        print(f'Organization Country “{organization_country_obj["organization_id"]}”, Country Code "{organization_country_obj["country_code"]}"')
+    # for country in all_countries:
+    #     if country not in super_duper_all_countries:
+    #         country_obj = {
+    #             "country_code":country[0],
+    #             "name": country[1]
+    #         }
+    #         country_collection.insert_one(country_obj)
+    #         print(f'Country {country_obj["name"]} added with country code {country_obj["country_code"]}.')
+    #         super_duper_all_countries.add(country)
+    #     organization_country_obj ={
+    #         "organization_id":gg_id,
+    #         "country_code":country[0]
+    #     }
+    #     organization_country_collection.insert_one(organization_country_obj)
+    #     print(f'Organization Country “{organization_country_obj["organization_id"]}”, Country Code "{organization_country_obj["country_code"]}"')
     
-    for theme in all_themes:
-        if theme not in super_duper_all_themes:
-            theme_obj={
-                "id":theme[0],
-                "name":theme[1]
-            }
-            theme_collection.insert_one(theme_obj)
-            print(f'Theme {theme_obj["name"]} added with id {theme_obj["id"]}.')
-            super_duper_all_themes.add(theme)
-        organization_theme_obj={
-            "organization_id":gg_id,
-            "theme_id":theme[0]
-        }
-        organization_theme_collection.insert_one(organization_theme_obj)
-        print(f'Organization Theme “{organization_theme_obj["organization_id"]}”, Theme ID "{organization_theme_obj["theme_id"]}"')
+    # for theme in all_themes:
+    #     if theme not in super_duper_all_themes:
+    #         theme_obj={
+    #             "id":theme[0],
+    #             "name":theme[1]
+    #         }
+    #         theme_collection.insert_one(theme_obj)
+    #         print(f'Theme {theme_obj["name"]} added with id {theme_obj["id"]}.')
+    #         super_duper_all_themes.add(theme)
+    #     organization_theme_obj={
+    #         "organization_id":gg_id,
+    #         "theme_id":theme[0]
+    #     }
+    #     organization_theme_collection.insert_one(organization_theme_obj)
+    #     print(f'Organization Theme “{organization_theme_obj["organization_id"]}”, Theme ID "{organization_theme_obj["theme_id"]}"')
         
 
 
