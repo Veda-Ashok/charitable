@@ -12,10 +12,6 @@ client = pymongo.MongoClient('mongodb+srv://user:charitable123@charitable.ddnxi.
 db = client["charitable"]
 
 organization_collection = db["organization"]
-theme_collection = db["theme"]
-country_collection = db["country"]
-organization_country_collection = db["organization_country"]
-organization_theme_collection = db["organization_theme"]
 
 def getAttributeText(n, s):
         checkattribute= n.find(s)
@@ -26,9 +22,9 @@ def getAllElements(m, s1, s2, s3, s4):
      results = []
      for s1 in m.iter(s1):
         for x in s1.findall(s2):
-            element_id = getAttributeText(x, s3)
+            #element_id = getAttributeText(x, s3)
             attribute = getAttributeText(x, s4)
-            results.append((element_id, attribute))
+            results.append(attribute)
      return results
 
 super_duper_all_countries = set()
@@ -53,11 +49,13 @@ for i in root.findall('organization'):
     # 'all_countries: ', all_countries, '\n',
     # 'all_themes: ', all_themes, '\n')
     organization_obj = {
-        "name":name,
-        "mission":mission,
-        "logo_url":logo_url,
-        "url":url,
-        "gg_id":gg_id
+        'name':name,
+        'mission':mission,
+        'logo_url':logo_url,
+        'url':url,
+        'gg_id':gg_id,
+        'countries': all_countries,
+        'themes': all_themes,
     }
     organization_collection.insert_one(organization_obj)
     
