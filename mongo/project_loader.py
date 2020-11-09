@@ -133,4 +133,4 @@ for i in root.findall('project'):
     # 'impact: ', impact, '\n',
     # 'countries: ', all_countries, '\n',
     # 'image_url: ' , image, '\n')
-    print(image, '\n')
+    print(all_donation_options, '\n')
