@@ -27,16 +27,33 @@ def getAttributeText(n, s):
 
 def getAllElements(m, s1, s2, s3):
     results = []
-    for s1 in m.iter(s1):
-        for x in s1.findall(s2):
+    for s in m.iter(s1):
+        #print('s: ', s.text)
+        for x in s.findall(s2):
+            #print('x: ' x.text)
             #element_id = getAttributeText(x, s3)
             attribute = getAttributeText(x, s3)
+            print("ABOUT TO APPEND")
             results.append(attribute)
     return results
+
+def getImage(m, s1, s2, s3):
+    attribute = ''
+    for image in m.iter(s1):
+        #print(image.tag, getAttributeText(image, 'imageLink'))
+        # print(image.tag, image.attrib, getAttributeText(image, ))
+        for imageLink in image.findall(s2):
+            if imageLink.tag is s3:
+                # print(imageLink.tag, imageLink.attrib)
+
+                attribute = getAttributeText(imageLink, 'url')
+                print(attribute)
+    return attribute
 
 def getAllDonationOptions(m, s1, s2):
      results = []
      for s1 in m.iter(s1):
+        print(m.iter(s1))
         for x in s1.findall(s2):
             amount = getAttributeText(x, 'amount')
             amount_description = getAttributeText(x, 'description')
@@ -54,39 +71,39 @@ super_duper_all_countries = set()
 super_duper_all_themes = set()
 
 for i in root.findall('project'):
-    gg_activity_id = getAttributeText(i, 'id')
-    #is_active = getAttributeText(i, 'active')
-    description = getAttributeText(i, 'activities')
-    # additional_documentation = getAttributeText(i, 'additionalDocumentation')
-    date_approved = getAttributeText(i, 'approvedDate')
-    contact_name = getAttributeText(i, 'contactName')
-    contact_title = getAttributeText(i, 'contactTitle')
-    contact_url = getAttributeText(i, 'contactUrl')
-    contact_street_address = getAttributeText(i, 'contactAddress')
-    contact_address_additional_info = getAttributeText(i, 'contactAddress2')
-    contact_address_city = getAttributeText(i, 'contactCity')
-    contact_address_country = getAttributeText(i, 'contactCountry')
-    contact_address_postal_code = getAttributeText(i, 'contactPostal')
-    contact_address_state = getAttributeText(i, 'contactState')
-    #countries = getAttributeText(i, 'countries')
-    country = getAttributeText(i, 'country')
-    # all_countries = getAllElements(i, 'countries', 'country', 'iso3166CountryCode', 'name')
-    donation_options = getAttributeText(i, 'dontationOptions')
-    all_donation_options = getAllDonationOptions(i, 'donationOptions', 'donationOption')
-    # current_funding = getAttributeText(i, 'funding')
-    goal_funding = getAttributeText(i, 'goal')
-    purpose = getAttributeText(i, 'need')
-    progress_report_link = getAttributeText(i, 'progressReportLink')
-    project_link = getAttributeText(i, 'projectLink')
-    region = getAttributeText(i, 'region')
-    status = getAttributeText(i, 'status')
-    summary = getAttributeText(i, 'summary')
-    organization = getAttributeText(i, 'organization')
-    gg_organization_id = getOrganizationAttributes(i, 'organization', 'id')
-    project_theme = getAttributeText(i, 'themeName')
-    impact = getAttributeText(i, 'longTermImpact')
-    title = getAttributeText(i, 'title')
-    image = getAllElements(i, 'image id="0"', 'imagelink size="large"', 'url')
+    # gg_activity_id = getAttributeText(i, 'id')
+    # #is_active = getAttributeText(i, 'active')
+    # description = getAttributeText(i, 'activities')
+    # # additional_documentation = getAttributeText(i, 'additionalDocumentation')
+    # date_approved = getAttributeText(i, 'approvedDate')
+    # contact_name = getAttributeText(i, 'contactName')
+    # contact_title = getAttributeText(i, 'contactTitle')
+    # contact_url = getAttributeText(i, 'contactUrl')
+    # contact_street_address = getAttributeText(i, 'contactAddress')
+    # contact_address_additional_info = getAttributeText(i, 'contactAddress2')
+    # contact_address_city = getAttributeText(i, 'contactCity')
+    # contact_address_country = getAttributeText(i, 'contactCountry')
+    # contact_address_postal_code = getAttributeText(i, 'contactPostal')
+    # contact_address_state = getAttributeText(i, 'contactState')
+    # #countries = getAttributeText(i, 'countries')
+    # country = getAttributeText(i, 'country')
+    # all_countries = getAllElements(i, 'countries', 'country', 'name')
+    # donation_options = getAttributeText(i, 'dontationOptions')
+    # all_donation_options = getAllDonationOptions(i, 'donationOptions', 'donationOption')
+    # # current_funding = getAttributeText(i, 'funding')
+    # goal_funding = getAttributeText(i, 'goal')
+    # purpose = getAttributeText(i, 'need')
+    # progress_report_link = getAttributeText(i, 'progressReportLink')
+    # project_link = getAttributeText(i, 'projectLink')
+    # region = getAttributeText(i, 'region')
+    # status = getAttributeText(i, 'status')
+    # summary = getAttributeText(i, 'summary')
+    # organization = getAttributeText(i, 'organization')
+    # gg_organization_id = getOrganizationAttributes(i, 'organization', 'id')
+    # project_theme = getAttributeText(i, 'themeName')
+    # impact = getAttributeText(i, 'longTermImpact')
+    # title = getAttributeText(i, 'title')
+    image = getImage(i, 'image', 'imagelink', 'size=\"large\"')
     
     # activity_obj = {
     #     'gg_activity_id': gg_activity_id,
@@ -133,4 +150,4 @@ for i in root.findall('project'):
     # 'impact: ', impact, '\n',
     # 'countries: ', all_countries, '\n',
     # 'image_url: ' , image, '\n')
-    print(all_donation_options, '\n')
+   # print(image, '\n')
