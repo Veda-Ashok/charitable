@@ -2,7 +2,7 @@ import pymongo
 import xml.etree.ElementTree as DataTree
 import os
 
-env = os.environ["MONGODB_PY_URI"]
+env = os.environ.get('MONGODB_PY_URI')
 tree = DataTree.parse('projects.xml')
 root = tree.getroot()
 
@@ -108,4 +108,5 @@ for i in root.findall('project'):
     }
     if activity_obj['country'] != "Not Specified.":
         activities_collection.insert_one(activity_obj)
+        print(activity_obj)
     

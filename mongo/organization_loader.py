@@ -2,15 +2,15 @@ import pymongo
 import xml.etree.ElementTree as DataTree
 import os
 
-env = os.environ["MONGODB_PY_URI"]
-
+env = os.environ.get('MONGODB_PY_URI')
 tree = DataTree.parse('organizations.xml')
 root = tree.getroot()
 
+client =  pymongo.MongoClient(env)
+
 db = client["charitable"]
 
-organization_collection = db["organization"]
-
+organization_collection = db["organizations"]
 
 def getAttributeText(n, s):
     checkattribute = n.find(s)
@@ -48,7 +48,7 @@ for i in root.findall('organization'):
         'themes': all_themes
     }
     organization_collection.insert_one(organization_obj)
-    #print(f'Organization “{organization_obj["name"]}” ({organization_obj["url"]}) added with ID {organization_obj["gg_id"]}.')
+    print(f'Organization “{organization_obj["name"]}” ({organization_obj["url"]}) added with ID {organization_obj["gg_id"]}.')
   
 #     # COUNTRY ROAAAAAAAAAADS, TAKE ME HOOOOOOOOOOOOME TO THE PLAAAAAAACE, I BELOOOOOOOOOOOOONG
 #     # WEST VIRGINIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
