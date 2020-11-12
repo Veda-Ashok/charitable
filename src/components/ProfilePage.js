@@ -11,6 +11,7 @@ import Paper from '@material-ui/core/Paper'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import Loading from './Loading'
 import { mockProfile } from '../tests/MockAPI/MockProfile'
+import { useAuth0 } from '@auth0/auth0-react'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
@@ -72,50 +73,57 @@ function ProfilePage(props) {
   }, [])
 
   const classes = useStyles()
+  const isAuthenticated = useAuth0()
 
   return (
     <div className={classes.banner}>
       <NavigationBar page="Profile" user={props.user} />
-      <ProfileBanner
-        bio={bio}
-        name={name}
-        banner={banner}
-        isMe={props.isMe}
-        icon={icon}
-        isFollower={props.isFollower}
-      />
-      <div className={classes.content}>
+      {isAuthenticated ? (
         <div>
-          {props.isMe ? <CreatePostBox name="Bj Johnson" icon="/media/BjIcon" /> : null}
-          <PostScrollview posts={posts}></PostScrollview>
-          {!isWidthUp('sm', props.width) && (
+          <ProfileBanner
+            bio={bio}
+            name={name}
+            banner={banner}
+            isMe={props.isMe}
+            icon={icon}
+            isFollower={props.isFollower}
+          />
+          <div className={classes.content}>
             <div>
-              {isLoading ? (
-                <Loading />
-              ) : (
+              {props.isMe ? <CreatePostBox name="Bj Johnson" icon="/media/BjIcon" /> : null}
+              <PostScrollview posts={posts}></PostScrollview>
+              {!isWidthUp('sm', props.width) && (
                 <div>
-                  <Paper className={classes.title}>
-                    <Typography variant="h6">Saved Organizations</Typography>
-                  </Paper>
-                  <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null} />
+                  {isLoading ? (
+                    <Loading />
+                  ) : (
+                    <div>
+                      <Paper className={classes.title}>
+                        <Typography variant="h6">Saved Organizations</Typography>
+                      </Paper>
+                      <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null} />
+                    </div>
+                  )}
                 </div>
               )}
             </div>
-          )}
-        </div>
-        {isWidthUp('sm', props.width) && (
-          <div className={classes.savedOrg}>
-            <Paper className={classes.title}>
-              <Typography variant="h6">Saved Organizations</Typography>
-            </Paper>
-            {isLoading ? (
-              <Loading />
-            ) : (
-              <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null} />
+            {isWidthUp('sm', props.width) && (
+              <div className={classes.savedOrg}>
+                <Paper className={classes.title}>
+                  <Typography variant="h6">Saved Organizations</Typography>
+                </Paper>
+                {isLoading ? (
+                  <Loading />
+                ) : (
+                  <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null} />
+                )}
+              </div>
             )}
           </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div>Authenticate your account to view this page</div>
+      )}
     </div>
   )
 }
