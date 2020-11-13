@@ -36,7 +36,7 @@ export default function SearchPage(props) {
   const router = useRouter()
   const query = router.query.query
   // Handle for when type is undefined
-  // const type = router.query.type
+  const type = router.query.type ? router.query.type : 'organizations'
 
   return (
     <div>
@@ -50,7 +50,11 @@ export default function SearchPage(props) {
           </div>
           <Paper className={classes.results}>
             <div>
-              <SearchScrollview className={classes.scrollView} results={mockSearch.result} />
+              <SearchScrollview
+                className={classes.scrollView}
+                results={mockSearch.result}
+                type={type}
+              />
             </div>
           </Paper>
         </div>

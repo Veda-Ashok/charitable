@@ -21,9 +21,9 @@ export default function SearchFilter(props) {
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-simple-select-helper-label">Filter Search</InputLabel>
         <Select value={props.type} onChange={props.handleChange}>
-          <MenuItem value={'organization'}>Organization</MenuItem>
-          <MenuItem value={'activity'}>Activity</MenuItem>
-          <MenuItem value={'people'}>People</MenuItem>
+          <MenuItem value={'organizations'}>Organizations</MenuItem>
+          <MenuItem value={'activities'}>Activities</MenuItem>
+          <MenuItem value={'users'}>Users</MenuItem>
         </Select>
       </FormControl>
     </div>
