@@ -3,7 +3,7 @@ import xml.etree.ElementTree as DataTree
 tree = DataTree.parse('projects.xml')
 root = tree.getroot()
 print(root)
-
+#adding comment to test commit
 def getAttributeText(n, s):
         checkattribute = n.find(s)
         attributetext = 'Not Specified.' if checkattribute is None else checkattribute.text
