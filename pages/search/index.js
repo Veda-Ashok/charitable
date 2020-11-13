@@ -6,7 +6,7 @@ import SearchPage from '../../src/components/SearchPage'
 export default function Search({ user }) {
   return (
     <div>
-      <SearchPage user={user} searchedWord={'Hello'} />
+      <SearchPage user={user} />
     </div>
   )
 }

@@ -4,9 +4,21 @@ import PropTypes from 'prop-types'
 import List from '@material-ui/core/List'
 import { ListItem } from '@material-ui/core'
 import OrgDialog from './OrgDialog'
+import { makeStyles } from '@material-ui/core/styles'
 import TrendingListItems from './TrendingListItems'
+import Loading from './Loading'
+
+const useStyles = makeStyles((theme) => ({
+  orgs: {
+    marginTop: theme.spacing(1),
+    maxHeight: '80vh',
+    overflow: 'auto',
+    maxWidth: '50rem',
+  },
+}))
 
 export default function SavedOrgsScrollview({ orgs }) {
+  const classes = useStyles()
   if (orgs) {
     const [org, setOrg] = useState(orgs[0])
     const [open, setOpen] = useState(false)
@@ -35,14 +47,14 @@ export default function SavedOrgsScrollview({ orgs }) {
 
     return (
       <div>
-        <Paper style={{ maxHeight: '70vh', overflow: 'auto' }}>
+        <Paper className={classes.orgs}>
           <List>{listItems}</List>
           <OrgDialog org={org} open={open} onClose={handleClose} />
         </Paper>
       </div>
     )
   } else {
-    return <h3>Loading...</h3>
+    return <Loading />
   }
 }
 

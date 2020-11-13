@@ -5,8 +5,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import { grey } from '@material-ui/core/colors'
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary'
-import LocationCityIcon from '@material-ui/icons/LocationCity'
-import EventNoteIcon from '@material-ui/icons/EventNote'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
@@ -57,7 +55,7 @@ const useStyles = makeStyles({
 })
 
 export default function CreatePostBox(props) {
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState(props.defaultText)
   const classes = useStyles()
 
   const handleSubmit = (e) => {
@@ -96,14 +94,6 @@ export default function CreatePostBox(props) {
             <Typography variant="subtitle2">Attach Image</Typography>
           </Button>
         </label>
-        <Button className={classes.attachOption} component="div">
-          <LocationCityIcon />
-          <Typography variant="subtitle2">Attach Organization</Typography>
-        </Button>
-        <Button className={classes.attachOption}>
-          <EventNoteIcon />
-          <Typography variant="subtitle2">Attach Activity</Typography>
-        </Button>
       </div>
     </Paper>
   )
@@ -112,4 +102,5 @@ export default function CreatePostBox(props) {
 CreatePostBox.propTypes = {
   name: PropTypes.string,
   icon: PropTypes.string,
+  defaultText: PropTypes.string,
 }

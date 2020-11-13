@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
@@ -8,10 +8,13 @@ import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
 import Link from './Link'
 import Avatar from '@material-ui/core/Avatar'
+import PostDialog from './PostDialog'
 
+// comment for testing
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
+    position: 'relative',
   },
   avatar: {
     height: theme.spacing(10),
@@ -20,20 +23,45 @@ const useStyles = makeStyles((theme) => ({
   section: {
     paddingBottom: theme.spacing(1),
   },
+  button: {
+    borderRadius: '999px',
+    fontSize: '12px',
+    margin: theme.spacing(1),
+    position: 'absolute',
+    right: '0',
+  },
 }))
 
 export default function DescriptionBox({ orgDetails }) {
   const classes = useStyles()
+  const [open, setOpen] = useState(false)
   const themes = orgDetails.themes.theme
   const countries = orgDetails.countries.country
 
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   return (
     <Card className={classes.root}>
+      <Fab
+        size="small"
+        variant="extended"
+        color="primary"
+        onClick={() => handleClickOpen()}
+        className={classes.button}>
+        Share
+      </Fab>
       <Avatar
         className={classes.avatar}
         src={orgDetails.organization.logoUrl}
         alt={orgDetails.organization.name}
       />
+      <PostDialog open={open} onClose={handleClose} org={orgDetails.organization}></PostDialog>
       <Typography gutterBottom variant="h4">
         {orgDetails.organization.name}
       </Typography>

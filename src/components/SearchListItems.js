@@ -61,6 +61,10 @@ export default function SearchListItems({ result, onClick, saved }) {
               <Typography color="textSecondary" variant="caption">
                 {type}
               </Typography>
+              <div></div>
+              <Typography color="textSecondary" variant="caption">
+                {type === 'Organization' ? result.themes.join(', ') : null}
+              </Typography>
             </div>
           </div>
         </CardContent>
@@ -79,5 +83,5 @@ export default function SearchListItems({ result, onClick, saved }) {
 SearchListItems.propTypes = {
   result: PropTypes.object,
   saved: PropTypes.bool,
-  onClick: PropTypes.function,
+  onClick: PropTypes.func,
 }

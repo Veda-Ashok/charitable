@@ -34,20 +34,35 @@ const useStyles = makeStyles((theme) => ({
 export default function SearchPage(props) {
   const classes = useStyles()
   const router = useRouter()
+  const query = router.query.query
+  // Handle for when type is undefined
+  // const type = router.query.type
 
   return (
     <div>
       <NavigationBar user={props.user} page="Search" />
-      <div className={classes.banner}>
-        <Paper className={classes.title}>
-          <Typography variant="h5">Search Results for &quot;{router.query.query}&quot;</Typography>
-        </Paper>
-      </div>
-      <Paper className={classes.results}>
+      {query ? (
         <div>
-          <SearchScrollview className={classes.scrollView} results={mockSearch.result} />
+          <div className={classes.banner}>
+            <Paper className={classes.title}>
+              <Typography variant="h5">Search Results for &quot;{query}&quot;</Typography>
+            </Paper>
+          </div>
+          <Paper className={classes.results}>
+            <div>
+              <SearchScrollview className={classes.scrollView} results={mockSearch.result} />
+            </div>
+          </Paper>
         </div>
-      </Paper>
+      ) : (
+        <div>
+          <div className={classes.banner}>
+            <Paper className={classes.results}>
+              <Typography variant="h3">You did not search for anything...</Typography>
+            </Paper>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
