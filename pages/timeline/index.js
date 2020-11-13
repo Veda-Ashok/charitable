@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import PostScrollview from '../../src/components/PostScrollview'
 import { mockPosts } from '../../src/tests/MockAPI/MockPosts'
 import CreatePostBox from '../../src/components/CreatePostBox'
+import TalkToFlask from '../../src/components/TalkToFlask'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +34,7 @@ export default function Timeline({ user }) {
       <NavigationBar page="Timeline" user={user} />
       <div className={classes.content}>
         <div>
+          <TalkToFlask />
           <CreatePostBox name="Bj" icon="/media/BjIcon" />
           <PostScrollview posts={mockPosts.posts} className={classes.posts}></PostScrollview>
         </div>
