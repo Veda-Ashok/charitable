@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react'
-import NavigationBar from '../../src/components/NavigationBar'
 import { makeStyles } from '@material-ui/core/styles'
 import auth0 from '../../utils/auth0'
 import PropTypes from 'prop-types'
-import PostScrollview from '../../src/components/PostScrollview'
-import { mockPosts } from '../../src/tests/MockAPI/MockPosts'
-import CreatePostBox from '../../src/components/CreatePostBox'
+import TimelinePage from '../../src/components/TimeLinePage'
+import { connectToDatabase } from '../../utils/mongodb'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,22 +18,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Timeline({ user }) {
   const classes = useStyles()
 
-  useEffect(() => {
-    // Check that a new route is OK
-    if (!user) {
-      window.location.href = '/api/login'
-    }
-  }, [user])
-
   return (
     <div className={classes.root}>
-      <NavigationBar page="Timeline" user={user} />
-      <div className={classes.content}>
-        <div>
-          <CreatePostBox name="Bj" icon="/media/BjIcon" />
-          <PostScrollview posts={mockPosts.posts} className={classes.posts}></PostScrollview>
-        </div>
-      </div>
+      <TimelinePage user={user} />
+      {/* {charit_user[0].name} */}
     </div>
   )
 }
@@ -44,13 +29,17 @@ export default function Timeline({ user }) {
 export async function getServerSideProps({ req }) {
   // pass the request that comes on the context object into auth0
   const session = await auth0.getSession(req)
+  // const { db } = await connectToDatabase()
+  // const users = await db.collection('users').find({}).limit(1).toArray()
   return {
     props: {
       user: session?.user || null,
+      // charit_user: JSON.parse(JSON.stringify(users)),
     },
   }
 }
 
 Timeline.propTypes = {
   user: PropTypes.object,
+  // charit_user: PropTypes.object,
 }

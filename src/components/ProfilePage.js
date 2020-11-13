@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import Loading from './Loading'
 import { mockProfile } from '../tests/MockAPI/MockProfile'
-import { connectToDatabase } from '../../utils/mongodb'
+// import { connectToDatabase } from '../../utils/mongodb'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-async function ProfilePage(props) {
+function ProfilePage(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [orgs, setOrgs] = useState(null)
   const [posts, setPosts] = useState()
@@ -43,10 +43,7 @@ async function ProfilePage(props) {
   const [bio, setBio] = useState(null)
   const [banner, setBanner] = useState(null)
   const [icon, setIcon] = useState(null)
-
-  const { db } = await connectToDatabase()
-
-  const charitable_user = await db.collection('users').find({}).limit(1).toArray()[0]
+  // const [emailVerified, setEmailVerified] = useState(false)
 
   //  FIX THIS TO BE REAL ORGS FROM OUR DATABASE
   useEffect(() => {
@@ -56,6 +53,10 @@ async function ProfilePage(props) {
       try {
         setIsLoading(true)
         //Get user data, saved org, posts
+        // const { db } = await connectToDatabase()
+        // console.log('hihihi')
+        // const charit_user = await db.collection('users').find({}).limit(1)
+        // console.log(charit_user)
         const response = mockProfile.result[0]
         setOrgs(response.saved_orgs)
         setPosts(response.posts.posts)
@@ -64,6 +65,7 @@ async function ProfilePage(props) {
         setBanner(response.bannerPicture)
         setBio(response.bio)
         setIsLoading(false)
+        // setEmailVerified(charit_user.email_verified)
       } catch (error) {
         console.error(error)
       } finally {
@@ -81,7 +83,7 @@ async function ProfilePage(props) {
   return (
     <div className={classes.banner}>
       <NavigationBar page="Profile" user={props.user} />
-      {charitable_user.email_verified ? (
+      {props.charit_user.email_verified ? (
         <div>
           <ProfileBanner
             bio={bio}
@@ -131,6 +133,18 @@ async function ProfilePage(props) {
   )
 }
 
+// export async function getServerSideProps() {
+//   const { db } = await connectToDatabase()
+
+//   const users = await db.collection('users').find({}).limit(1).toArray()
+//   //$lt less than,
+//   return {
+//     props: {
+//       charit_user: JSON.parse(JSON.stringify(users))[0],
+//     },
+//   }
+// }
+
 ProfilePage.propTypes = {
   member: PropTypes.string,
   user: PropTypes.object,
@@ -138,6 +152,7 @@ ProfilePage.propTypes = {
   isFollower: PropTypes.bool,
   orgs: PropTypes.object,
   width: PropTypes.string,
+  charit_user: PropTypes.object,
 }
 
 export default withWidth()(ProfilePage)
