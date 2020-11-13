@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import Loading from './Loading'
 import { mockProfile } from '../tests/MockAPI/MockProfile'
-import { useAuth0 } from '@auth0/auth0-react'
+import { connectToDatabase } from '../../utils/mongodb'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function ProfilePage(props) {
+async function ProfilePage(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [orgs, setOrgs] = useState(null)
   const [posts, setPosts] = useState()
@@ -43,6 +43,10 @@ function ProfilePage(props) {
   const [bio, setBio] = useState(null)
   const [banner, setBanner] = useState(null)
   const [icon, setIcon] = useState(null)
+
+  const { db } = await connectToDatabase()
+
+  const charitable_user = await db.collection('users').find({}).limit(1).toArray()[0]
 
   //  FIX THIS TO BE REAL ORGS FROM OUR DATABASE
   useEffect(() => {
@@ -73,12 +77,11 @@ function ProfilePage(props) {
   }, [])
 
   const classes = useStyles()
-  const isAuthenticated = useAuth0()
 
   return (
     <div className={classes.banner}>
       <NavigationBar page="Profile" user={props.user} />
-      {isAuthenticated ? (
+      {charitable_user.email_verified ? (
         <div>
           <ProfileBanner
             bio={bio}
