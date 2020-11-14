@@ -60,14 +60,14 @@ export default function SearchPage(props) {
           console.log(error)
         })
     } else if (type === 'users') {
-      // axios
-      //   .get(`/api/searchUsers/${query}`)
-      //   .then((response) => {
-      //     setResult(response.data)
-      //   })
-      //   .catch((error) => {
-      //     console.log(error)
-      //   })
+      axios
+        .get(`/api/searchUsers/${query}`)
+        .then((response) => {
+          setResult(response.data)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }, [query])
 

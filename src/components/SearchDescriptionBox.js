@@ -41,12 +41,11 @@ export default function SearchDescriptionBox({ result, type }) {
     url = result.url
   } else if (type === 'activities') {
     imageSrc = undefined
-    description = result['description:']
+    description = result.description
     location = [result.country]
     themes = [result.theme]
     name = result.title
     url = result.project_link
-    console.log(result['donation_options:'])
   }
 
   return (
@@ -94,7 +93,7 @@ export default function SearchDescriptionBox({ result, type }) {
             <div>
               <div className={classes.section}>
                 <Typography variant="body1">Purpose</Typography>
-                <Typography variant="body2">{result['purpose:']}</Typography>
+                <Typography variant="body2">{result.purpose}</Typography>
               </div>
               <div className={classes.section}>
                 <Typography variant="body1">Summary</Typography>
@@ -112,17 +111,18 @@ export default function SearchDescriptionBox({ result, type }) {
               <div className={classes.section}>
                 <Typography variant="body1">Goal Funding</Typography>
                 <Typography variant="body2">{result.goal_funding}</Typography>
-                {/* <Typography variant="body1">Donation Options</Typography>
+                <Typography variant="body1">Donation Options</Typography>
                 <Typography variant="body2">
                   <ul>
-                    {result['donation_options:'].map((option) => (
+                    {result.donation_options.map((option) => (
                       <li key={option[0]}>{`$${option[0]} ${option[1]}`}</li>
                     ))}
                   </ul>
-                </Typography> */}
+                </Typography>
               </div>
               <div className={classes.section}>
                 <Typography variant="body1">Media: </Typography>
+                {/* photo does not display */}
                 <CardMedia image={result.image} title={name} />
               </div>
             </div>

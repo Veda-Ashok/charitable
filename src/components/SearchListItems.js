@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardActionArea from '@material-ui/core/CardActionArea'
+import Link from './Link'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,29 +54,42 @@ export default function SearchListItems({ result, onClick, saved, type }) {
     //Hit the api and save/unsave in the DB
   }
   const classes = useStyles()
+  const HOME = process.env.POST_LOGOUT_REDIRECT_URI
 
   return (
     <Card className={classes.root}>
-      <CardActionArea onClick={onClick}>
-        <CardContent>
-          <div className={classes.leftSymbols}>
-            <Avatar className={classes.avatar} src={imageSrc} alt={name} />
-            <div className={classes.text}>
-              <Typography variant="body1">{name}</Typography>
-              <Typography color="textSecondary" variant="caption">
-                {theme.slice(0, 5).join(', ')}
-              </Typography>
+      {type === 'users' ? (
+        <CardActionArea href={`${HOME}/profile/${result.nickname}`} component={Link} naked>
+          <CardContent>
+            <div className={classes.leftSymbols}>
+              <Avatar className={classes.avatar} src={imageSrc} alt={name} />
+              <div className={classes.text}>
+                <Typography variant="body1">{name}</Typography>
+                <Typography color="textSecondary" variant="caption">
+                  {theme.slice(0, 5).join(', ')}
+                </Typography>
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </CardActionArea>
-      <div>
-        {type !== 'users' && (
-          <IconButton onClick={handleSaved}>
-            {saved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-          </IconButton>
-        )}
-      </div>
+          </CardContent>
+        </CardActionArea>
+      ) : (
+        <CardActionArea onClick={onClick}>
+          <CardContent>
+            <div className={classes.leftSymbols}>
+              <Avatar className={classes.avatar} src={imageSrc} alt={name} />
+              <div className={classes.text}>
+                <Typography variant="body1">{name}</Typography>
+                <Typography color="textSecondary" variant="caption">
+                  {theme.slice(0, 5).join(', ')}
+                </Typography>
+              </div>
+              <IconButton onClick={handleSaved}>
+                {saved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              </IconButton>
+            </div>
+          </CardContent>
+        </CardActionArea>
+      )}
     </Card>
   )
 }
