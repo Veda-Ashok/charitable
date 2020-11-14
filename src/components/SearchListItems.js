@@ -35,6 +35,7 @@ export default function SearchListItems({ result, onClick, saved, type }) {
   let name = ''
   let theme = []
 
+  console.log('searchlistitems', result)
   if (type === 'organizations') {
     imageSrc = result.logo_url
     name = result.name
@@ -73,9 +74,9 @@ export default function SearchListItems({ result, onClick, saved, type }) {
           </CardContent>
         </CardActionArea>
       ) : (
-        <CardActionArea onClick={onClick}>
-          <CardContent>
-            <div className={classes.leftSymbols}>
+        <CardContent>
+          <div className={classes.leftSymbols}>
+            <CardActionArea onClick={onClick}>
               <Avatar className={classes.avatar} src={imageSrc} alt={name} />
               <div className={classes.text}>
                 <Typography variant="body1">{name}</Typography>
@@ -83,12 +84,12 @@ export default function SearchListItems({ result, onClick, saved, type }) {
                   {theme.slice(0, 5).join(', ')}
                 </Typography>
               </div>
-              <IconButton onClick={handleSaved}>
-                {saved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-              </IconButton>
-            </div>
-          </CardContent>
-        </CardActionArea>
+            </CardActionArea>
+            <IconButton onClick={handleSaved}>
+              {saved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            </IconButton>
+          </div>
+        </CardContent>
       )}
     </Card>
   )

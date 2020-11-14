@@ -41,6 +41,7 @@ export default function SearchPage(props) {
 
   const [result, setResult] = useState('Loading')
   useEffect(() => {
+    setResult('Loading')
     if (type === 'organizations') {
       axios
         .get(`/api/searchOrganizations/${query}`)
@@ -87,6 +88,7 @@ export default function SearchPage(props) {
                 <Loading />
               ) : (
                 <div>
+                  {console.log(result)}
                   {result.length <= 0 ? (
                     <Typography variant="h3">
                       No results for that search :( kinda cringe... Search something else!
