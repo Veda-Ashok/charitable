@@ -8,8 +8,9 @@ import CreatePostBox from '../../src/components/CreatePostBox'
 import Loading from './Loading'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-import { connectToDatabase } from '../../utils/mongodb'
-import { searchUsers } from '../apicalls/mongoApi'
+import axios from 'axios'
+// import { connectToDatabase } from '../../utils/mongodb'
+// import { searchUsers } from '../apicalls/mongoApi'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,12 +39,19 @@ export default function TimelinePage({ user }) {
       !didCancel && setIsLoading(true)
       try {
         setIsLoading(true)
-        const response = await searchUsers('hi')
-        console.log(response)
-
+        axios
+          .get(`/api/searchUsers/ekejfj`)
+          .then((response) => {
+            console.log('response', response.data)
+            setCharitUser(response.data[0].name)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+        // console.log(request)
         // const { db } = await connectToDatabase()
         // const users = await db.collection('users').find({}).limit(1).toArray()
-        setCharitUser(JSON.parse(JSON.stringify(response))[0])
+        // setCharitUser(JSON.parse(JSON.stringify(response))[0])
         setIsLoading(false)
       } catch (error) {
         setError(error.statusText)
@@ -59,7 +67,7 @@ export default function TimelinePage({ user }) {
 
   return (
     <div className={classes.root}>
-      {/* {console.log(charitUser)} */}
+      <h4>{charitUser}</h4>
       <NavigationBar page="Timeline" user={user} />
       <Paper className={classes.organizations}>
         <div>

@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import auth0 from '../../utils/auth0'
 import PropTypes from 'prop-types'
 import TimelinePage from '../../src/components/TimeLinePage'
-import { connectToDatabase } from '../../utils/mongodb'
+import TalkToFlask from '../../src/components/TalkToFlask'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +20,7 @@ export default function Timeline({ user }) {
 
   return (
     <div className={classes.root}>
+      <TalkToFlask />
       <TimelinePage user={user} />
       {/* {charit_user[0].name} */}
     </div>
