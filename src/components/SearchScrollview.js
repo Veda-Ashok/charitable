@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
 
 function SearchScrollview(props) {
   const classes = useStyles()
-  if (props.results) {
-    const [result, setResult] = useState(props.results[0])
+  if (props.result) {
+    const [result, setResult] = useState(props.result[0])
     const [open, setOpen] = useState(false)
 
     const handleClickOpen = (result) => {
@@ -40,9 +40,14 @@ function SearchScrollview(props) {
       setOpen(false)
     }
 
-    const listItems = props.results.map((result) => (
+    const listItems = props.result.map((result) => (
       <ListItem key={result.id}>
-        <SearchListItems onClick={() => handleClickOpen(result)} result={result} saved={false} />
+        <SearchListItems
+          onClick={() => handleClickOpen(result)}
+          type={props.type}
+          result={result}
+          saved={false}
+        />
       </ListItem>
     ))
 
@@ -54,10 +59,10 @@ function SearchScrollview(props) {
         {props.type !== 'users' &&
           (isWidthUp('sm', props.width) ? (
             <div className={classes.scroll}>
-              <SearchDescriptionBox result={result} />
+              <SearchDescriptionBox result={result} type={props.type} />
             </div>
           ) : (
-            <SearchDialog result={result} open={open} onClose={handleClose} />
+            <SearchDialog result={result} open={open} onClose={handleClose} type={props.type} />
           ))}
       </div>
     )
@@ -67,7 +72,7 @@ function SearchScrollview(props) {
 }
 
 SearchScrollview.propTypes = {
-  results: PropTypes.array,
+  result: PropTypes.array,
   type: PropTypes.string,
 }
 

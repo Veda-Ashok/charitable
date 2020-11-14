@@ -29,20 +29,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SearchListItems({ result, onClick, saved }) {
+export default function SearchListItems({ result, onClick, saved, type }) {
   let imageSrc = ''
-  let name = result.name
-  let type = ''
+  let name = ''
+  let theme = []
 
-  if (result.type === 'organization') {
+  if (type === 'organizations') {
     imageSrc = result.logo_url
-    type = 'Organization'
-  } else if (result.type === 'activity') {
+    name = result.name
+    theme = result.themes
+  } else if (type === 'activities') {
+    //TODO: We need to have a lookup query to get the logo image of the org connected to the activity
     imageSrc = undefined
-    type = 'Activity'
-  } else if (result.type === 'user') {
+    theme = [result.theme]
+    name = result.title
+  } else if (type === 'users') {
     imageSrc = result.profile_picture
-    type = 'User'
+    name = result.name
+    theme = [result.nickname]
   }
 
   const handleSaved = () => {
@@ -59,18 +63,14 @@ export default function SearchListItems({ result, onClick, saved }) {
             <div className={classes.text}>
               <Typography variant="body1">{name}</Typography>
               <Typography color="textSecondary" variant="caption">
-                {type}
-              </Typography>
-              <div></div>
-              <Typography color="textSecondary" variant="caption">
-                {type === 'Organization' ? result.themes.join(', ') : null}
+                {theme.slice(0, 5).join(', ')}
               </Typography>
             </div>
           </div>
         </CardContent>
       </CardActionArea>
       <div>
-        {type !== 'user' && (
+        {type !== 'users' && (
           <IconButton onClick={handleSaved}>
             {saved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </IconButton>
@@ -83,5 +83,6 @@ export default function SearchListItems({ result, onClick, saved }) {
 SearchListItems.propTypes = {
   result: PropTypes.object,
   saved: PropTypes.bool,
+  type: PropTypes.string,
   onClick: PropTypes.func,
 }

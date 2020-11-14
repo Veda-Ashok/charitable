@@ -7,15 +7,15 @@ export default async (req, res) => {
 
   const { db } = await connectToDatabase()
   const organizations = await db
-    .collection('organizations')
+    .collection('activities')
     .find(
       {
-        name: { $regex: `${pid}`, $options: 'i' },
+        title: { $regex: `${pid}`, $options: 'i' },
       },
       {
         _id: 0,
-        name: 1,
-        url: 1,
+        title: 1,
+        project_link: 1,
       }
     )
     .limit(10)
