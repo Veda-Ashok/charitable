@@ -113,11 +113,11 @@ export default function SearchDescriptionBox({ result, type }) {
                 <Typography variant="body2">{result.goal_funding}</Typography>
                 <Typography variant="body1">Donation Options</Typography>
                 <Typography variant="body2">
-                  <ul>
+                  {/* <ul>
                     {result.donation_options.map((option) => (
                       <li key={option[0]}>{`$${option[0]} ${option[1]}`}</li>
                     ))}
-                  </ul>
+                  </ul> */}
                 </Typography>
               </div>
               <div className={classes.section}>

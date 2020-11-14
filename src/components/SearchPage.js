@@ -38,40 +38,32 @@ export default function SearchPage(props) {
   const query = router.query.query
   // Handle for when type is undefined
   const type = router.query.type ? router.query.type : 'organizations'
-
+  const [resultType, setResultType] = useState(null)
   const [result, setResult] = useState('Loading')
-  useEffect(() => {
-    setResult('Loading')
-    if (type === 'organizations') {
-      axios
-        .get(`/api/searchOrganizations/${query}`)
-        .then((response) => {
-          setResult(response.data)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    } else if (type === 'activities') {
-      axios
-        .get(`/api/searchActivities/${query}`)
-        .then((response) => {
-          setResult(response.data)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    } else if (type === 'users') {
-      axios
-        .get(`/api/searchUsers/${query}`)
-        .then((response) => {
-          setResult(response.data)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    }
-  }, [query])
 
+  useEffect(() => {
+    console.log('Result before API call', result)
+    const search = async () => {
+      setResult('Loading')
+      try {
+        let response
+        if (type === 'organizations') {
+          response = await axios.get(`/api/searchOrganizations/${query}`)
+        } else if (type === 'activities') {
+          response = await axios.get(`/api/searchActivities/${query}`)
+        } else if (type === 'users') {
+          response = await axios.get(`/api/searchUsers/${query}`)
+        }
+        setResult(response.data)
+        setResultType(type)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    search()
+  }, [query, type])
+
+  console.log('Result before rendering', result)
   return (
     <div>
       <NavigationBar user={props.user} page="Search" />
@@ -84,7 +76,7 @@ export default function SearchPage(props) {
           </div>
           <Paper className={classes.results}>
             <div>
-              {result === 'Loading' ? (
+              {result === 'Loading' || type !== resultType ? (
                 <Loading />
               ) : (
                 <div>
