@@ -6,8 +6,6 @@ env = os.environ.get('MONGODB_PY_URI')
 tree = DataTree.parse('projects.xml')
 root = tree.getroot()
 
-client =  pymongo.MongoClient(env)
-
 db = client["charitable"]
 
 activities_collection = db["activities"]
