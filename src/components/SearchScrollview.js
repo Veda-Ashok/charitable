@@ -41,7 +41,7 @@ function SearchScrollview(props) {
     }
 
     const listItems = props.result.map((result) => (
-      <ListItem key={result.id}>
+      <ListItem key={result._id}>
         <SearchListItems
           onClick={() => handleClickOpen(result)}
           type={props.type}

@@ -55,9 +55,16 @@ export default function SearchDescriptionBox({ result, type }) {
         {name}
       </Typography>
       <CardActions>
-        <Fab variant="extended" color="primary" href={url} component={Link} naked>
-          Visit Page
-        </Fab>
+        {url ? (
+          <Fab variant="extended" color="primary" href={url} component={Link} naked>
+            Visit Page
+          </Fab>
+        ) : (
+          <Typography variant="h6" color="error">
+            No Website Exists
+          </Typography>
+        )}
+
         {type === 'activities' && (
           <Fab
             variant="extended"
