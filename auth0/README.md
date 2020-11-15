@@ -17,7 +17,7 @@ Connections -> Database -> CreateDBConnection ->
 Settings -> Requires Username = true
 Custom Database -> Use my own database = true 
 Input the scripts
--> Settings -> MONGO_PASSWORD = charitable123
+-> Settings -> MONGO_PASSWORD = ....
 
 Application -> Charitable = true
 
