@@ -18,11 +18,10 @@
 //         client.close()
 //         return callback(err)
 //       }
-
 //       users.update({ email: email }, { $set: { password: hash } }, function (err, count) {
 //         client.close()
 //         if (err) return callback(err)
-//         callback(null, count > 0)
+//         callback(null, true)
 //       })
 //     })
 //   })
