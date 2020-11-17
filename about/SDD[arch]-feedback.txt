@@ -1,0 +1,23 @@
+
+
+Group 1: [5 souls] *
+   Veda Ashok, Sam Gibson, Rachel Nguyen, Bridget O'Connor, Krysten Tachiyama
+   synopsis:   Charitable ~ web app to centralize ways to give back to your community
+=====================================================================================
+Another great effort on this deliverable!
+
+Your description is, of course, excellent.  I love the screen views which show
+examples [how did you know I love pancakes?!].  Your diagrams are perfect for
+the level needed for architectural view.
+
+One very minor point: the color in the diagram boxes is very pleasing, but
+white text doesn't show too well, so it's a bit harder to read.
+
+
+Another outstanding work product!!  EXCELLENT!!
+
+Evaluation score:
+
+    10% out of 10% for this deliverable:  A-plus
+
+
