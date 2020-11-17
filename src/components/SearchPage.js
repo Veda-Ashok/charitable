@@ -52,7 +52,7 @@ export default function SearchPage(props) {
         } else if (type === 'activities') {
           response = await axios.get(`/api/searchActivities/${query}`)
         } else if (type === 'users') {
-          response = await axios.get(`/api/searchUsers/${query}`)
+          response = await axios.get(`/api/searchUser/${query}`)
         }
         setResult(response.data)
         setResultType(type)

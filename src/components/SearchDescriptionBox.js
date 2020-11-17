@@ -11,15 +11,17 @@ import Link from './Link'
 import Avatar from '@material-ui/core/Avatar'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
+  root: { overflow: 'auto', width: '100%' },
   avatar: {
     height: theme.spacing(10),
     width: theme.spacing(10),
   },
   section: {
     paddingBottom: theme.spacing(1),
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%',
   },
 }))
 
@@ -50,13 +52,20 @@ export default function SearchDescriptionBox({ result, type }) {
 
   return (
     <Card className={classes.root}>
-      <Avatar className={classes.avatar} src={imageSrc} alt={name} />
-      <Typography gutterBottom variant="h4">
-        {name}
-      </Typography>
+      <CardContent>
+        <Avatar className={classes.avatar} src={imageSrc} alt={name} />
+        <Typography gutterBottom variant="h4">
+          {name}
+        </Typography>
+      </CardContent>
       <CardActions>
         {url ? (
-          <Fab variant="extended" color="primary" href={url} component={Link} naked>
+          <Fab
+            variant="extended"
+            color="primary"
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer">
             Visit Page
           </Fab>
         ) : (
@@ -80,62 +89,63 @@ export default function SearchDescriptionBox({ result, type }) {
         <div>
           {type === 'activities' && (
             <div className={classes.section}>
-              <Typography variant="body1">Status</Typography>
+              <Typography variant="h6">Status</Typography>
               <Typography variant="body2">{result.status}</Typography>
             </div>
           )}
           <div className={classes.section}>
-            <Typography variant="body1">Location</Typography>
+            <Typography variant="h6">Location</Typography>
             <Typography variant="body2">{location.join(', ')}</Typography>
           </div>
           <div className={classes.section}>
-            <Typography variant="body1">Themes</Typography>
+            <Typography variant="h6">Themes</Typography>
             <Typography variant="body2">{themes.join(', ')}</Typography>
           </div>
         </div>
         <div className={classes.section}>
-          <Typography variant="body1">Description</Typography>
+          <Typography variant="h6">Description</Typography>
           <Typography variant="body2">{description}</Typography>
-          {type === 'activities' && (
-            <div>
-              <div className={classes.section}>
-                <Typography variant="body1">Purpose</Typography>
-                <Typography variant="body2">{result.purpose}</Typography>
-              </div>
-              <div className={classes.section}>
-                <Typography variant="body1">Summary</Typography>
-                <Typography variant="body2">{result.summary}</Typography>
-              </div>
-              <div className={classes.section}>
-                <Typography variant="body1">Impact</Typography>
-                <Typography variant="body2">{result.impact}</Typography>
-              </div>
-              <div className={classes.section}>
-                <Typography variant="body1">Contact Information</Typography>
-                <Typography variant="body2">Name: {result.contact_name}</Typography>
-                <Typography variant="body2">Contact us at: {result.contact_url}</Typography>
-              </div>
-              <div className={classes.section}>
-                <Typography variant="body1">Goal Funding</Typography>
-                <Typography variant="body2">{result.goal_funding}</Typography>
-                <Typography variant="body1">Donation Options</Typography>
-                <Typography variant="body2">
-                  {/* <ul>
+        </div>
+        {type === 'activities' && (
+          <div>
+            <div className={classes.section}>
+              <Typography variant="h6">Purpose</Typography>
+              <Typography variant="body2">{result.purpose}</Typography>
+            </div>
+            <div className={classes.section}>
+              <Typography variant="h6">Summary</Typography>
+              <Typography variant="body2">{result.summary}</Typography>
+            </div>
+            <div className={classes.section}>
+              <Typography variant="h6">Impact</Typography>
+              <Typography variant="body2">{result.impact}</Typography>
+            </div>
+            <div className={classes.section}>
+              <Typography variant="h6">Contact Information</Typography>
+              <Typography variant="body2">Name: {result.contact_name}</Typography>
+              <Typography variant="body2">Contact us at: {result.contact_url}</Typography>
+            </div>
+            <div className={classes.section}>
+              <Typography variant="h6">Goal Funding</Typography>
+              <Typography variant="body2">{result.goal_funding}</Typography>
+              <Typography variant="h6">Donation Options</Typography>
+              <Typography variant="body2">
+                {/* <ul>
                     {result.donation_options.map((option) => (
                       <li key={option[0]}>{`$${option[0]} ${option[1]}`}</li>
                     ))}
                   </ul> */}
-                </Typography>
-              </div>
-              <div className={classes.section}>
-                <Typography variant="body1">Media: </Typography>
-                {/* photo does not display */}
-                <CardMedia image={result.image} title={name} />
-              </div>
+              </Typography>
             </div>
-          )}
-        </div>
+            <div className={classes.section}>
+              <Typography variant="h6">Media </Typography>
+            </div>
+          </div>
+        )}
       </CardContent>
+      {type === 'activities' && (
+        <CardMedia className={classes.media} image={result.image} title={name} />
+      )}
     </Card>
   )
 }
