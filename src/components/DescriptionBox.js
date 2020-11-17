@@ -6,7 +6,6 @@ import CardContent from '@material-ui/core/CardContent'
 import Fab from '@material-ui/core/Fab'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
-import Link from './Link'
 import Avatar from '@material-ui/core/Avatar'
 import PostDialog from './PostDialog'
 
@@ -70,14 +69,14 @@ export default function DescriptionBox({ orgDetails }) {
           variant="extended"
           color="primary"
           href={orgDetails.organization.url}
-          component={Link}
-          naked>
+          target="_blank"
+          rel="noopener noreferrer">
           Visit Site
         </Fab>
       </CardActions>
       <CardContent>
         <div className={classes.section}>
-          <Typography variant="body1">Location</Typography>
+          <Typography variant="h6">Location</Typography>
           <Typography variant="body2">
             {countries.map((country, i, arr) =>
               i != arr.length - 1 ? country.name + ', ' : country.name + ''
@@ -85,7 +84,7 @@ export default function DescriptionBox({ orgDetails }) {
           </Typography>
         </div>
         <div className={classes.section}>
-          <Typography variant="body1">Themes</Typography>
+          <Typography variant="h6">Themes</Typography>
           <Typography variant="body2">
             {themes.map((theme, i, arr) =>
               i != arr.length - 1 ? theme.name + ', ' : theme.name + ''
@@ -93,7 +92,7 @@ export default function DescriptionBox({ orgDetails }) {
           </Typography>
         </div>
         <div className={classes.section}>
-          <Typography variant="body1">Mission Statement</Typography>
+          <Typography variant="h6">Mission Statement</Typography>
           <Typography variant="body2">{orgDetails.organization.mission}</Typography>
         </div>
       </CardContent>

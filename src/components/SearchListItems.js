@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardActionArea from '@material-ui/core/CardActionArea'
+import Link from './Link'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,8 +17,19 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     width: '100%',
   },
+  heart: {
+    height: theme.spacing(5),
+    marginLeft: 'auto',
+  },
   leftSymbols: {
     display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  innerBox: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    padding: theme.spacing(1),
   },
   text: {
     padding: '0rem 1rem',
@@ -29,20 +41,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SearchListItems({ result, onClick, saved }) {
+export default function SearchListItems({ result, onClick, saved, type }) {
   let imageSrc = ''
-  let name = result.name
-  let type = ''
+  let name = ''
+  let theme = []
 
-  if (result.type === 'organization') {
+  console.log('searchlistitems', result)
+  if (type === 'organizations') {
     imageSrc = result.logo_url
-    type = 'Organization'
-  } else if (result.type === 'activity') {
+    name = result.name
+    theme = result.themes
+  } else if (type === 'activities') {
+    //TODO: We need to have a lookup query to get the logo image of the org connected to the activity
     imageSrc = undefined
-    type = 'Activity'
-  } else if (result.type === 'user') {
+    theme = [result.theme]
+    name = result.title
+  } else if (type === 'users') {
     imageSrc = result.profile_picture
-    type = 'User'
+    name = result.name
+    theme = [result.nickname]
   }
 
   const handleSaved = () => {
@@ -52,30 +69,36 @@ export default function SearchListItems({ result, onClick, saved }) {
 
   return (
     <Card className={classes.root}>
-      <CardActionArea onClick={onClick}>
-        <CardContent>
-          <div className={classes.leftSymbols}>
+      {type === 'users' ? (
+        <CardActionArea href={`/profile/${result.nickname}`} component={Link} naked>
+          <CardContent>
+            <div className={classes.leftSymbols}>
+              <Avatar className={classes.avatar} src={imageSrc} alt={name} />
+              <div className={classes.text}>
+                <Typography variant="body1">{name}</Typography>
+                <Typography color="textSecondary" variant="caption">
+                  {theme.slice(0, 5).join(', ')}
+                </Typography>
+              </div>
+            </div>
+          </CardContent>
+        </CardActionArea>
+      ) : (
+        <div className={classes.leftSymbols}>
+          <CardActionArea onClick={onClick} className={classes.innerBox}>
             <Avatar className={classes.avatar} src={imageSrc} alt={name} />
             <div className={classes.text}>
               <Typography variant="body1">{name}</Typography>
               <Typography color="textSecondary" variant="caption">
-                {type}
-              </Typography>
-              <div></div>
-              <Typography color="textSecondary" variant="caption">
-                {type === 'Organization' ? result.themes.join(', ') : null}
+                {theme.slice(0, 5).join(', ')}
               </Typography>
             </div>
-          </div>
-        </CardContent>
-      </CardActionArea>
-      <div>
-        {type !== 'user' && (
-          <IconButton onClick={handleSaved}>
+          </CardActionArea>
+          <IconButton onClick={handleSaved} className={classes.heart}>
             {saved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </IconButton>
-        )}
-      </div>
+        </div>
+      )}
     </Card>
   )
 }
@@ -83,5 +106,6 @@ export default function SearchListItems({ result, onClick, saved }) {
 SearchListItems.propTypes = {
   result: PropTypes.object,
   saved: PropTypes.bool,
+  type: PropTypes.string,
   onClick: PropTypes.func,
 }
