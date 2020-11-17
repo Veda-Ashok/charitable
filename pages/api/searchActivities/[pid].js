@@ -8,6 +8,19 @@ export default async (req, res) => {
   const { db } = await connectToDatabase()
   const organizations = await db
     .collection('activities')
+    // .aggregate([
+    //   {
+    //     $search: {
+    //       autocomplete: {
+    //         path: 'title',
+    //         query: `${pid}`,
+    //         fuzzy: {
+    //           maxEdits: 1,
+    //         },
+    //       },
+    //     },
+    //   },
+    // ])
     .find(
       {
         title: { $regex: `${pid}`, $options: 'i' },
