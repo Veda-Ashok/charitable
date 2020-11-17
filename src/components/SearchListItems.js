@@ -17,8 +17,19 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     width: '100%',
   },
+  heart: {
+    height: theme.spacing(5),
+    marginLeft: 'auto',
+  },
   leftSymbols: {
     display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  innerBox: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    padding: theme.spacing(1),
   },
   text: {
     padding: '0rem 1rem',
@@ -55,12 +66,11 @@ export default function SearchListItems({ result, onClick, saved, type }) {
     //Hit the api and save/unsave in the DB
   }
   const classes = useStyles()
-  const HOME = process.env.POST_LOGOUT_REDIRECT_URI
 
   return (
     <Card className={classes.root}>
       {type === 'users' ? (
-        <CardActionArea href={`${HOME}/profile/${result.nickname}`} component={Link} naked>
+        <CardActionArea href={`/profile/${result.nickname}`} component={Link} naked>
           <CardContent>
             <div className={classes.leftSymbols}>
               <Avatar className={classes.avatar} src={imageSrc} alt={name} />
@@ -74,22 +84,20 @@ export default function SearchListItems({ result, onClick, saved, type }) {
           </CardContent>
         </CardActionArea>
       ) : (
-        <CardContent>
-          <div className={classes.leftSymbols}>
-            <CardActionArea onClick={onClick}>
-              <Avatar className={classes.avatar} src={imageSrc} alt={name} />
-              <div className={classes.text}>
-                <Typography variant="body1">{name}</Typography>
-                <Typography color="textSecondary" variant="caption">
-                  {theme.slice(0, 5).join(', ')}
-                </Typography>
-              </div>
-            </CardActionArea>
-            <IconButton onClick={handleSaved}>
-              {saved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-            </IconButton>
-          </div>
-        </CardContent>
+        <div className={classes.leftSymbols}>
+          <CardActionArea onClick={onClick} className={classes.innerBox}>
+            <Avatar className={classes.avatar} src={imageSrc} alt={name} />
+            <div className={classes.text}>
+              <Typography variant="body1">{name}</Typography>
+              <Typography color="textSecondary" variant="caption">
+                {theme.slice(0, 5).join(', ')}
+              </Typography>
+            </div>
+          </CardActionArea>
+          <IconButton onClick={handleSaved} className={classes.heart}>
+            {saved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          </IconButton>
+        </div>
       )}
     </Card>
   )

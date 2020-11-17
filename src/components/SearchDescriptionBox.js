@@ -7,7 +7,6 @@ import CardContent from '@material-ui/core/CardContent'
 import Fab from '@material-ui/core/Fab'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
-import Link from './Link'
 import Avatar from '@material-ui/core/Avatar'
 
 const useStyles = makeStyles((theme) => ({
@@ -18,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
   },
   section: {
     paddingBottom: theme.spacing(1),
+  },
+  warning: {
+    margin: theme.spacing(2),
+    textAlign: 'center',
   },
   media: {
     height: 0,
@@ -79,8 +82,8 @@ export default function SearchDescriptionBox({ result, type }) {
             variant="extended"
             color="secondary"
             href={result.progress_report_link}
-            component={Link}
-            naked>
+            target="_blank"
+            rel="noopener noreferrer">
             View Progress Report
           </Fab>
         )}
@@ -88,9 +91,17 @@ export default function SearchDescriptionBox({ result, type }) {
       <CardContent>
         <div>
           {type === 'activities' && (
-            <div className={classes.section}>
-              <Typography variant="h6">Status</Typography>
-              <Typography variant="body2">{result.status}</Typography>
+            <div>
+              <div className={classes.warning}>
+                <Typography variant="caption" color="error">
+                  ** If you get a 403 ERROR when accessing either of the above links, clear your
+                  cookies on the site **
+                </Typography>
+              </div>
+              <div className={classes.section}>
+                <Typography variant="h6">Status</Typography>
+                <Typography variant="body2">{result.status}</Typography>
+              </div>
             </div>
           )}
           <div className={classes.section}>
@@ -129,13 +140,11 @@ export default function SearchDescriptionBox({ result, type }) {
               <Typography variant="h6">Goal Funding</Typography>
               <Typography variant="body2">{result.goal_funding}</Typography>
               <Typography variant="h6">Donation Options</Typography>
-              <Typography variant="body2">
-                {/* <ul>
-                    {result.donation_options.map((option) => (
-                      <li key={option[0]}>{`$${option[0]} ${option[1]}`}</li>
-                    ))}
-                  </ul> */}
-              </Typography>
+              <ul>
+                {result.donation_options.map((option) => (
+                  <li key={option[0]}>{`$${option[0]} ${option[1]}`}</li>
+                ))}
+              </ul>
             </div>
             <div className={classes.section}>
               <Typography variant="h6">Media </Typography>

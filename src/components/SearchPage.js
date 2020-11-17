@@ -83,7 +83,7 @@ export default function SearchPage(props) {
                   {console.log(result)}
                   {result.length <= 0 ? (
                     <Typography variant="h3">
-                      No results for that search :( kinda cringe... Search something else!
+                      No results for that search :( Search something else!
                     </Typography>
                   ) : (
                     <SearchScrollview className={classes.scrollView} result={result} type={type} />

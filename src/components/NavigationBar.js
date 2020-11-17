@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 export default function NavigationBar({ user, page }) {
   const router = useRouter()
   const [searchValue, setSearchValue] = useState('')
-  const [type, setType] = useState('organizations')
+  const [type, setType] = useState(router.query.type ? router.query.type : 'organizations')
 
   const handleChange = (e) => {
     setType(e.target.value)
