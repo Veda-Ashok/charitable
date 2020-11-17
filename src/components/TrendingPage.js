@@ -10,7 +10,10 @@ import Loading from './Loading'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
-    marginTop: theme.spacing(11),
+    marginTop: theme.spacing(15),
+    [theme.breakpoints.up('sm')]: {
+      marginTop: theme.spacing(11),
+    },
   },
   title: {
     marginRight: theme.spacing(2),
