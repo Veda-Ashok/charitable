@@ -6,33 +6,24 @@ export default async (req, res) => {
   } = req
 
   const { db } = await connectToDatabase()
-  const organizations = await db
+  const activities = await db
     .collection('activities')
-    // .aggregate([
-    //   {
-    //     $search: {
-    //       autocomplete: {
-    //         path: 'title',
-    //         query: `${pid}`,
-    //         fuzzy: {
-    //           maxEdits: 1,
-    //         },
-    //       },
-    //     },
-    //   },
-    // ])
     .find(
       {
-        title: { $regex: `${pid}`, $options: 'i' },
+        $or: [
+          { title: { $regex: `${pid}`, $options: 'i' } },
+          { country: { $regex: `${pid}`, $options: 'i' } },
+          { theme: { $regex: `${pid}`, $options: 'i' } },
+        ],
       },
       {
         _id: 0,
-        title: 1,
-        project_link: 1,
+        name: 1,
+        url: 1,
       }
     )
-    .limit(10)
+    .limit(20)
     .toArray()
 
-  res.json(organizations)
+  res.json(activities)
 }
