@@ -14,7 +14,7 @@ export default async (req, res) => {
       {
         $or: [
           { name: { $regex: `${pid}`, $options: 'i' } },
-          { theme: { $regex: `${pid}`, $options: 'i' } },
+          { themes: { $regex: `${pid}`, $options: 'i' } },
           { countries: { $regex: `${pid}`, $options: 'i' } },
         ],
       },
