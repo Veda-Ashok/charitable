@@ -1,5 +1,4 @@
 import { connectToDatabase } from '../../../utils/mongodb'
-//adding comment
 
 export default async (req, res) => {
   const {
@@ -7,20 +6,20 @@ export default async (req, res) => {
   } = req
 
   const { db } = await connectToDatabase()
-  const organizations = await db
-    .collection('organizations')
+
+  const users = await db
+    .collection('users')
     .find(
       {
-        name: { $regex: `${pid}`, $options: 'i' },
+        nickname: { $regex: `${pid}`, $options: 'i' },
       },
       {
         _id: 0,
-        name: 1,
-        url: 1,
+        email: 0,
       }
     )
     .limit(10)
     .toArray()
 
-  res.json(organizations)
+  res.json(users)
 }

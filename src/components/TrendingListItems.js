@@ -53,7 +53,7 @@ export default function TrendingListItems({ orgDetails, saved, onClick }) {
             <div className={classes.text}>
               <Typography variant="body1">{details.organization.name}</Typography>
               <Typography color="textSecondary" variant="caption">
-                {themes.join(', ')}
+                {themes.slice(0, 5).join(', ')}
               </Typography>
             </div>
           </div>

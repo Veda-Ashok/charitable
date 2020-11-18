@@ -6,8 +6,6 @@ env = os.environ.get('MONGODB_PY_URI')
 tree = DataTree.parse('projects.xml')
 root = tree.getroot()
 
-client =  pymongo.MongoClient(env)
-
 db = client["charitable"]
 
 activities_collection = db["activities"]
@@ -82,8 +80,8 @@ for i in root.findall('project'):
     
     activity_obj = {
         'gg_activity_id': gg_activity_id,
-        'purpose: ': purpose,
-        'description: ': description,
+        'purpose': purpose,
+        'description': description,
         'contact_name': contact_name,
         'contact_title': contact_title,
         'contact_url': contact_url,
@@ -95,7 +93,7 @@ for i in root.findall('project'):
         'contact_address_state': contact_address_state,
         'date_approved': date_approved,
         'country': country,
-        'donation_options: ': all_donation_options,
+        'donation_options': all_donation_options,
         'goal_funding': goal_funding,
         'progress_report_link': progress_report_link,
         'project_link': project_link,
@@ -104,7 +102,9 @@ for i in root.findall('project'):
         'summary': summary,
         'gg_organization_id': gg_organization_id,
         'theme': project_theme,
-        'impact':impact,
+        'impact': impact,
+        'title': title,
+        'image': image
     }
     if activity_obj['country'] != "Not Specified.":
         activities_collection.insert_one(activity_obj)

@@ -2,17 +2,15 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
+import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import Fab from '@material-ui/core/Fab'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
-import Link from './Link'
 import Avatar from '@material-ui/core/Avatar'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
+  root: { overflow: 'auto', width: '100%' },
   avatar: {
     height: theme.spacing(10),
     width: theme.spacing(10),
@@ -20,76 +18,148 @@ const useStyles = makeStyles((theme) => ({
   section: {
     paddingBottom: theme.spacing(1),
   },
+  warning: {
+    margin: theme.spacing(2),
+    textAlign: 'center',
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%',
+  },
 }))
 
-export default function SearchDescriptionBox({ result }) {
+export default function SearchDescriptionBox({ result, type }) {
   const classes = useStyles()
   let imageSrc = ''
-  let name = result.name
+  let name = ''
   let description = ''
-  let type = result.type
   let url = ''
   let location = []
   let themes = []
 
-  if (type === 'organization') {
+  if (type === 'organizations') {
     imageSrc = result.logo_url
     description = result.mission
     location = result.countries
     themes = result.themes
+    name = result.name
     url = result.url
-  } else if (type === 'activity') {
+  } else if (type === 'activities') {
     imageSrc = undefined
     description = result.description
-    location.push(result.street_address)
-    location.push(result.country)
-    themes = result.themes
-    url = result.url
-  } else if (type === 'user') {
-    imageSrc = result.profile_picture
-    description = result.bio
-    url = ''
+    location = [result.country]
+    themes = [result.theme]
+    name = result.title
+    url = result.project_link
   }
 
   return (
     <Card className={classes.root}>
-      <Avatar className={classes.avatar} src={imageSrc} alt={name} />
-      <Typography gutterBottom variant="h4">
-        {name}
-      </Typography>
+      <CardContent>
+        <Avatar className={classes.avatar} src={imageSrc} alt={name} />
+        <Typography gutterBottom variant="h4">
+          {name}
+        </Typography>
+      </CardContent>
       <CardActions>
-        <Fab variant="extended" color="primary" href={url} component={Link} naked>
-          Visit Page
-        </Fab>
+        {url ? (
+          <Fab
+            variant="extended"
+            color="primary"
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer">
+            Visit Page
+          </Fab>
+        ) : (
+          <Typography variant="h6" color="error">
+            No Website Exists
+          </Typography>
+        )}
+
+        {type === 'activities' && (
+          <Fab
+            variant="extended"
+            color="secondary"
+            href={result.progress_report_link}
+            target="_blank"
+            rel="noopener noreferrer">
+            View Progress Report
+          </Fab>
+        )}
       </CardActions>
       <CardContent>
-        {type !== 'user' && (
+        <div>
+          {type === 'activities' && (
+            <div>
+              <div className={classes.warning}>
+                <Typography variant="caption" color="error">
+                  ** If you get a 403 ERROR when accessing either of the above links, clear your
+                  cookies on the site **
+                </Typography>
+              </div>
+              <div className={classes.section}>
+                <Typography variant="h6">Status</Typography>
+                <Typography variant="body2">{result.status}</Typography>
+              </div>
+            </div>
+          )}
+          <div className={classes.section}>
+            <Typography variant="h6">Location</Typography>
+            <Typography variant="body2">{location.join(', ')}</Typography>
+          </div>
+          <div className={classes.section}>
+            <Typography variant="h6">Themes</Typography>
+            <Typography variant="body2">{themes.join(', ')}</Typography>
+          </div>
+        </div>
+        <div className={classes.section}>
+          <Typography variant="h6">Description</Typography>
+          <Typography variant="body2">{description}</Typography>
+        </div>
+        {type === 'activities' && (
           <div>
             <div className={classes.section}>
-              <Typography variant="body1">Location</Typography>
-              <Typography variant="body2">
-                {location.map((location, i, arr) =>
-                  i != arr.length - 1 ? location + ', ' : location + ''
-                )}
-              </Typography>
+              <Typography variant="h6">Purpose</Typography>
+              <Typography variant="body2">{result.purpose}</Typography>
             </div>
             <div className={classes.section}>
-              <Typography variant="body1">Themes</Typography>
-              <Typography variant="body2">
-                {themes.map((theme, i, arr) => (i != arr.length - 1 ? theme + ', ' : theme + ''))}
-              </Typography>
+              <Typography variant="h6">Summary</Typography>
+              <Typography variant="body2">{result.summary}</Typography>
+            </div>
+            <div className={classes.section}>
+              <Typography variant="h6">Impact</Typography>
+              <Typography variant="body2">{result.impact}</Typography>
+            </div>
+            <div className={classes.section}>
+              <Typography variant="h6">Contact Information</Typography>
+              <Typography variant="body2">Name: {result.contact_name}</Typography>
+              <Typography variant="body2">Contact us at: {result.contact_url}</Typography>
+            </div>
+            <div className={classes.section}>
+              <Typography variant="h6">Goal Funding</Typography>
+              <Typography variant="body2">{result.goal_funding}</Typography>
+              <Typography variant="h6">Donation Options</Typography>
+              <ul>
+                {result.donation_options.map((option) => (
+                  <li key={option[0]}>{`$${option[0]} ${option[1]}`}</li>
+                ))}
+              </ul>
+            </div>
+            <div className={classes.section}>
+              <Typography variant="h6">Media </Typography>
             </div>
           </div>
         )}
-        <div className={classes.section}>
-          <Typography variant="body1">Description</Typography>
-          <Typography variant="body2">{description}</Typography>
-        </div>
       </CardContent>
+      {type === 'activities' && (
+        <CardMedia className={classes.media} image={result.image} title={name} />
+      )}
     </Card>
   )
 }
 
 SearchDescriptionBox.propTypes = {
   result: PropTypes.object,
+  type: PropTypes.string,
 }

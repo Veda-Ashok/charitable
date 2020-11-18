@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   search: {
     position: 'relative',
+    marginTop: theme.spacing(2),
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.black, 0.03),
     '&:hover': {
@@ -45,6 +46,11 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(3),
       width: 'auto',
+    },
+  },
+  filterAndSearch: {
+    [theme.breakpoints.up('sm')]: {
+      display: 'flex',
     },
   },
   searchIcon: {
@@ -71,10 +77,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function NavigationBar({ user, page }) {
+function NavigationBar({ user, page }) {
   const router = useRouter()
   const [searchValue, setSearchValue] = useState('')
-  const [type, setType] = useState('organizations')
+  const [type, setType] = useState(router.query.type ? router.query.type : 'organizations')
 
   const handleChange = (e) => {
     setType(e.target.value)
@@ -101,25 +107,27 @@ export default function NavigationBar({ user, page }) {
           <Typography className={classes.title} variant="h6" noWrap>
             Charitable
           </Typography>
-          <form onSubmit={onSubmit}>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
+          <div className={classes.filterAndSearch}>
+            <form onSubmit={onSubmit}>
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ 'aria-label': 'Search' }}
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                />
               </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'Search' }}
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-              />
+            </form>
+            <div>
+              <SearchFilter handleChange={handleChange} type={type} />
             </div>
-          </form>
-          <div>
-            <SearchFilter handleChange={handleChange} type={type} />
           </div>
           <div className={classes.grow} />
           <IconWithLabelPath
@@ -147,3 +155,5 @@ NavigationBar.propTypes = {
   user: PropTypes.object,
   page: PropTypes.string,
 }
+
+export default NavigationBar

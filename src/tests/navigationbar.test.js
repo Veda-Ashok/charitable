@@ -1,5 +1,9 @@
+jest.mock('next/router')
 import { render, fireEvent } from '@testing-library/react'
 import NavigationBar from '../components/NavigationBar'
+import { useRouter } from 'next/router'
+
+useRouter.mockReturnValue({ query: { type: 'organizations' } })
 
 describe('NavigationBar', () => {
   const user = {
