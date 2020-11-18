@@ -1,5 +1,6 @@
 import { connectToDatabase } from '../../../utils/mongodb'
-//adding comment
+
+//http://localhost:3000/api/searchOrganizations/Uganda
 
 export default async (req, res) => {
   const {
@@ -11,7 +12,11 @@ export default async (req, res) => {
     .collection('organizations')
     .find(
       {
-        name: { $regex: `${pid}`, $options: 'i' },
+        $or: [
+          { name: { $regex: `${pid}`, $options: 'i' } },
+          { theme: { $regex: `${pid}`, $options: 'i' } },
+          { countries: { $regex: `${pid}`, $options: 'i' } },
+        ],
       },
       {
         _id: 0,
