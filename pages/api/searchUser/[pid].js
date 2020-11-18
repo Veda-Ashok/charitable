@@ -11,7 +11,10 @@ export default async (req, res) => {
     .collection('users')
     .find(
       {
-        nickname: { $regex: `${pid}`, $options: 'i' },
+        $or: [
+          { name: { $regex: `${pid}`, $options: 'i' } },
+          { nickname: { $regex: `${pid}`, $options: 'i' } },
+        ],
       },
       {
         _id: 0,
