@@ -7,7 +7,11 @@ import Fab from '@material-ui/core/Fab'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
 import Avatar from '@material-ui/core/Avatar'
+import IconButton from '@material-ui/core/IconButton'
 import PostDialog from './PostDialog'
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import PostAddIcon from '@material-ui/icons/PostAdd'
 
 // comment for testing
 const useStyles = makeStyles((theme) => ({
@@ -23,11 +27,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(1),
   },
   button: {
-    borderRadius: '999px',
-    fontSize: '12px',
-    margin: theme.spacing(1),
-    position: 'absolute',
-    right: '0',
+    float: 'right',
   },
 }))
 
@@ -36,6 +36,7 @@ export default function DescriptionBox({ orgDetails }) {
   const [open, setOpen] = useState(false)
   const themes = orgDetails.themes.theme
   const countries = orgDetails.countries.country
+  const saved = false
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -47,14 +48,12 @@ export default function DescriptionBox({ orgDetails }) {
 
   return (
     <Card className={classes.root}>
-      <Fab
-        size="small"
-        variant="extended"
-        color="primary"
-        onClick={() => handleClickOpen()}
-        className={classes.button}>
-        Share
-      </Fab>
+      <IconButton className={classes.button}>
+        {saved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+      </IconButton>
+      <IconButton className={classes.button}>
+        <PostAddIcon onClick={() => handleClickOpen()} />
+      </IconButton>
       <Avatar
         className={classes.avatar}
         src={orgDetails.organization.logoUrl}
