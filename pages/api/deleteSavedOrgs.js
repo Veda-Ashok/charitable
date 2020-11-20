@@ -2,23 +2,13 @@ import { connectToDatabase } from '../../utils/mongodb'
 
 const ObjectId = require('mongodb').ObjectID
 
-// {
-//   $switch: {
-//      branches: [
-//         { case: "this is true", then: "first case" },
-//         { case: false, then: "second case" }
-//      ],
-//      default: "Did not match"
-//   }
-// }
-
 export default async (req, res) => {
   // const {
   //   query: { pid },
   // } = req
   try {
     const example = {
-      _id: ObjectId('5fb4bd5ac478970011f749bc'),
+      _id: ObjectId('5fb3675e723a2200111c8a08'),
       organizationId: 'love',
       wantToSave: false,
     }
@@ -28,7 +18,11 @@ export default async (req, res) => {
     // if (!isSaved)
     const users = await db
       .collection('users')
-      .updateOne({ _id: example._id }, [{ $pull: { saved_orgs: example.organizationId } }])
+      .updateOne(
+        { _id: example._id },
+        { $pull: { saved_orgs: example.organizationId } },
+        { upsert: true }
+      )
 
     res.json(users)
   } catch (error) {
