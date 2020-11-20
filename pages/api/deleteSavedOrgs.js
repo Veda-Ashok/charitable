@@ -1,25 +1,15 @@
 import { connectToDatabase } from '../../utils/mongodb'
-
 const ObjectId = require('mongodb').ObjectID
 
 export default async (req, res) => {
-  // const {
-  //   query: { pid },
-  // } = req
   try {
-    const example = {
-      _id: ObjectId('5fb3675e723a2200111c8a08'),
-      organizationId: 'checking',
-      wantToSave: false,
-    }
-
     const { db } = await connectToDatabase()
 
     const users = await db
       .collection('users')
       .updateOne(
-        { _id: example._id },
-        { $pull: { saved_orgs: example.organizationId } },
+        { _id: ObjectId(req.body.userId) },
+        { $pull: { saved_orgs: req.body.result.gg_id } },
         { upsert: true }
       )
 

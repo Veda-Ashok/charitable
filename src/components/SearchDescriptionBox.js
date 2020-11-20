@@ -14,6 +14,7 @@ import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import PostDialog from './PostDialog'
 import SavedDialog from './SavedDialog'
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
   root: { overflow: 'auto', width: '100%' },
@@ -63,7 +64,8 @@ export default function SearchDescriptionBox({ result, type }) {
   }
   const [postOpen, setPostOpen] = useState(false)
   const [savedOpen, setSavedOpen] = useState(false)
-  const saved = true
+  //on load, call the DB for the og state
+  const isSaved = true
 
   const handleClickPostOpen = () => {
     setPostOpen(true)
@@ -74,25 +76,49 @@ export default function SearchDescriptionBox({ result, type }) {
   }
 
   const handleClickSavedOpen = () => {
+    // get user ID
+    if (type === 'activities') {
+      if (isSaved) {
+        axios.post('/api/deleteSavedActivities', {
+          result: result,
+          userId: '5fb3675e723a2200111c8a08',
+        })
+      } else {
+        axios.post('/api/addSavedActivities', {
+          result: result,
+          userId: '5fb3675e723a2200111c8a08',
+        })
+      }
+    } else if (type === 'organizations') {
+      if (isSaved) {
+        axios.post('/api/deleteSavedOrgs', {
+          result: result,
+          userId: '5fb3675e723a2200111c8a08',
+        })
+      }
+      // else {
+      // axios.post('/api/addSavedOrgs', {
+      //   result: result,
+      //   userId: '5fb3675e723a2200111c8a08',
+      // })
+      // }
+    }
     setSavedOpen(true)
   }
 
   const handleSavedClose = () => {
+    //reload the page to get whether or not something is saved
     setSavedOpen(false)
   }
 
   return (
     <Card className={classes.root}>
       <CardContent>
-        <IconButton className={classes.button}>
-          {saved ? (
-            <FavoriteIcon onClick={() => handleClickSavedOpen()} />
-          ) : (
-            <FavoriteBorderIcon onClick={() => handleClickSavedOpen()} />
-          )}
+        <IconButton onClick={() => handleClickSavedOpen()} className={classes.button}>
+          {isSaved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         </IconButton>
-        <IconButton className={classes.button}>
-          <PostAddIcon onClick={() => handleClickPostOpen()} />
+        <IconButton onClick={() => handleClickPostOpen()} className={classes.button}>
+          <PostAddIcon />
         </IconButton>
         <Avatar className={classes.avatar} src={imageSrc} alt={name} />
         <Typography gutterBottom variant="h4">
@@ -100,7 +126,7 @@ export default function SearchDescriptionBox({ result, type }) {
         </Typography>
         {/*TODO: NEED TO MAKE POST DIALOG SPECIFIC FOR SEARCH.... and also update the trending one*/}
         <PostDialog open={postOpen} onClose={handlePostClose} org={result}></PostDialog>
-        <SavedDialog open={savedOpen} onClose={handleSavedClose} wantToSave={saved} name={name} />
+        <SavedDialog open={savedOpen} onClose={handleSavedClose} isSaved={isSaved} name={name} />
       </CardContent>
       <CardActions>
         {url ? (

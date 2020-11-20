@@ -43,7 +43,6 @@ export default function SearchListItems({ result, onClick, type }) {
   let name = ''
   let theme = []
 
-  console.log('searchlistitems', result)
   if (type === 'organizations') {
     imageSrc = result.logo_url
     name = result.name

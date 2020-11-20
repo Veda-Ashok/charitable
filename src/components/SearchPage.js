@@ -45,7 +45,6 @@ export default function SearchPage(props) {
   const [result, setResult] = useState('Loading')
 
   useEffect(() => {
-    console.log('Result before API call', result)
     const search = async () => {
       setResult('Loading')
       try {
@@ -66,7 +65,6 @@ export default function SearchPage(props) {
     search()
   }, [query, type])
 
-  console.log('Result before rendering', result)
   return (
     <div>
       <NavigationBar user={props.user} page="Search" />
@@ -83,7 +81,6 @@ export default function SearchPage(props) {
                 <Loading />
               ) : (
                 <div>
-                  {console.log(result)}
                   {result.length <= 0 ? (
                     <Typography variant="h3">
                       No results for that search :( Search something else!

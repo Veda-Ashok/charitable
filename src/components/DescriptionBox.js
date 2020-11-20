@@ -38,7 +38,7 @@ export default function DescriptionBox({ orgDetails }) {
   const countries = orgDetails.countries.country
   const [postOpen, setPostOpen] = useState(false)
   const [savedOpen, setSavedOpen] = useState(false)
-  const saved = false
+  const isSaved = false
 
   const handleClickPostOpen = () => {
     setPostOpen(true)
@@ -58,15 +58,11 @@ export default function DescriptionBox({ orgDetails }) {
 
   return (
     <Card className={classes.root}>
-      <IconButton className={classes.button}>
-        {saved ? (
-          <FavoriteIcon onClick={() => handleClickSavedOpen()} />
-        ) : (
-          <FavoriteBorderIcon onClick={() => handleClickSavedOpen()} />
-        )}
+      <IconButton className={classes.button} onClick={() => handleClickSavedOpen()}>
+        {isSaved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
       </IconButton>
-      <IconButton className={classes.button}>
-        <PostAddIcon onClick={() => handleClickPostOpen()} />
+      <IconButton className={classes.button} onClick={() => handleClickPostOpen()}>
+        <PostAddIcon />
       </IconButton>
       <Avatar
         className={classes.avatar}
@@ -80,7 +76,7 @@ export default function DescriptionBox({ orgDetails }) {
       <SavedDialog
         open={savedOpen}
         onClose={handleSavedClose}
-        wantToSave={saved}
+        isSaved={isSaved}
         name={orgDetails.organization.name}
       />
       <Typography gutterBottom variant="h4">
