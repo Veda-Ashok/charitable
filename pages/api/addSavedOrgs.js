@@ -19,44 +19,17 @@ export default async (req, res) => {
   try {
     const example = {
       _id: ObjectId('5fb3675e723a2200111c8a08'),
-      organizationId: 'checking',
+      organizationId: 'pleese',
       wantToSave: false,
     }
 
     const { db } = await connectToDatabase()
 
-    // const users = await db.collection('users').updateOne(
-    //   {
-    //     _id: example._id,
-    //   },
-    //   [
-    //     {
-    //       $set: {
-    //         saved_orgs: {
-    //           $switch: {
-    //             branches: [
-    //               {
-    //                 case: { $in: ['saved_orgs', example.organizationId] },
-    //                 then: { $pull: { saved_orgs: example.organizationId } },
-    //               },
-    //               {
-    //                 case: { $nin: ['saved_orgs', example.organizationId] },
-    //                 then: { $push: { saved_orgs: example.organizationId } },
-    //               },
-    //             ],
-    //           },
-    //         },
-    //       },
-    //     },
-    //   ]
-    // )
-
-    // if (!isSaved)
     const users = await db
       .collection('users')
       .updateOne(
         { _id: example._id },
-        { $push: { saved_orgs: example.organizationId } },
+        { $addToSet: { saved_orgs: example.organizationId } },
         { upsert: true }
       )
 

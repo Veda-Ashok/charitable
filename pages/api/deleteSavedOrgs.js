@@ -9,13 +9,12 @@ export default async (req, res) => {
   try {
     const example = {
       _id: ObjectId('5fb3675e723a2200111c8a08'),
-      organizationId: 'love',
+      organizationId: 'checking',
       wantToSave: false,
     }
 
     const { db } = await connectToDatabase()
 
-    // if (!isSaved)
     const users = await db
       .collection('users')
       .updateOne(
