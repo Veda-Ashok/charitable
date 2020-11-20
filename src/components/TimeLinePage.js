@@ -39,19 +39,15 @@ export default function TimelinePage({ user }) {
       !didCancel && setIsLoading(true)
       try {
         setIsLoading(true)
-        axios
+        await axios
           .get(`/api/searchUsers/ekejfj`)
           .then((response) => {
             console.log('response', response.data)
-            setCharitUser(response.data[0].name)
+            setCharitUser(response.data[0])
           })
           .catch((error) => {
             console.log(error)
           })
-        // console.log(request)
-        // const { db } = await connectToDatabase()
-        // const users = await db.collection('users').find({}).limit(1).toArray()
-        // setCharitUser(JSON.parse(JSON.stringify(response))[0])
         setIsLoading(false)
       } catch (error) {
         setError(error.statusText)
@@ -67,21 +63,23 @@ export default function TimelinePage({ user }) {
 
   return (
     <div className={classes.root}>
-      <h4>{charitUser}</h4>
       <NavigationBar page="Timeline" user={user} />
+      <h3>{charitUser.email_verified ? 'true' : 'false'}</h3>
       <Paper className={classes.organizations}>
         <div>
           {isLoading ? (
             <Loading />
           ) : error ? (
             <Typography>{error}</Typography>
-          ) : (
+          ) : charitUser ? (
             <div className={classes.content}>
               <div>
                 <CreatePostBox name="Bj" icon="/media/BjIcon" />
                 <PostScrollview posts={mockPosts.posts} className={classes.posts}></PostScrollview>
               </div>
             </div>
+          ) : (
+            <div>verify your email to access this page</div>
           )}
         </div>
       </Paper>
