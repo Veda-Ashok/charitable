@@ -8,8 +8,8 @@ import CreatePostBox from '../../src/components/CreatePostBox'
 import Loading from './Loading'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
+import axios from 'axios'
 // import { connectToDatabase } from '../../utils/mongodb'
-import { searchUsers } from '../apicalls/mongoApi'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,12 +38,12 @@ export default function TimelinePage({ user }) {
       !didCancel && setIsLoading(true)
       try {
         setIsLoading(true)
-        const response = await searchUsers('hi')
+        const response = await axios.get(`/api/searchUser/${user.nickname}`)
         console.log(response)
 
         // const { db } = await connectToDatabase()
         // const users = await db.collection('users').find({}).limit(1).toArray()
-        setCharitUser(JSON.parse(JSON.stringify(response))[0])
+        setCharitUser(response.data[0])
         setIsLoading(false)
       } catch (error) {
         setError(error.statusText)
