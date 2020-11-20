@@ -77,7 +77,7 @@ export default function TimelinePage({ user }) {
               </div>
             </div>
           ) : (
-            <div>verify ur email bitch</div>
+            <h2>Verify Your Email To Acess This Page</h2>
           )}
         </div>
       </Paper>
