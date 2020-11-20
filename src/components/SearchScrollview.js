@@ -46,7 +46,6 @@ function SearchScrollview(props) {
           onClick={() => handleClickOpen(result)}
           type={props.type}
           result={result}
-          saved={false}
         />
       </ListItem>
     ))
