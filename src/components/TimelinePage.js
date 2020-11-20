@@ -24,12 +24,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TimelinePage({ user }) {
   const classes = useStyles()
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(undefined)
   const [charitUser, setCharitUser] = useState(undefined)
 
   useEffect(() => {
     // Check that a new route is OK
+    console.log('in use eff')
     if (!user) {
       window.location.href = '/api/login'
     }
@@ -39,7 +40,7 @@ export default function TimelinePage({ user }) {
       try {
         setIsLoading(true)
         const response = await axios.get(`/api/searchUser/${user.nickname}`)
-        console.log(response)
+        // console.log(response)
 
         // const { db } = await connectToDatabase()
         // const users = await db.collection('users').find({}).limit(1).toArray()
@@ -59,6 +60,7 @@ export default function TimelinePage({ user }) {
 
   return (
     <div className={classes.root}>
+      {console.log(isLoading)}
       {console.log(charitUser)}
       <NavigationBar page="Timeline" user={user} />
       <Paper className={classes.organizations}>
@@ -68,11 +70,19 @@ export default function TimelinePage({ user }) {
           ) : error ? (
             <Typography>{error}</Typography>
           ) : (
-            <div className={classes.content}>
-              <div>
-                <CreatePostBox name="Bj" icon="/media/BjIcon" />
-                <PostScrollview posts={mockPosts.posts} className={classes.posts}></PostScrollview>
-              </div>
+            <div>
+              {charitUser.email_verified ? (
+                <div className={classes.content}>
+                  <div>
+                    <CreatePostBox name="Bj" icon="/media/BjIcon" />
+                    <PostScrollview
+                      posts={mockPosts.posts}
+                      className={classes.posts}></PostScrollview>
+                  </div>
+                </div>
+              ) : (
+                <div>verify ur email bitch</div>
+              )}
             </div>
           )}
         </div>
