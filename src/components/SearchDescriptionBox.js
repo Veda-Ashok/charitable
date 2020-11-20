@@ -13,6 +13,7 @@ import PostAddIcon from '@material-ui/icons/PostAdd'
 import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import PostDialog from './PostDialog'
+import SavedDialog from './SavedDialog'
 
 const useStyles = makeStyles((theme) => ({
   root: { overflow: 'auto', width: '100%' },
@@ -60,31 +61,46 @@ export default function SearchDescriptionBox({ result, type }) {
     name = result.title
     url = result.project_link
   }
-  const [open, setOpen] = useState(false)
-  const saved = true
+  const [postOpen, setPostOpen] = useState(false)
+  const [savedOpen, setSavedOpen] = useState(false)
+  const saved = false
 
-  const handleClickOpen = () => {
-    setOpen(true)
+  const handleClickPostOpen = () => {
+    setPostOpen(true)
   }
 
-  const handleClose = () => {
-    setOpen(false)
+  const handlePostClose = () => {
+    setPostOpen(false)
+  }
+
+  const handleClickSavedOpen = () => {
+    setSavedOpen(true)
+  }
+
+  const handleSavedClose = () => {
+    setSavedOpen(false)
   }
 
   return (
     <Card className={classes.root}>
       <CardContent>
         <IconButton className={classes.button}>
-          {saved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          {saved ? (
+            <FavoriteIcon onClick={() => handleClickSavedOpen()} />
+          ) : (
+            <FavoriteBorderIcon onClick={() => handleClickSavedOpen()} />
+          )}
         </IconButton>
         <IconButton className={classes.button}>
-          <PostAddIcon onClick={() => handleClickOpen()} />
+          <PostAddIcon onClick={() => handleClickPostOpen()} />
         </IconButton>
         <Avatar className={classes.avatar} src={imageSrc} alt={name} />
         <Typography gutterBottom variant="h4">
           {name}
         </Typography>
-        <PostDialog open={open} onClose={handleClose} org={result}></PostDialog>
+        {/*TODO: NEED TO MAKE POST DIALOG SPECIFIC FOR SEARCH.... and also update the trending one*/}
+        <PostDialog open={postOpen} onClose={handlePostClose} org={result}></PostDialog>
+        <SavedDialog open={savedOpen} onClose={handleSavedClose} wantToSave={saved} name={name} />
       </CardContent>
       <CardActions>
         {url ? (
