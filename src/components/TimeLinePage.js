@@ -10,7 +10,6 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import axios from 'axios'
 // import { connectToDatabase } from '../../utils/mongodb'
-// import { searchUsers } from '../apicalls/mongoApi'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
 }))
-
+// saving from delete
 export default function TimelinePage({ user }) {
   const classes = useStyles()
   const [isLoading, setIsLoading] = useState(false)
@@ -39,15 +38,12 @@ export default function TimelinePage({ user }) {
       !didCancel && setIsLoading(true)
       try {
         setIsLoading(true)
-        await axios
-          .get(`/api/searchUsers/ekejfj`)
-          .then((response) => {
-            console.log('response', response.data)
-            setCharitUser(response.data[0])
-          })
-          .catch((error) => {
-            console.log(error)
-          })
+        const response = await axios.get(`/api/searchUser/${user.nickname}`)
+        console.log(response)
+
+        // const { db } = await connectToDatabase()
+        // const users = await db.collection('users').find({}).limit(1).toArray()
+        setCharitUser(response.data[0])
         setIsLoading(false)
       } catch (error) {
         setError(error.statusText)
@@ -63,23 +59,21 @@ export default function TimelinePage({ user }) {
 
   return (
     <div className={classes.root}>
+      {console.log(charitUser)}
       <NavigationBar page="Timeline" user={user} />
-      <h3>{charitUser.email_verified ? 'true' : 'false'}</h3>
       <Paper className={classes.organizations}>
         <div>
           {isLoading ? (
             <Loading />
           ) : error ? (
             <Typography>{error}</Typography>
-          ) : charitUser ? (
+          ) : (
             <div className={classes.content}>
               <div>
                 <CreatePostBox name="Bj" icon="/media/BjIcon" />
                 <PostScrollview posts={mockPosts.posts} className={classes.posts}></PostScrollview>
               </div>
             </div>
-          ) : (
-            <div>verify your email to access this page</div>
           )}
         </div>
       </Paper>
