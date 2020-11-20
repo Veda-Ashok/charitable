@@ -65,7 +65,7 @@ export default function SearchDescriptionBox({ result, type }) {
   const [postOpen, setPostOpen] = useState(false)
   const [savedOpen, setSavedOpen] = useState(false)
   //on load, call the DB for the og state
-  const isSaved = true
+  const isSaved = false
 
   const handleClickPostOpen = () => {
     setPostOpen(true)
@@ -95,13 +95,12 @@ export default function SearchDescriptionBox({ result, type }) {
           result: result,
           userId: '5fb3675e723a2200111c8a08',
         })
+      } else {
+        axios.post('/api/addSavedOrgs', {
+          result: result,
+          userId: '5fb3675e723a2200111c8a08',
+        })
       }
-      // else {
-      // axios.post('/api/addSavedOrgs', {
-      //   result: result,
-      //   userId: '5fb3675e723a2200111c8a08',
-      // })
-      // }
     }
     setSavedOpen(true)
   }
