@@ -1,30 +1,10 @@
-import { makeStyles } from '@material-ui/core/styles'
+import React from 'react'
 import auth0 from '../../utils/auth0'
 import PropTypes from 'prop-types'
-import TimelinePage from '../../src/components/TimeLinePage'
-import TalkToFlask from '../../src/components/TalkToFlask'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(11),
-    flexGrow: 1,
-  },
-  content: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-}))
+import TimelinePage from '../../src/components/TimelinePage'
 
 export default function Timeline({ user }) {
-  const classes = useStyles()
-
-  return (
-    <div className={classes.root}>
-      <TalkToFlask />
-      <TimelinePage user={user} />
-      {/* {charit_user[0].name} */}
-    </div>
-  )
+  return <TimelinePage user={user} />
 }
 
 export async function getServerSideProps({ req }) {

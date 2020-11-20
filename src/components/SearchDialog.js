@@ -32,7 +32,7 @@ export default function SearchDialog(props) {
           </IconButton>
         </DialogActions>
         <DialogContent>
-          <SearchDescriptionBox result={result}></SearchDescriptionBox>
+          <SearchDescriptionBox result={result} type={props.type}></SearchDescriptionBox>
         </DialogContent>
       </div>
     </Dialog>
@@ -43,4 +43,5 @@ SearchDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   result: PropTypes.object,
+  type: PropTypes.string,
 }

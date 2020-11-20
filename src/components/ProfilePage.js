@@ -15,7 +15,10 @@ import { mockProfile } from '../tests/MockAPI/MockProfile'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(14),
+    [theme.breakpoints.up('sm')]: {
+      marginTop: theme.spacing(8),
+    },
   },
   content: {
     display: 'flex',

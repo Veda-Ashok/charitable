@@ -3,9 +3,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
 import Avatar from '@material-ui/core/Avatar'
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import IconButton from '@material-ui/core/IconButton'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardActionArea from '@material-ui/core/CardActionArea'
@@ -29,11 +26,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function TrendingListItems({ orgDetails, saved, onClick }) {
+export default function TrendingListItems({ orgDetails, onClick }) {
   const details = orgDetails
-  const handleSaved = () => {
-    //Hit the api and save/unsave in the DB
-  }
   const classes = useStyles()
   let themes = []
   for (const theme of details.themes.theme) {
@@ -53,23 +47,17 @@ export default function TrendingListItems({ orgDetails, saved, onClick }) {
             <div className={classes.text}>
               <Typography variant="body1">{details.organization.name}</Typography>
               <Typography color="textSecondary" variant="caption">
-                {themes.join(', ')}
+                {themes.slice(0, 5).join(', ')}
               </Typography>
             </div>
           </div>
         </CardContent>
       </CardActionArea>
-      <div>
-        <IconButton onClick={handleSaved}>
-          {saved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-        </IconButton>
-      </div>
     </Card>
   )
 }
 
 TrendingListItems.propTypes = {
   orgDetails: PropTypes.object,
-  saved: PropTypes.bool,
   onClick: PropTypes.func,
 }

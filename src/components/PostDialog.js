@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   },
 })
 
-export default function OrgDialog(props) {
+export default function PostDialog(props) {
   const classes = useStyles()
   const { onClose, open } = props
 
@@ -39,7 +39,7 @@ export default function OrgDialog(props) {
   )
 }
 
-OrgDialog.propTypes = {
+PostDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   org: PropTypes.object,
