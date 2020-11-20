@@ -69,21 +69,15 @@ export default function TimelinePage({ user }) {
             <Loading />
           ) : error ? (
             <Typography>{error}</Typography>
-          ) : (
-            <div>
-              {charitUser.email_verified ? (
-                <div className={classes.content}>
-                  <div>
-                    <CreatePostBox name="Bj" icon="/media/BjIcon" />
-                    <PostScrollview
-                      posts={mockPosts.posts}
-                      className={classes.posts}></PostScrollview>
-                  </div>
-                </div>
-              ) : (
-                <div>verify ur email bitch</div>
-              )}
+          ) : charitUser.email_verified ? (
+            <div className={classes.content}>
+              <div>
+                <CreatePostBox name="Bj" icon="/media/BjIcon" />
+                <PostScrollview posts={mockPosts.posts} className={classes.posts}></PostScrollview>
+              </div>
             </div>
+          ) : (
+            <div>verify ur email bitch</div>
           )}
         </div>
       </Paper>
