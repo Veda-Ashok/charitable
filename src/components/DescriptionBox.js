@@ -7,7 +7,12 @@ import Fab from '@material-ui/core/Fab'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
 import Avatar from '@material-ui/core/Avatar'
+import IconButton from '@material-ui/core/IconButton'
 import PostDialog from './PostDialog'
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import PostAddIcon from '@material-ui/icons/PostAdd'
+import SavedDialog from './SavedDialog'
 
 // comment for testing
 const useStyles = makeStyles((theme) => ({
@@ -23,44 +28,61 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(1),
   },
   button: {
-    borderRadius: '999px',
-    fontSize: '12px',
-    margin: theme.spacing(1),
-    position: 'absolute',
-    right: '0',
+    float: 'right',
   },
 }))
 
 export default function DescriptionBox({ orgDetails }) {
   const classes = useStyles()
-  const [open, setOpen] = useState(false)
   const themes = orgDetails.themes.theme
   const countries = orgDetails.countries.country
+  const [postOpen, setPostOpen] = useState(false)
+  const [savedOpen, setSavedOpen] = useState(false)
+  const saved = false
 
-  const handleClickOpen = () => {
-    setOpen(true)
+  const handleClickPostOpen = () => {
+    setPostOpen(true)
   }
 
-  const handleClose = () => {
-    setOpen(false)
+  const handlePostClose = () => {
+    setPostOpen(false)
+  }
+
+  const handleClickSavedOpen = () => {
+    setSavedOpen(true)
+  }
+
+  const handleSavedClose = () => {
+    setSavedOpen(false)
   }
 
   return (
     <Card className={classes.root}>
-      <Fab
-        size="small"
-        variant="extended"
-        color="primary"
-        onClick={() => handleClickOpen()}
-        className={classes.button}>
-        Share
-      </Fab>
+      <IconButton className={classes.button}>
+        {saved ? (
+          <FavoriteIcon onClick={() => handleClickSavedOpen()} />
+        ) : (
+          <FavoriteBorderIcon onClick={() => handleClickSavedOpen()} />
+        )}
+      </IconButton>
+      <IconButton className={classes.button}>
+        <PostAddIcon onClick={() => handleClickPostOpen()} />
+      </IconButton>
       <Avatar
         className={classes.avatar}
         src={orgDetails.organization.logoUrl}
         alt={orgDetails.organization.name}
       />
-      <PostDialog open={open} onClose={handleClose} org={orgDetails.organization}></PostDialog>
+      <PostDialog
+        open={postOpen}
+        onClose={handlePostClose}
+        org={orgDetails.organization}></PostDialog>
+      <SavedDialog
+        open={savedOpen}
+        onClose={handleSavedClose}
+        wantToSave={saved}
+        name={orgDetails.organization.name}
+      />
       <Typography gutterBottom variant="h4">
         {orgDetails.organization.name}
       </Typography>

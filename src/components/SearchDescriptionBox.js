@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
@@ -7,7 +7,13 @@ import CardContent from '@material-ui/core/CardContent'
 import Fab from '@material-ui/core/Fab'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import PostAddIcon from '@material-ui/icons/PostAdd'
 import Avatar from '@material-ui/core/Avatar'
+import IconButton from '@material-ui/core/IconButton'
+import PostDialog from './PostDialog'
+import SavedDialog from './SavedDialog'
 
 const useStyles = makeStyles((theme) => ({
   root: { overflow: 'auto', width: '100%' },
@@ -25,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
     paddingTop: '56.25%',
+  },
+  button: {
+    float: 'right',
   },
 }))
 
@@ -52,14 +61,46 @@ export default function SearchDescriptionBox({ result, type }) {
     name = result.title
     url = result.project_link
   }
+  const [postOpen, setPostOpen] = useState(false)
+  const [savedOpen, setSavedOpen] = useState(false)
+  const saved = true
+
+  const handleClickPostOpen = () => {
+    setPostOpen(true)
+  }
+
+  const handlePostClose = () => {
+    setPostOpen(false)
+  }
+
+  const handleClickSavedOpen = () => {
+    setSavedOpen(true)
+  }
+
+  const handleSavedClose = () => {
+    setSavedOpen(false)
+  }
 
   return (
     <Card className={classes.root}>
       <CardContent>
+        <IconButton className={classes.button}>
+          {saved ? (
+            <FavoriteIcon onClick={() => handleClickSavedOpen()} />
+          ) : (
+            <FavoriteBorderIcon onClick={() => handleClickSavedOpen()} />
+          )}
+        </IconButton>
+        <IconButton className={classes.button}>
+          <PostAddIcon onClick={() => handleClickPostOpen()} />
+        </IconButton>
         <Avatar className={classes.avatar} src={imageSrc} alt={name} />
         <Typography gutterBottom variant="h4">
           {name}
         </Typography>
+        {/*TODO: NEED TO MAKE POST DIALOG SPECIFIC FOR SEARCH.... and also update the trending one*/}
+        <PostDialog open={postOpen} onClose={handlePostClose} org={result}></PostDialog>
+        <SavedDialog open={savedOpen} onClose={handleSavedClose} wantToSave={saved} name={name} />
       </CardContent>
       <CardActions>
         {url ? (
