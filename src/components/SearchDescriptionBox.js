@@ -63,7 +63,7 @@ export default function SearchDescriptionBox({ result, type }) {
   }
   const [postOpen, setPostOpen] = useState(false)
   const [savedOpen, setSavedOpen] = useState(false)
-  const saved = false
+  const saved = true
 
   const handleClickPostOpen = () => {
     setPostOpen(true)
