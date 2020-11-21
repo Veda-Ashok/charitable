@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
 import Fab from '@material-ui/core/Fab'
+import TextField from '@material-ui/core/TextField'
 
 const useStyles = makeStyles({
   root: {
@@ -28,12 +29,7 @@ const useStyles = makeStyles({
   },
   topInput: {
     flex: 1,
-    outlineWidth: 0,
-    border: 'none',
-    padding: '.5rem 1rem',
     margin: '0 .5rem',
-    borderRadius: '999px',
-    backgroundColor: '#eff2f5',
   },
   button: {
     borderRadius: '999px',
@@ -68,14 +64,16 @@ export default function CreatePostBox(props) {
     <Paper className={classes.root}>
       <div className={classes.top}>
         <Avatar alt={props.name} src={props.icon}></Avatar>
-        <form className={classes.topForm}>
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className={classes.topInput}
-            placeholder={'Share with the community!'}
-          />
-        </form>
+        <TextField
+          id="standard-multiline-flexible"
+          label="Share with the community!"
+          multiline
+          rowsMax={4}
+          className={classes.topInput}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          variant="filled"
+        />
         <Fab variant="extended" color="primary" onClick={handleSubmit} className={classes.button}>
           Post
         </Fab>
