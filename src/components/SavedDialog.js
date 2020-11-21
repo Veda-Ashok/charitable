@@ -25,7 +25,7 @@ export default function SavedDialog(props) {
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
       <div className={classes.root}>
         <DialogTitle>
-          {!isSaved ? (
+          {isSaved ? (
             <Typography> Congratulations! You have saved {name} </Typography>
           ) : (
             <Typography> You have unsaved {name}.</Typography>
