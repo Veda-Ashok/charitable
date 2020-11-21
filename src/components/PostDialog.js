@@ -7,6 +7,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import CreatePostBox from './CreatePostBox'
+import InfoSmallBox from './InfoSmallBox'
 
 const useStyles = makeStyles({
   root: {
@@ -32,6 +33,7 @@ export default function PostDialog(props) {
           </IconButton>
         </DialogActions>
         <DialogContent>
+          <InfoSmallBox orgDetails={props.org} />
           <CreatePostBox name="Bj Johnson" icon="/media/BjIcon" defaultText={props.org.name} />
         </DialogContent>
       </div>
