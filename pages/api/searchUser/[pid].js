@@ -23,7 +23,7 @@ export default async (req, res) => {
         email: 0,
       }
     )
-    .limit(10)
+    .limit(20)
     .toArray()
 
   res.json(users)

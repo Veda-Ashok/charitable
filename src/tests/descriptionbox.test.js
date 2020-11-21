@@ -7,6 +7,6 @@ describe('DescriptionBox', () => {
     const { getAllByText } = render(
       <DescriptionBox orgDetails={mockTrending.projects.project[0]} />
     )
-    expect(getAllByText('Visit Site')).toBeTruthy()
+    expect(getAllByText('Loading...')).toBeTruthy()
   })
 })
