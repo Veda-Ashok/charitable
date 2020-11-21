@@ -9,8 +9,7 @@ export default async (req, res) => {
       .collection('users')
       .updateOne(
         { _id: ObjectId(req.body.userId) },
-        { $addToSet: { saved_orgs: req.body.result.gg_id } },
-        { upsert: true }
+        { $addToSet: { saved_orgs: req.body.result.gg_id } }
       )
 
     res.json(users)

@@ -10,8 +10,7 @@ export default async (req, res) => {
       .collection('users')
       .updateOne(
         { _id: ObjectId(req.body.userId) },
-        { $addToSet: { saved_activities: ObjectId(req.body.result._id) } },
-        { upsert: true }
+        { $addToSet: { saved_activities: ObjectId(req.body.result._id) } }
       )
 
     res.json(users)

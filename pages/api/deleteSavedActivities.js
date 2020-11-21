@@ -9,9 +9,8 @@ export default async (req, res) => {
     const users = await db
       .collection('users')
       .updateOne(
-        { _id: req.body.userId },
-        { $pull: { saved_activities: ObjectId(req.body.result._id) } },
-        { upsert: true }
+        { _id: ObjectId(req.body.userId) },
+        { $pull: { saved_activities: ObjectId(req.body.result._id) } }
       )
 
     res.json(users)

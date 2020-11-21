@@ -14,6 +14,7 @@ import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import PostDialog from './PostDialog'
 import SavedDialog from './SavedDialog'
+import UsersOnlyDialog from './UsersOnlyDialog'
 import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
@@ -46,6 +47,9 @@ export default function SearchDescriptionBox({ result, type }) {
   let url = ''
   let location = []
   let themes = []
+  let userId = '5fb3675e723a2200111c8a08'
+  let userVerified = true
+  //we need the user object//
 
   if (type === 'organizations') {
     imageSrc = result.logo_url
@@ -63,46 +67,63 @@ export default function SearchDescriptionBox({ result, type }) {
     url = result.project_link
   }
   const [postOpen, setPostOpen] = useState(false)
+  const [verifyUserOpen, setVerifyUserOpen] = useState(false)
   const [savedOpen, setSavedOpen] = useState(false)
   //on load, call the DB for the og state
-  const isSaved = false
+  const isSaved = true
 
   const handleClickPostOpen = () => {
-    setPostOpen(true)
+    if (!userId || !userVerified) {
+      handleVerifyUserOpen()
+    } else {
+      setPostOpen(true)
+    }
   }
 
   const handlePostClose = () => {
     setPostOpen(false)
   }
 
+  const handleVerifyUserOpen = () => {
+    setVerifyUserOpen(true)
+  }
+
+  const handleVerifyUserClose = () => {
+    setVerifyUserOpen(false)
+  }
+
   const handleClickSavedOpen = () => {
     // get user ID
-    if (type === 'activities') {
-      if (isSaved) {
-        axios.post('/api/deleteSavedActivities', {
-          result: result,
-          userId: '5fb3675e723a2200111c8a08',
-        })
-      } else {
-        axios.post('/api/addSavedActivities', {
-          result: result,
-          userId: '5fb3675e723a2200111c8a08',
-        })
+    if (!userId || !userVerified) {
+      handleVerifyUserOpen()
+    } else {
+      if (type === 'activities') {
+        if (isSaved) {
+          axios.post('/api/deleteSavedActivities', {
+            result: result,
+            userId: userId,
+          })
+        } else {
+          axios.post('/api/addSavedActivities', {
+            result: result,
+            userId: userId,
+          })
+        }
+      } else if (type === 'organizations') {
+        if (isSaved) {
+          axios.post('/api/deleteSavedOrgs', {
+            result: result,
+            userId: userId,
+          })
+        } else {
+          axios.post('/api/addSavedOrgs', {
+            result: result,
+            userId: userId,
+          })
+        }
       }
-    } else if (type === 'organizations') {
-      if (isSaved) {
-        axios.post('/api/deleteSavedOrgs', {
-          result: result,
-          userId: '5fb3675e723a2200111c8a08',
-        })
-      } else {
-        axios.post('/api/addSavedOrgs', {
-          result: result,
-          userId: '5fb3675e723a2200111c8a08',
-        })
-      }
+      setSavedOpen(true)
     }
-    setSavedOpen(true)
   }
 
   const handleSavedClose = () => {
@@ -126,6 +147,7 @@ export default function SearchDescriptionBox({ result, type }) {
         {/*TODO: NEED TO MAKE POST DIALOG SPECIFIC FOR SEARCH.... and also update the trending one*/}
         <PostDialog open={postOpen} onClose={handlePostClose} org={result}></PostDialog>
         <SavedDialog open={savedOpen} onClose={handleSavedClose} isSaved={isSaved} name={name} />
+        <UsersOnlyDialog open={verifyUserOpen} onClose={handleVerifyUserClose} />
       </CardContent>
       <CardActions>
         {url ? (
