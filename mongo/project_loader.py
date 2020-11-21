@@ -72,6 +72,8 @@ for i in root.findall('project'):
     summary = getAttributeText(i, 'summary')
     organization = getAttributeText(i, 'organization')
     gg_organization_id = getOrganizationAttributes(i, 'organization', 'id')
+    organization_name= getOrganizationAttributes(i, 'organization', 'name')
+    organization_logo_url = getOrganizationAttributes(i, 'organization', 'logoUrl')
     project_theme = getAttributeText(i, 'themeName')
     impact = getAttributeText(i, 'longTermImpact')
     title = getAttributeText(i, 'title')
@@ -104,9 +106,12 @@ for i in root.findall('project'):
         'theme': project_theme,
         'impact': impact,
         'title': title,
-        'image': image
+        'image': image,
+        'organization_name': organization_name,
+        'organization_logo_url': organization_logo_url
     }
     if activity_obj['country'] != "Not Specified.":
         activities_collection.insert_one(activity_obj)
         print(activity_obj)
     
+   
