@@ -49,7 +49,7 @@ function TrendingScrollview(props) {
       })
       .map((org) => (
         <ListItem key={org.organization.name}>
-          <TrendingListItems onClick={() => handleClickOpen(org)} orgDetails={org} saved={false} />
+          <TrendingListItems onClick={() => handleClickOpen(org)} orgDetails={org} />
         </ListItem>
       ))
 

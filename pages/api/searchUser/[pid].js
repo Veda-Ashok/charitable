@@ -1,4 +1,5 @@
 import { connectToDatabase } from '../../../utils/mongodb'
+// const ObjectId = require('mongodb').ObjectID
 
 export default async (req, res) => {
   const {
@@ -14,14 +15,15 @@ export default async (req, res) => {
         $or: [
           { name: { $regex: `${pid}`, $options: 'i' } },
           { nickname: { $regex: `${pid}`, $options: 'i' } },
+          // { _id: ObjectId`${pid}` },
         ],
       },
       {
-        _id: 0,
+        _id: 1,
         email: 0,
       }
     )
-    .limit(10)
+    .limit(20)
     .toArray()
 
   res.json(users)

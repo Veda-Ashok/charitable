@@ -3,9 +3,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
 import Avatar from '@material-ui/core/Avatar'
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import IconButton from '@material-ui/core/IconButton'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardActionArea from '@material-ui/core/CardActionArea'
@@ -41,12 +38,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SearchListItems({ result, onClick, saved, type }) {
+export default function SearchListItems({ result, onClick, type }) {
   let imageSrc = ''
   let name = ''
   let theme = []
 
-  console.log('searchlistitems', result)
   if (type === 'organizations') {
     imageSrc = result.logo_url
     name = result.name
@@ -62,9 +58,6 @@ export default function SearchListItems({ result, onClick, saved, type }) {
     theme = [result.nickname]
   }
 
-  const handleSaved = () => {
-    //Hit the api and save/unsave in the DB
-  }
   const classes = useStyles()
 
   return (
@@ -94,9 +87,6 @@ export default function SearchListItems({ result, onClick, saved, type }) {
               </Typography>
             </div>
           </CardActionArea>
-          <IconButton onClick={handleSaved} className={classes.heart}>
-            {saved ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-          </IconButton>
         </div>
       )}
     </Card>
@@ -105,7 +95,6 @@ export default function SearchListItems({ result, onClick, saved, type }) {
 
 SearchListItems.propTypes = {
   result: PropTypes.object,
-  saved: PropTypes.bool,
   type: PropTypes.string,
   onClick: PropTypes.func,
 }

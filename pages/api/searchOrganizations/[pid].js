@@ -24,7 +24,7 @@ export default async (req, res) => {
         url: 1,
       }
     )
-    .limit(10)
+    .limit(20)
     .toArray()
 
   res.json(organizations)
