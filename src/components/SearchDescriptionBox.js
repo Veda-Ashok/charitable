@@ -17,7 +17,6 @@ import Loading from './Loading'
 import SavedDialog from './SavedDialog'
 import UsersOnlyDialog from './UsersOnlyDialog'
 import axios from 'axios'
-import { ErrorOutlineRounded } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   root: { overflow: 'auto', width: '100%' },
@@ -43,13 +42,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchDescriptionBox({ result, type }) {
   const classes = useStyles()
-  let gg_id = ''
+  let _id = ''
   let imageSrc = ''
   let name = ''
   let description = ''
   let url = ''
   let location = []
   let themes = []
+  /*TODO: get the current user object and pass it down to here from the top level*/
   let userId = '5fb3675e723a2200111c8a08'
   let userVerified = true
 
@@ -60,14 +60,14 @@ export default function SearchDescriptionBox({ result, type }) {
     themes = result.themes
     name = result.name
     url = result.url
-    gg_id = result.gg_id
+    _id = result.gg_id
   } else if (type === 'activities') {
     imageSrc = undefined
     description = result.description
     location = [result.country]
     themes = [result.theme]
     name = result.title
-    gg_id = result.gg_activity_id
+    _id = result._id
     url = result.project_link
   }
 
@@ -76,7 +76,6 @@ export default function SearchDescriptionBox({ result, type }) {
   const [savedOpen, setSavedOpen] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
   const [loading, setLoading] = useState(true)
-  //we need the user object//
 
   useEffect(() => {
     const getIsSaved = async () => {
@@ -84,11 +83,11 @@ export default function SearchDescriptionBox({ result, type }) {
       try {
         let response
         if (type === 'organizations') {
-          response = await axios.get('/api/getSavedOrgs')
+          response = await axios.get('/api/getSavedOrgsIDs')
         } else if (type === 'activities') {
-          response = await axios.get('/api/getSavedActivities')
+          response = await axios.get('/api/getSavedActivitiesIDs')
         }
-        setIsSaved(response.data.includes(gg_id))
+        setIsSaved(response.data.includes(_id))
         setLoading(false)
       } catch (error) {
         console.log(error)
@@ -118,7 +117,6 @@ export default function SearchDescriptionBox({ result, type }) {
   }
 
   async function handleClickSavedOpen() {
-    // get user ID
     if (!userId || !userVerified) {
       handleVerifyUserOpen()
     } else {
@@ -154,7 +152,7 @@ export default function SearchDescriptionBox({ result, type }) {
           setSavedOpen(true)
         }
       } catch (error) {
-        console.error(ErrorOutlineRounded)
+        console.error(error)
       }
     }
   }
