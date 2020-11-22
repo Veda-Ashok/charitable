@@ -40,10 +40,6 @@ export default function TimelinePage({ user }) {
       try {
         setIsLoading(true)
         const response = await axios.get(`/api/searchUser/${user.nickname}`)
-        // console.log(response)
-
-        // const { db } = await connectToDatabase()
-        // const users = await db.collection('users').find({}).limit(1).toArray()
         setCharitUser(response.data[0])
         setIsLoading(false)
       } catch (error) {

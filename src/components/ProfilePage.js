@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import Loading from './Loading'
-import { mockProfile } from '../tests/MockAPI/MockProfile'
+import axios from 'axios'
 // import { connectToDatabase } from '../../utils/mongodb'
 
 const useStyles = makeStyles((theme) => ({
@@ -46,29 +46,24 @@ function ProfilePage(props) {
   const [bio, setBio] = useState(null)
   const [banner, setBanner] = useState(null)
   const [icon, setIcon] = useState(null)
-  // const [emailVerified, setEmailVerified] = useState(false)
+  const [email_verified, setEmailVerified] = useState(true)
 
   //  FIX THIS TO BE REAL ORGS FROM OUR DATABASE
   useEffect(() => {
     let didCancel = false
-    function fetchData() {
+    async function fetchData() {
       !didCancel && setIsLoading(true)
       try {
         setIsLoading(true)
-        //Get user data, saved org, posts
-        // const { db } = await connectToDatabase()
-        // console.log('hihihi')
-        // const charit_user = await db.collection('users').find({}).limit(1)
-        // console.log(charit_user)
-        const response = mockProfile.result[0]
+        const response = await axios.get(`/api/searchUser/${props.user.nickname}`)
         setOrgs(response.saved_orgs)
         setPosts(response.posts.posts)
         setIcon(response.profile_picture)
         setName(response.name)
         setBanner(response.bannerPicture)
         setBio(response.bio)
+        setEmailVerified(response.email_verified)
         setIsLoading(false)
-        // setEmailVerified(charit_user.email_verified)
       } catch (error) {
         console.error(error)
       } finally {
@@ -86,7 +81,7 @@ function ProfilePage(props) {
   return (
     <div className={classes.banner}>
       <NavigationBar page="Profile" user={props.user} />
-      {props.charit_user.email_verified ? (
+      {email_verified ? (
         <div>
           <ProfileBanner
             bio={bio}
@@ -130,23 +125,11 @@ function ProfilePage(props) {
           </div>
         </div>
       ) : (
-        <div>Authenticate your account to view this page</div>
+        <h2>verify your email to access this page</h2>
       )}
     </div>
   )
 }
-
-// export async function getServerSideProps() {
-//   const { db } = await connectToDatabase()
-
-//   const users = await db.collection('users').find({}).limit(1).toArray()
-//   //$lt less than,
-//   return {
-//     props: {
-//       charit_user: JSON.parse(JSON.stringify(users))[0],
-//     },
-//   }
-// }
 
 ProfilePage.propTypes = {
   member: PropTypes.string,
@@ -155,7 +138,6 @@ ProfilePage.propTypes = {
   isFollower: PropTypes.bool,
   orgs: PropTypes.object,
   width: PropTypes.string,
-  charit_user: PropTypes.object,
 }
 
 export default withWidth()(ProfilePage)
