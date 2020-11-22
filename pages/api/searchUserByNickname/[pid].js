@@ -11,7 +11,7 @@ export default async (req, res) => {
   const users = await db
     .collection('users')
     .find(
-      { name: { $regex: `${pid}`, $options: 'i' } },
+      { nickname: { $regex: `${pid}`, $options: 'i' } },
       {
         _id: 1,
         email: 0,
