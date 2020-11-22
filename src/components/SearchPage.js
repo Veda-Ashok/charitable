@@ -43,6 +43,22 @@ export default function SearchPage(props) {
   const type = router.query.type ? router.query.type : 'organizations'
   const [resultType, setResultType] = useState(null)
   const [result, setResult] = useState('Loading')
+  const [dbuser, setDbuser] = useState(undefined)
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        let responseUser
+        if (props.user) {
+          responseUser = await axios.get(`/api/searchUserByNickname/${props.user.nickname}`)
+          setDbuser(responseUser.data)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getUser()
+  }, [])
 
   useEffect(() => {
     const search = async () => {
@@ -86,7 +102,12 @@ export default function SearchPage(props) {
                       No results for that search :( Search something else!
                     </Typography>
                   ) : (
-                    <SearchScrollview className={classes.scrollView} result={result} type={type} />
+                    <SearchScrollview
+                      className={classes.scrollView}
+                      result={result}
+                      type={type}
+                      dbuser={dbuser}
+                    />
                   )}
                 </div>
               )}

@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SearchDescriptionBox({ result, type }) {
+export default function SearchDescriptionBox({ result, type, dbuser }) {
   const classes = useStyles()
   let _id = ''
   let imageSrc = ''
@@ -49,9 +49,8 @@ export default function SearchDescriptionBox({ result, type }) {
   let url = ''
   let location = []
   let themes = []
-  /*TODO: get the current user object and pass it down to here from the top level*/
-  let userId = '5fb3675e723a2200111c8a08'
-  let userVerified = true
+  let userId = dbuser?._id || undefined
+  let userVerified = dbuser?.email_verified || false
 
   if (type === 'organizations') {
     imageSrc = result.logo_url
@@ -81,16 +80,20 @@ export default function SearchDescriptionBox({ result, type }) {
     const getIsSaved = async () => {
       setLoading(true)
       try {
-        let response
-        if (type === 'organizations') {
-          response = await axios.get('/api/getSavedOrgsIDs')
-        } else if (type === 'activities') {
-          response = await axios.get('/api/getSavedActivitiesIDs')
+        if (userId && userVerified) {
+          let response
+          if (type === 'organizations') {
+            response = await axios.get(`/api/getSavedOrgsIDs/${userId}`)
+          } else if (type === 'activities') {
+            response = await axios.get(`/api/getSavedActivitiesIDs/${userId}`)
+          }
+          setIsSaved(response.data.includes(_id))
+          setLoading(false)
+        } else {
+          setLoading(false)
         }
-        setIsSaved(response.data.includes(_id))
-        setLoading(false)
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     }
     getIsSaved()
@@ -291,4 +294,5 @@ export default function SearchDescriptionBox({ result, type }) {
 SearchDescriptionBox.propTypes = {
   result: PropTypes.object,
   type: PropTypes.string,
+  dbuser: PropTypes.object,
 }

@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper'
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Loading from './Loading'
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
@@ -36,9 +37,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TrendingPage({ user }) {
   const classes = useStyles()
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [orgs, setOrgs] = useState(null)
   const [error, setError] = useState(undefined)
+  const [dbuser, setDbuser] = useState(undefined)
 
   useEffect(() => {
     let didCancel = false
@@ -46,7 +48,12 @@ export default function TrendingPage({ user }) {
       !didCancel && setIsLoading(true)
       try {
         setIsLoading(true)
+        let responseUser
         const response = await searchFeatured('featured/projects')
+        if (user) {
+          responseUser = await axios.get(`/api/searchUserByNickname/${user.nickname}`)
+          setDbuser(responseUser.data)
+        }
         setOrgs(response)
         setIsLoading(false)
       } catch (error) {
@@ -79,6 +86,7 @@ export default function TrendingPage({ user }) {
             <TrendingScrollview
               className={classes.scrollView}
               orgs={orgs ? orgs.projects.project : null}
+              dbuser={dbuser}
             />
           )}
         </div>

@@ -7,7 +7,6 @@ import Fab from '@material-ui/core/Fab'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
 import Avatar from '@material-ui/core/Avatar'
-import IconButton from '@material-ui/core/IconButton'
 import PostDialog from './PostDialog'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import FavoriteIcon from '@material-ui/icons/Favorite'
@@ -16,8 +15,8 @@ import SavedDialog from './SavedDialog'
 import Loading from './Loading'
 import UsersOnlyDialog from './UsersOnlyDialog'
 import axios from 'axios'
+import IconButton from '@material-ui/core/IconButton'
 
-// comment for testing
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
@@ -35,27 +34,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function DescriptionBox({ orgDetails }) {
+export default function DescriptionBox({ orgDetails, dbuser }) {
   const classes = useStyles()
   const themes = orgDetails.organization.themes.theme
   const countries = orgDetails.organization.countries.country
   /*TODO: get the current user object and pass it down to here from the top level*/
-  let userId = '5fb3675e723a2200111c8a08'
-  let userVerified = true
+  let userId = dbuser?._id || undefined
+  let userVerified = dbuser?.email_verified || false
   const [postOpen, setPostOpen] = useState(false)
   const [savedOpen, setSavedOpen] = useState(false)
   const [verifyUserOpen, setVerifyUserOpen] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
   const [loading, setLoading] = useState(true)
-  console.log('countries', countries)
 
   useEffect(() => {
     const getIsSaved = async () => {
       setLoading(true)
       try {
-        const response = await axios.get('/api/getSavedOrgsIDs')
-        setIsSaved(response.data.includes(orgDetails.organization.id))
-        setLoading(false)
+        if (userId && userVerified) {
+          const response = await axios.get(`/api/getSavedOrgsIDs/${userId}`)
+          setIsSaved(response.data.includes(orgDetails.organization.id.toString()))
+          setLoading(false)
+        } else {
+          setLoading(false)
+        }
       } catch (error) {
         console.log(error)
       }
@@ -185,4 +187,5 @@ export default function DescriptionBox({ orgDetails }) {
 
 DescriptionBox.propTypes = {
   orgDetails: PropTypes.object,
+  dbuser: PropTypes.object,
 }
