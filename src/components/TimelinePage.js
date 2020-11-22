@@ -39,8 +39,9 @@ export default function TimelinePage({ user }) {
       !didCancel && setIsLoading(true)
       try {
         setIsLoading(true)
-        const response = await axios.get(`/api/searchUser/${user.nickname}`)
-        setCharitUser(response.data[0])
+        console.log(user.nickname)
+        const response = await axios.get(`/api/searchUserByNickname/${user.nickname}`)
+        setCharitUser(response.data)
         setIsLoading(false)
       } catch (error) {
         setError(error.statusText)

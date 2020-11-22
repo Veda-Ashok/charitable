@@ -57,7 +57,7 @@ function ProfilePage(props) {
         setIsLoading(true)
         const response = await axios.get(`/api/searchUser/${props.user.nickname}`)
         setOrgs(response.saved_orgs)
-        setPosts(response.posts.posts)
+        setPosts(response.posts)
         setIcon(response.profile_picture)
         setName(response.name)
         setBanner(response.bannerPicture)
@@ -115,6 +115,7 @@ function ProfilePage(props) {
                 <Paper className={classes.title}>
                   <Typography variant="h6">Saved Organizations</Typography>
                 </Paper>
+                {console.log(isLoading)}
                 {isLoading ? (
                   <Loading />
                 ) : (
