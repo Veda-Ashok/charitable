@@ -1,8 +1,11 @@
 import { connectToDatabase } from '../../utils/mongodb'
+import microCors from 'micro-cors'
+
+const cors = microCors()
 
 const ObjectId = require('mongodb').ObjectID
 
-export default async (req, res) => {
+const handler = async (req, res) => {
   try {
     const { db } = await connectToDatabase()
 
@@ -18,3 +21,5 @@ export default async (req, res) => {
     console.error(error)
   }
 }
+
+export default cors(handler)
