@@ -6,7 +6,7 @@ import { ListItem } from '@material-ui/core'
 import OrgDialog from './OrgDialog'
 import { makeStyles } from '@material-ui/core/styles'
 import TrendingListItems from './TrendingListItems'
-import Loading from './Loading'
+// import Loading from './Loading'
 
 const useStyles = makeStyles((theme) => ({
   orgs: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SavedOrgsScrollview({ orgs }) {
   const classes = useStyles()
-  if (orgs) {
+  if (orgs && orgs[0].name) {
     const [org, setOrg] = useState(orgs[0])
     const [open, setOpen] = useState(false)
 
@@ -33,10 +33,12 @@ export default function SavedOrgsScrollview({ orgs }) {
     }
 
     let orgSet = new Set()
+
     const listItems = orgs
+      // fix to take in from api call
       .filter((org) => {
         let exists = orgSet.has(org.organization.id)
-        orgSet.add(org.organization.id)
+        orgSet.add(org)
         return !exists
       })
       .map((org) => (
@@ -54,7 +56,7 @@ export default function SavedOrgsScrollview({ orgs }) {
       </div>
     )
   } else {
-    return <Loading />
+    return <Paper className={classes.orgs} />
   }
 }
 
