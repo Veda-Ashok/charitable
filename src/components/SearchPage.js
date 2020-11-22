@@ -43,9 +43,24 @@ export default function SearchPage(props) {
   const type = router.query.type ? router.query.type : 'organizations'
   const [resultType, setResultType] = useState(null)
   const [result, setResult] = useState('Loading')
+  const [dbuser, setDbuser] = useState(undefined)
 
   useEffect(() => {
-    console.log('Result before API call', result)
+    const getUser = async () => {
+      try {
+        let responseUser
+        if (props.user) {
+          responseUser = await axios.get(`/api/searchUserByNickname/${props.user.nickname}`)
+          setDbuser(responseUser.data)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getUser()
+  }, [])
+
+  useEffect(() => {
     const search = async () => {
       setResult('Loading')
       try {
@@ -66,7 +81,6 @@ export default function SearchPage(props) {
     search()
   }, [query, type])
 
-  console.log('Result before rendering', result)
   return (
     <div>
       <NavigationBar user={props.user} page="Search" />
@@ -83,13 +97,17 @@ export default function SearchPage(props) {
                 <Loading />
               ) : (
                 <div>
-                  {console.log(result)}
                   {result.length <= 0 ? (
                     <Typography variant="h3">
                       No results for that search :( Search something else!
                     </Typography>
                   ) : (
-                    <SearchScrollview className={classes.scrollView} result={result} type={type} />
+                    <SearchScrollview
+                      className={classes.scrollView}
+                      result={result}
+                      type={type}
+                      dbuser={dbuser}
+                    />
                   )}
                 </div>
               )}

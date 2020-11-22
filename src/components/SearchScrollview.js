@@ -57,9 +57,15 @@ function SearchScrollview(props) {
         </div>
         {props.type !== 'users' &&
           (isWidthUp('sm', props.width) ? (
-            <SearchDescriptionBox result={result} type={props.type} />
+            <SearchDescriptionBox result={result} type={props.type} dbuser={props.dbuser} />
           ) : (
-            <SearchDialog result={result} open={open} onClose={handleClose} type={props.type} />
+            <SearchDialog
+              result={result}
+              open={open}
+              onClose={handleClose}
+              type={props.type}
+              dbuser={props.dbuser}
+            />
           ))}
       </div>
     )
@@ -71,6 +77,7 @@ function SearchScrollview(props) {
 SearchScrollview.propTypes = {
   result: PropTypes.array,
   type: PropTypes.string,
+  dbuser: PropTypes.object,
 }
 
 export default withWidth()(SearchScrollview)

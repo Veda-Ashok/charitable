@@ -9,7 +9,7 @@ export default async (req, res) => {
   const { db } = await connectToDatabase()
 
   const users = await db.collection('users').findOne(
-    { nickname: `${pid}` },
+    { nickname: `${pid.replace(/['"]+/g, '')}` },
     {
       _id: 1,
       email: 0,
