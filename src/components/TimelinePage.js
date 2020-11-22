@@ -1,46 +1,83 @@
+import React, { useEffect, useState } from 'react'
+import NavigationBar from './NavigationBar'
 import { makeStyles } from '@material-ui/core/styles'
-import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import PostScrollview from './PostScrollview'
-import NavigationBar from './NavigationBar'
 import { mockPosts } from '../tests/MockAPI/MockPosts'
 import CreatePostBox from './CreatePostBox'
+import Loading from './Loading'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
+import axios from 'axios'
+// import { connectToDatabase } from '../../utils/mongodb'
 
 const useStyles = makeStyles((theme) => ({
-  banner: {
-    marginTop: theme.spacing(15),
-    [theme.breakpoints.up('sm')]: {
-      marginTop: theme.spacing(11),
-    },
+  root: {
+    marginTop: theme.spacing(11),
+    flexGrow: 1,
   },
   content: {
     display: 'flex',
     justifyContent: 'center',
-    width: 'auto',
   },
 }))
 
 export default function TimelinePage({ user }) {
   const classes = useStyles()
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(undefined)
+  const [charitUser, setCharitUser] = useState(undefined)
 
   useEffect(() => {
     // Check that a new route is OK
+    console.log('in use eff')
     if (!user) {
       window.location.href = '/api/login'
     }
-  }, [user])
+    let didCancel = false
+    async function fetchData() {
+      !didCancel && setIsLoading(true)
+      try {
+        setIsLoading(true)
+        console.log(user.nickname)
+        const response = await axios.get(`/api/searchUserByNickname/${user.nickname}`)
+        setCharitUser(response.data)
+        setIsLoading(false)
+      } catch (error) {
+        setError(error.statusText)
+      } finally {
+        !didCancel && setIsLoading(false)
+      }
+    }
+    fetchData()
+    return () => {
+      didCancel = true
+    }
+  }, [])
 
   return (
-    <div>
+    <div className={classes.root}>
+      {console.log(isLoading)}
+      {console.log(charitUser)}
       <NavigationBar page="Timeline" user={user} />
-      <div className={classes.banner}>
-        <div className={classes.content}>
-          <div>
-            <CreatePostBox name="Bj" icon="/media/BjIcon" />
-            <PostScrollview posts={mockPosts.posts} className={classes.posts}></PostScrollview>
-          </div>
+      <Paper className={classes.organizations}>
+        <div>
+          {isLoading ? (
+            <Loading />
+          ) : error ? (
+            <Typography>{error}</Typography>
+          ) : charitUser.email_verified ? (
+            <div className={classes.content}>
+              <div>
+                <CreatePostBox name="Bj" icon="/media/BjIcon" />
+                <PostScrollview posts={mockPosts.posts} className={classes.posts}></PostScrollview>
+              </div>
+            </div>
+          ) : (
+            <h2>Verify Your Email To Acess This Page</h2>
+          )}
         </div>
-      </div>
+      </Paper>
     </div>
   )
 }

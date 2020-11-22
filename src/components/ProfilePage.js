@@ -10,7 +10,8 @@ import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import Loading from './Loading'
-import { mockProfile } from '../tests/MockAPI/MockProfile'
+import axios from 'axios'
+// import { connectToDatabase } from '../../utils/mongodb'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
@@ -45,22 +46,24 @@ function ProfilePage(props) {
   const [bio, setBio] = useState(null)
   const [banner, setBanner] = useState(null)
   const [icon, setIcon] = useState(null)
+  const [email_verified, setEmailVerified] = useState(false)
 
   //  FIX THIS TO BE REAL ORGS FROM OUR DATABASE
   useEffect(() => {
     let didCancel = false
-    function fetchData() {
+    async function fetchData() {
       !didCancel && setIsLoading(true)
       try {
         setIsLoading(true)
-        //Get user data, saved org, posts
-        const response = mockProfile.result[0]
-        setOrgs(response.saved_orgs)
-        setPosts(response.posts.posts)
-        setIcon(response.profile_picture)
-        setName(response.name)
-        setBanner(response.bannerPicture)
-        setBio(response.bio)
+        const response = await axios.get(`/api/searchUserByNickname/${props.user.nickname}`)
+        console.log(response.data)
+        setOrgs(response.data.saved_orgs)
+        setPosts(response.data.posts)
+        setIcon(response.data.profile_picture)
+        setName(response.data.name)
+        setBanner(response.data.bannerPicture)
+        setBio(response.data.bio)
+        setEmailVerified(response.data.email_verified)
         setIsLoading(false)
       } catch (error) {
         console.error(error)
@@ -79,46 +82,49 @@ function ProfilePage(props) {
   return (
     <div className={classes.banner}>
       <NavigationBar page="Profile" user={props.user} />
-      <ProfileBanner
-        bio={bio}
-        name={name}
-        banner={banner}
-        isMe={props.isMe}
-        icon={icon}
-        isFollower={props.isFollower}
-      />
-      <div className={classes.content}>
+      {email_verified ? (
         <div>
-          {props.isMe ? <CreatePostBox name="Bj Johnson" icon="/media/BjIcon" /> : null}
-          <PostScrollview posts={posts}></PostScrollview>
-          {!isWidthUp('sm', props.width) && (
+          <ProfileBanner
+            bio={bio}
+            name={name}
+            banner={banner}
+            isMe={props.isMe}
+            icon={icon}
+            isFollower={props.isFollower}
+          />
+          <div className={classes.content}>
             <div>
-              {isLoading ? (
-                <Loading />
-              ) : (
+              {props.isMe ? <CreatePostBox name="Bj Johnson" icon="/media/BjIcon" /> : null}
+              <PostScrollview posts={posts}></PostScrollview>
+              {!isWidthUp('sm', props.width) && (
                 <div>
-                  <Paper className={classes.title}>
-                    <Typography variant="h6">Saved Organizations</Typography>
-                  </Paper>
-                  <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null} />
+                  {isLoading ? (
+                    <Loading />
+                  ) : (
+                    <div>
+                      <Paper className={classes.title}>
+                        <Typography variant="h6">Saved Organizations</Typography>
+                      </Paper>
+                      <SavedOrgsScrollview orgs={orgs ? orgs : null} />
+                    </div>
+                  )}
                 </div>
               )}
             </div>
-          )}
-        </div>
-        {isWidthUp('sm', props.width) && (
-          <div className={classes.savedOrg}>
-            <Paper className={classes.title}>
-              <Typography variant="h6">Saved Organizations</Typography>
-            </Paper>
-            {isLoading ? (
-              <Loading />
-            ) : (
-              <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null} />
+            {isWidthUp('sm', props.width) && (
+              <div className={classes.savedOrg}>
+                <Paper className={classes.title}>
+                  <Typography variant="h6">Saved Organizations</Typography>
+                </Paper>
+                {console.log(isLoading)}
+                {isLoading ? <Loading /> : <SavedOrgsScrollview orgs={orgs ? orgs : null} />}
+              </div>
             )}
           </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <h2>verify your email to access this page</h2>
+      )}
     </div>
   )
 }
