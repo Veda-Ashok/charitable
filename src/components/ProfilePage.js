@@ -46,7 +46,7 @@ function ProfilePage(props) {
   const [bio, setBio] = useState(null)
   const [banner, setBanner] = useState(null)
   const [icon, setIcon] = useState(null)
-  const [email_verified, setEmailVerified] = useState(true)
+  const [email_verified, setEmailVerified] = useState(false)
 
   //  FIX THIS TO BE REAL ORGS FROM OUR DATABASE
   useEffect(() => {
@@ -55,14 +55,15 @@ function ProfilePage(props) {
       !didCancel && setIsLoading(true)
       try {
         setIsLoading(true)
-        const response = await axios.get(`/api/searchUser/${props.user.nickname}`)
-        setOrgs(response.saved_orgs)
-        setPosts(response.posts)
-        setIcon(response.profile_picture)
-        setName(response.name)
-        setBanner(response.bannerPicture)
-        setBio(response.bio)
-        setEmailVerified(response.email_verified)
+        const response = await axios.get(`/api/searchUserByNickname/${props.user.nickname}`)
+        console.log(response.data)
+        setOrgs(response.data.saved_orgs)
+        setPosts(response.data.posts)
+        setIcon(response.data.profile_picture)
+        setName(response.data.name)
+        setBanner(response.data.bannerPicture)
+        setBio(response.data.bio)
+        setEmailVerified(response.data.email_verified)
         setIsLoading(false)
       } catch (error) {
         console.error(error)
@@ -104,7 +105,7 @@ function ProfilePage(props) {
                       <Paper className={classes.title}>
                         <Typography variant="h6">Saved Organizations</Typography>
                       </Paper>
-                      <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null} />
+                      <SavedOrgsScrollview orgs={orgs ? orgs : null} />
                     </div>
                   )}
                 </div>
@@ -116,11 +117,7 @@ function ProfilePage(props) {
                   <Typography variant="h6">Saved Organizations</Typography>
                 </Paper>
                 {console.log(isLoading)}
-                {isLoading ? (
-                  <Loading />
-                ) : (
-                  <SavedOrgsScrollview orgs={orgs ? orgs.projects.project : null} />
-                )}
+                {isLoading ? <Loading /> : <SavedOrgsScrollview orgs={orgs ? orgs : null} />}
               </div>
             )}
           </div>
