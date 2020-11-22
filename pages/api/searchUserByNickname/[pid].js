@@ -8,17 +8,13 @@ export default async (req, res) => {
 
   const { db } = await connectToDatabase()
 
-  const users = await db
-    .collection('users')
-    .find(
-      { nickname: { $regex: `${pid}`, $options: 'i' } },
-      {
-        _id: 1,
-        email: 0,
-      }
-    )
-    .limit(10)
-    .toArray()
+  const users = await db.collection('users').findOne(
+    { nickname: `${pid}` },
+    {
+      _id: 1,
+      email: 0,
+    }
+  )
 
   res.json(users)
 }
