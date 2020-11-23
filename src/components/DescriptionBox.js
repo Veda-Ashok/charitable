@@ -161,7 +161,7 @@ export default function DescriptionBox({ orgDetails, dbuser }) {
             <div className={classes.section}>
               <Typography variant="h6">Location</Typography>
               <Typography variant="body2">
-                {countries.map((country, i, arr) =>
+                {countries?.map((country, i, arr) =>
                   i != arr.length - 1 ? country.name + ', ' : country.name + ''
                 )}
               </Typography>
@@ -169,14 +169,14 @@ export default function DescriptionBox({ orgDetails, dbuser }) {
             <div className={classes.section}>
               <Typography variant="h6">Themes</Typography>
               <Typography variant="body2">
-                {themes.map((theme, i, arr) =>
+                {themes?.map((theme, i, arr) =>
                   i != arr.length - 1 ? theme.name + ', ' : theme.name + ''
                 )}
               </Typography>
             </div>
             <div className={classes.section}>
               <Typography variant="h6">Mission Statement</Typography>
-              <Typography variant="body2">{orgDetails.organization.mission}</Typography>
+              <Typography variant="body2">{orgDetails.organization?.mission}</Typography>
             </div>
           </CardContent>
         </>
