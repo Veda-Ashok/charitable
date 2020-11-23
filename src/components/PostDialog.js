@@ -34,7 +34,7 @@ export default function PostDialog(props) {
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
       <div className={classes.root}>
         <DialogTitle>
-          Share post about {typeDisplay}!
+          Post about this {typeDisplay}!
           <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
             <CloseIcon />
           </IconButton>
