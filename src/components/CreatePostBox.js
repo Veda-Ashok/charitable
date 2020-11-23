@@ -11,6 +11,7 @@ import PropTypes from 'prop-types'
 import Fab from '@material-ui/core/Fab'
 import TextField from '@material-ui/core/TextField'
 import InfoSmallBox from './InfoSmallBox'
+import SuccessfulPostDialog from './SuccessfulPostDialog'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,11 +65,24 @@ const useStyles = makeStyles((theme) => ({
 export default function CreatePostBox(props) {
   const [input, setInput] = useState(props.defaultText)
   const classes = useStyles()
+  const [successOpen, setSuccessOpen] = useState(false)
+
+  const handleSuccessOpen = () => {
+    setSuccessOpen(true)
+  }
+
+  const handleSuccessClose = () => {
+    setSuccessOpen(false)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
     setInput('')
+    //send the post data to the post api
+    if (props.result && props.type) {
+      props.closePostDialog()
+    }
+    handleSuccessOpen()
   }
 
   return (
@@ -137,6 +151,7 @@ export default function CreatePostBox(props) {
           </div>
         </>
       )}
+      <SuccessfulPostDialog open={successOpen} onClose={handleSuccessClose} />
     </Paper>
   )
 }
@@ -148,4 +163,5 @@ CreatePostBox.propTypes = {
   result: PropTypes.object,
   type: PropTypes.string,
   dbuser: PropTypes.object,
+  closePostDialog: PropTypes.func,
 }
