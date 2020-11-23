@@ -93,11 +93,11 @@ export default function SearchPage(props) {
           </div>
           <Paper className={classes.results}>
             <div>
-              {result === 'Loading' || type !== resultType ? (
+              {(result === 'Loading' || type !== resultType) && query != '.' ? (
                 <Loading />
               ) : (
                 <div>
-                  {result.length <= 0 ? (
+                  {query == '.' || result.length <= 0 ? (
                     <Typography variant="h3">
                       No results for that search :( Search something else!
                     </Typography>
