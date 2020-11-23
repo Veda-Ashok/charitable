@@ -14,6 +14,7 @@ export default async (req, res) => {
           { title: { $regex: `${pid}`, $options: 'i' } },
           { country: { $regex: `${pid}`, $options: 'i' } },
           { theme: { $regex: `${pid}`, $options: 'i' } },
+          { organization_name: { $regex: `${pid}`, $options: 'i' } },
         ],
       },
       {

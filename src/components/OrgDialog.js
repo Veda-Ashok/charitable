@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 
 export default function OrgDialog(props) {
   const classes = useStyles()
-  const { onClose, open, org } = props
+  const { onClose, open, org, dbuser } = props
 
   const handleClose = () => {
     onClose()
@@ -32,7 +32,7 @@ export default function OrgDialog(props) {
           </IconButton>
         </DialogActions>
         <DialogContent>
-          <DescriptionBox orgDetails={org}></DescriptionBox>
+          <DescriptionBox orgDetails={org} dbuser={dbuser}></DescriptionBox>
         </DialogContent>
       </div>
     </Dialog>
@@ -43,4 +43,5 @@ OrgDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   org: PropTypes.object,
+  dbuser: PropTypes.object,
 }
