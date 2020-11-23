@@ -13,7 +13,7 @@ export default function Profile({ user }) {
 
   return (
     <div>
-      <h1>This page does not exist, rediecting you to a new page ~ </h1>
+      <h1>This page does not exist, redirecting you to a new page ~ </h1>
     </div>
   )
 }

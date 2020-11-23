@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SavedOrgsScrollview({ orgs }) {
   const classes = useStyles()
-  if (orgs && orgs[0].name) {
+  if (orgs.size > 1) {
     const [org, setOrg] = useState(orgs[0])
     const [open, setOpen] = useState(false)
 

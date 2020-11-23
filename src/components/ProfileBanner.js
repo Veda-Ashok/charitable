@@ -82,7 +82,7 @@ export default function ProfileBanner(props) {
   return (
     <div className={classes.grow}>
       <Card>
-        <CardMedia className={classes.media} image="/media/banner.png" title="profileBanner">
+        <CardMedia className={classes.media} image={props.banner} title="profileBanner">
           <div className={classes.avatar}>
             <ProfileBannerAvatar icon={props.icon} name={props.name} />
           </div>
@@ -133,4 +133,5 @@ ProfileBanner.propTypes = {
   bio: PropTypes.string,
   isMe: PropTypes.bool,
   isFollower: PropTypes.bool,
+  banner: PropTypes.string,
 }
