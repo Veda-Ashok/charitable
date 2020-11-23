@@ -182,7 +182,12 @@ export default function SearchDescriptionBox({ result, type, dbuser }) {
               {name}
             </Typography>
             {/*TODO: NEED TO MAKE POST DIALOG SPECIFIC FOR SEARCH.... and also update the trending one*/}
-            <PostDialog open={postOpen} onClose={handlePostClose} org={result}></PostDialog>
+            <PostDialog
+              open={postOpen}
+              onClose={handlePostClose}
+              result={result}
+              type={type}
+              dbuser={dbuser}></PostDialog>
             <SavedDialog
               open={savedOpen}
               onClose={handleSavedClose}

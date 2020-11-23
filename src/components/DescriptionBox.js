@@ -136,7 +136,9 @@ export default function DescriptionBox({ orgDetails, dbuser }) {
           <PostDialog
             open={postOpen}
             onClose={handlePostClose}
-            org={orgDetails.organization}></PostDialog>
+            result={orgDetails}
+            type="trending"
+            dbuser={dbuser}></PostDialog>
           <SavedDialog
             open={savedOpen}
             onClose={handleSavedClose}
