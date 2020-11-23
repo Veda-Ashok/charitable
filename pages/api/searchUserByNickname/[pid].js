@@ -1,5 +1,4 @@
 import { connectToDatabase } from '../../../utils/mongodb'
-// const ObjectId = require('mongodb').ObjectID
 
 export default async (req, res) => {
   const {
@@ -8,13 +7,12 @@ export default async (req, res) => {
 
   const { db } = await connectToDatabase()
 
-  const users = await db.collection('users').findOne(
+  const user = await db.collection('users').findOne(
     { nickname: `${pid.replace(/['"]+/g, '')}` },
     {
       _id: 1,
       email: 0,
     }
   )
-
-  res.json(users)
+  res.json(user)
 }

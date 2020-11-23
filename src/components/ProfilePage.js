@@ -56,12 +56,11 @@ function ProfilePage(props) {
       try {
         setIsLoading(true)
         const response = await axios.get(`/api/searchUserByNickname/${props.user.nickname}`)
-        console.log(response.data)
         setOrgs(response.data.saved_orgs)
         setPosts(response.data.posts)
         setIcon(response.data.profile_picture)
         setName(response.data.name)
-        setBanner(response.data.bannerPicture)
+        setBanner(response.data.banner_picture)
         setBio(response.data.bio)
         setEmailVerified(response.data.email_verified)
         setIsLoading(false)
