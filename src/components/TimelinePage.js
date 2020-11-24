@@ -8,12 +8,16 @@ import CreatePostBox from './CreatePostBox'
 import Loading from './Loading'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
+import SuccessfulPostDialog from './SuccessfulPostDialog'
 import axios from 'axios'
-// import { connectToDatabase } from '../../utils/mongodb'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(11),
+    marginTop: theme.spacing(12),
+    [theme.breakpoints.up('sm')]: {
+      marginTop: theme.spacing(9),
+      flexGrow: 1,
+    },
     flexGrow: 1,
   },
   content: {
@@ -27,6 +31,15 @@ export default function TimelinePage({ user }) {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(undefined)
   const [charitUser, setCharitUser] = useState(undefined)
+  const [success, setSuccessOpen] = useState(false)
+
+  const handleSuccessOpen = () => {
+    setSuccessOpen(true)
+  }
+
+  const handleSuccessClose = () => {
+    setSuccessOpen(false)
+  }
 
   useEffect(() => {
     // Check that a new route is OK
@@ -39,7 +52,6 @@ export default function TimelinePage({ user }) {
       !didCancel && setIsLoading(true)
       try {
         setIsLoading(true)
-        console.log(user.nickname)
         const response = await axios.get(`/api/searchUserByNickname/${user.nickname}`)
         setCharitUser(response.data)
         setIsLoading(false)
@@ -57,8 +69,6 @@ export default function TimelinePage({ user }) {
 
   return (
     <div className={classes.root}>
-      {console.log(isLoading)}
-      {console.log(charitUser)}
       <NavigationBar page="Timeline" user={user} />
       <Paper className={classes.organizations}>
         <div>
@@ -69,7 +79,12 @@ export default function TimelinePage({ user }) {
           ) : charitUser.email_verified ? (
             <div className={classes.content}>
               <div>
-                <CreatePostBox name="Bj" icon="/media/BjIcon" />
+                <CreatePostBox
+                  handleSuccessOpen={handleSuccessOpen}
+                  name={charitUser.name}
+                  icon={charitUser.profile_picture}
+                />
+                <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
                 <PostScrollview posts={mockPosts.posts} className={classes.posts}></PostScrollview>
               </div>
             </div>
