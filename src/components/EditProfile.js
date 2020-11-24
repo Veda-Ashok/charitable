@@ -25,14 +25,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function EditProfile(props) {
-  // let userId = dbuser?._id || undefined
-
   const classes = useStyles()
   const { onClose, open, userInfo } = props
-  // console.log(userInfo)
   const [updatedInfo, setUpdatedInfo] = useState({})
   console.log(userInfo)
-  // console.log(updatedInfo)
 
   const handleClose = () => {
     onClose()
@@ -41,13 +37,11 @@ export default function EditProfile(props) {
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    console.log('checking updatedInfo before call', updatedInfo)
-
     try {
-      console.log('checking updatedInfo before call', updatedInfo)
       await axios.post(`/api/editProfile/${userInfo.nickname}`, {
         updatedInfo: updatedInfo,
       })
+      props.setRefresh(!props.refresh)
     } catch (error) {
       console.error(error)
     }
@@ -57,7 +51,6 @@ export default function EditProfile(props) {
     return (event) => {
       let newUpdatedInfo = JSON.parse(JSON.stringify(updatedInfo))
       newUpdatedInfo[field] = event.target.value
-      console.log('updatedinfo stuff bio', updatedInfo.name)
       setUpdatedInfo(newUpdatedInfo)
     }
   }
@@ -124,4 +117,6 @@ EditProfile.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   userInfo: PropTypes.object.isRequired,
+  setRefresh: PropTypes.func,
+  refresh: PropTypes.bool,
 }
