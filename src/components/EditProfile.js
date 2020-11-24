@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import Dialog from '@material-ui/core/Dialog'
@@ -11,6 +11,7 @@ import Fab from '@material-ui/core/Fab'
 import DialogActions from '@material-ui/core/DialogActions'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,13 +23,43 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(3),
   },
 }))
-export default function EditProfile(props) {
-  const classes = useStyles()
 
+export default function EditProfile(props) {
+  // let userId = dbuser?._id || undefined
+
+  const classes = useStyles()
   const { onClose, open, userInfo } = props
+  // console.log(userInfo)
+  const [updatedInfo, setUpdatedInfo] = useState({})
+  console.log(userInfo)
+  // console.log(updatedInfo)
 
   const handleClose = () => {
     onClose()
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    console.log('checking updatedInfo before call', updatedInfo)
+
+    try {
+      console.log('checking updatedInfo before call', updatedInfo)
+      await axios.post(`/api/editProfile/${userInfo.nickname}`, {
+        updatedInfo: updatedInfo,
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleChange = (field) => {
+    return (event) => {
+      let newUpdatedInfo = JSON.parse(JSON.stringify(updatedInfo))
+      newUpdatedInfo[field] = event.target.value
+      console.log('updatedinfo stuff bio', updatedInfo.name)
+      setUpdatedInfo(newUpdatedInfo)
+    }
   }
 
   return (
@@ -40,45 +71,49 @@ export default function EditProfile(props) {
           </IconButton>
         </DialogActions>
         <div className={classes.root}>
-          <div>
-            <label htmlFor="upload-photo">
-              <input
-                name="upload-photo"
-                id="upload-photo"
-                accept="image/*"
-                style={{ display: 'none' }}
-                type="file"
-              />
-              <Badge
-                overlap="circle"
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                }}
-                badgeContent={<AddCircleIcon />}>
-                {/* <Avatar src={userInfo.icon} /> */}
-                <ProfileBannerAvatar icon={userInfo.icon} />
-              </Badge>
-            </label>
-          </div>
-          <TextField
-            id="standard-basic"
-            label="Edit Name"
-            defaultValue={userInfo.name}
-            className={classes.text}
-          />
-          <TextField
-            id="standard-basic"
-            label="Edit Bio"
-            defaultValue={userInfo.bio}
-            multiline
-            rows={4}
-            rowsMax={10}
-            className={classes.text}
-          />
-          <Fab variant="extended" color="primary">
-            Save
-          </Fab>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="upload-photo">
+                <input
+                  name="upload-photo"
+                  id="upload-photo"
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  type="file"
+                />
+                <Badge
+                  overlap="circle"
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                  badgeContent={<AddCircleIcon />}>
+                  {/* <Avatar src={userInfo.icon} /> */}
+                  <ProfileBannerAvatar icon={userInfo.icon} />
+                </Badge>
+              </label>
+            </div>
+            <TextField
+              id="standard-basic"
+              label="Edit Name"
+              defaultValue={userInfo.name}
+              className={classes.text}
+              onChange={handleChange('name')}
+            />
+            <TextField
+              id="standard-basic"
+              label="Edit Bio"
+              defaultValue={userInfo.bio}
+              multiline
+              rows={4}
+              rowsMax={10}
+              className={classes.text}
+              onChange={handleChange('bio')}
+            />
+            <Fab variant="extended" color="primary" onClick={handleClose} type="submit">
+              Save
+            </Fab>
+          </form>
         </div>
       </Dialog>
     </Paper>

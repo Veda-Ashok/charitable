@@ -95,6 +95,7 @@ function ProfilePage(props) {
           <ProfileBanner
             bio={bio}
             name={name}
+            nickname={props.user.nickname}
             banner={banner}
             isMe={props.isMe}
             icon={icon}

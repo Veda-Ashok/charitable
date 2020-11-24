@@ -128,6 +128,7 @@ export default function ProfileBanner(props) {
 }
 
 ProfileBanner.propTypes = {
+  nickname: PropTypes.string,
   name: PropTypes.string,
   icon: PropTypes.string,
   bio: PropTypes.string,
