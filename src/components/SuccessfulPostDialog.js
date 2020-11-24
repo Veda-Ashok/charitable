@@ -1,12 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Dialog from '@material-ui/core/Dialog'
-import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import CloseIcon from '@material-ui/icons/Close'
-import DialogContent from '@material-ui/core/DialogContent'
-import CreatePostBox from './CreatePostBox'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import Button from '@material-ui/core/Button'
+import DialogActions from '@material-ui/core/DialogActions'
+import Link from './Link'
+import CloseIcon from '@material-ui/icons/Close'
+import { DialogContent } from '@material-ui/core'
+import IconButton from '@material-ui/core/IconButton'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,10 +24,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function PostDialog(props) {
+export default function SuccessfulPostDialog(props) {
   const classes = useStyles()
-  const { onClose, open, result, type, dbuser, handleSuccessOpen } = props
-  const typeDisplay = type === 'trending' || type === 'organizations' ? 'organization' : 'activity'
+  const { onClose, open } = props
 
   const handleClose = () => {
     onClose()
@@ -34,33 +36,28 @@ export default function PostDialog(props) {
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
       <div className={classes.root}>
         <DialogTitle>
-          Post about this {typeDisplay}!
+          Congratulations!
           <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
             <CloseIcon />
           </IconButton>
         </DialogTitle>
         <DialogContent>
-          <CreatePostBox
-            name="Bj Johnson"
-            icon="/media/BjIcon"
-            defaultText={`Look at the great ${typeDisplay} I found!`}
-            result={result}
-            type={type}
-            dbuser={dbuser}
-            closePostDialog={handleClose}
-            handleSuccessOpen={handleSuccessOpen}
-          />
+          <Typography>You have successfully made a post!</Typography>
         </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} component={Link} naked href="/timeline" color="primary">
+            View on Timeline
+          </Button>
+          <Button onClick={handleClose} component={Link} naked href="/profile" color="primary">
+            View on Profile
+          </Button>
+        </DialogActions>
       </div>
     </Dialog>
   )
 }
 
-PostDialog.propTypes = {
+SuccessfulPostDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  result: PropTypes.object,
-  type: PropTypes.string,
-  dbuser: PropTypes.object,
-  handleSuccessOpen: PropTypes.func,
 }
