@@ -6,21 +6,44 @@ import TextField from '@material-ui/core/TextField'
 import ProfileBannerAvatar from './ProfileBannerAvatar'
 import Badge from '@material-ui/core/Badge'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
-import Paper from '@material-ui/core/Paper'
 import Fab from '@material-ui/core/Fab'
-import DialogActions from '@material-ui/core/DialogActions'
 import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography'
 import CloseIcon from '@material-ui/icons/Close'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary'
 import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(4),
+  icon: {
+    display: 'block',
+  },
+  iconText: {
+    display: 'block',
+    marginLeft: theme.spacing(2.5),
+  },
+  form: {
+    paddingRight: theme.spacing(5),
+    paddingLeft: theme.spacing(5),
+    paddingBottom: theme.spacing(3),
     display: 'flex',
     flexDirection: 'column',
   },
   text: {
     marginBottom: theme.spacing(3),
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+  upload: {
+    display: 'flex',
+    justifyContent: 'space-around',
+  },
+  banner: {
+    marginTop: theme.spacing(6.5),
   },
 }))
 
@@ -56,16 +79,51 @@ export default function EditProfile(props) {
   }
 
   return (
-    <Paper>
-      <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-        <DialogActions>
-          <IconButton onClick={handleClose} aria-label="Close" size="small">
-            <CloseIcon />
-          </IconButton>
-        </DialogActions>
-        <div className={classes.root}>
-          <form onSubmit={handleSubmit}>
+    <Dialog
+      onClose={handleClose}
+      aria-labelledby="simple-dialog-title"
+      open={open}
+      maxWidth="sm"
+      fullWidth>
+      <DialogTitle>
+        Edit Profile
+        <IconButton
+          className={classes.closeButton}
+          onClick={handleClose}
+          aria-label="Close"
+          size="small">
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <div>
+        <form onSubmit={handleSubmit} className={classes.form}>
+          <div className={classes.upload}>
             <div>
+              <Typography className={classes.iconText} variant="body">
+                Upload Icon
+              </Typography>
+              <IconButton className={classes.icon}>
+                <label htmlFor="upload-photo">
+                  <input
+                    name="upload-photo"
+                    id="upload-photo"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    type="file"
+                  />
+                  <Badge
+                    overlap="circle"
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'right',
+                    }}
+                    badgeContent={<AddCircleIcon />}>
+                    <ProfileBannerAvatar icon={userInfo.icon} />
+                  </Badge>
+                </label>
+              </IconButton>
+            </div>
+            <div className={classes.banner}>
               <label htmlFor="upload-photo">
                 <input
                   name="upload-photo"
@@ -74,42 +132,42 @@ export default function EditProfile(props) {
                   style={{ display: 'none' }}
                   type="file"
                 />
-                <Badge
-                  overlap="circle"
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                  }}
-                  badgeContent={<AddCircleIcon />}>
-                  {/* <Avatar src={userInfo.icon} /> */}
-                  <ProfileBannerAvatar icon={userInfo.icon} />
-                </Badge>
+                <Fab variant="extended" className={classes.attachOption} component="div">
+                  <PhotoLibraryIcon />
+                  <Typography variant="subtitle2">Upload Banner Photo</Typography>
+                </Fab>
               </label>
             </div>
-            <TextField
-              id="standard-basic"
-              label="Edit Name"
-              defaultValue={userInfo.name}
-              className={classes.text}
-              onChange={handleChange('name')}
-            />
-            <TextField
-              id="standard-basic"
-              label="Edit Bio"
-              defaultValue={userInfo.bio}
-              multiline
-              rows={4}
-              rowsMax={10}
-              className={classes.text}
-              onChange={handleChange('bio')}
-            />
-            <Fab variant="extended" color="primary" onClick={handleClose} type="submit">
-              Save
-            </Fab>
-          </form>
-        </div>
-      </Dialog>
-    </Paper>
+          </div>
+          <TextField
+            id="standard-basic"
+            label="Edit Name"
+            defaultValue={userInfo.name}
+            className={classes.text}
+            onChange={handleChange('name')}
+            inputProps={{
+              maxLength: 75,
+            }}
+          />
+          <TextField
+            id="standard-basic"
+            label="Edit Bio"
+            defaultValue={userInfo.bio}
+            multiline
+            rows={4}
+            rowsMax={7}
+            className={classes.text}
+            onChange={handleChange('bio')}
+            inputProps={{
+              maxLength: 250,
+            }}
+          />
+          <Fab variant="extended" color="primary" onClick={handleClose} type="submit">
+            Save
+          </Fab>
+        </form>
+      </div>
+    </Dialog>
   )
 }
 
