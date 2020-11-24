@@ -16,6 +16,7 @@ import PostDialog from './PostDialog'
 import Loading from './Loading'
 import SavedDialog from './SavedDialog'
 import UsersOnlyDialog from './UsersOnlyDialog'
+import SuccessfulPostDialog from './SuccessfulPostDialog'
 import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
@@ -75,6 +76,7 @@ export default function SearchDescriptionBox({ result, type, dbuser }) {
   const [savedOpen, setSavedOpen] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [success, setSuccessOpen] = useState(false)
 
   useEffect(() => {
     const getIsSaved = async () => {
@@ -164,6 +166,14 @@ export default function SearchDescriptionBox({ result, type, dbuser }) {
     setSavedOpen(false)
   }
 
+  const handleSuccessOpen = () => {
+    setSuccessOpen(true)
+  }
+
+  const handleSuccessClose = () => {
+    setSuccessOpen(false)
+  }
+
   return (
     <Card className={classes.root}>
       {loading ? (
@@ -181,13 +191,13 @@ export default function SearchDescriptionBox({ result, type, dbuser }) {
             <Typography gutterBottom variant="h4">
               {name}
             </Typography>
-            {/*TODO: NEED TO MAKE POST DIALOG SPECIFIC FOR SEARCH.... and also update the trending one*/}
             <PostDialog
               open={postOpen}
               onClose={handlePostClose}
               result={result}
               type={type}
-              dbuser={dbuser}></PostDialog>
+              dbuser={dbuser}
+              handleSuccessOpen={handleSuccessOpen}></PostDialog>
             <SavedDialog
               open={savedOpen}
               onClose={handleSavedClose}
@@ -195,6 +205,7 @@ export default function SearchDescriptionBox({ result, type, dbuser }) {
               name={name}
             />
             <UsersOnlyDialog open={verifyUserOpen} onClose={handleVerifyUserClose} />
+            <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
           </CardContent>
           <CardActions>
             {url ? (

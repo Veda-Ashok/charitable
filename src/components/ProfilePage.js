@@ -9,9 +9,9 @@ import CreatePostBox from './CreatePostBox'
 import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
+import SuccessfulPostDialog from './SuccessfulPostDialog'
 import Loading from './Loading'
 import axios from 'axios'
-// import { connectToDatabase } from '../../utils/mongodb'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
@@ -47,6 +47,15 @@ function ProfilePage(props) {
   const [banner, setBanner] = useState(null)
   const [icon, setIcon] = useState(null)
   const [email_verified, setEmailVerified] = useState(false)
+  const [success, setSuccessOpen] = useState(false)
+
+  const handleSuccessOpen = () => {
+    setSuccessOpen(true)
+  }
+
+  const handleSuccessClose = () => {
+    setSuccessOpen(false)
+  }
 
   //  FIX THIS TO BE REAL ORGS FROM OUR DATABASE
   useEffect(() => {
@@ -93,7 +102,12 @@ function ProfilePage(props) {
           />
           <div className={classes.content}>
             <div>
-              {props.isMe ? <CreatePostBox name="Bj Johnson" icon="/media/BjIcon" /> : null}
+              {props.isMe ? (
+                <>
+                  <CreatePostBox handleSuccessOpen={handleSuccessOpen} name={name} icon={icon} />{' '}
+                  <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
+                </>
+              ) : null}
               <PostScrollview posts={posts}></PostScrollview>
               {!isWidthUp('sm', props.width) && (
                 <div>

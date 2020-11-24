@@ -16,6 +16,7 @@ import Loading from './Loading'
 import UsersOnlyDialog from './UsersOnlyDialog'
 import axios from 'axios'
 import IconButton from '@material-ui/core/IconButton'
+import SuccessfulPostDialog from './SuccessfulPostDialog'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +47,7 @@ export default function DescriptionBox({ orgDetails, dbuser }) {
   const [verifyUserOpen, setVerifyUserOpen] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [success, setSuccessOpen] = useState(false)
 
   useEffect(() => {
     const getIsSaved = async () => {
@@ -83,6 +85,14 @@ export default function DescriptionBox({ orgDetails, dbuser }) {
 
   const handleVerifyUserClose = () => {
     setVerifyUserOpen(false)
+  }
+
+  const handleSuccessOpen = () => {
+    setSuccessOpen(true)
+  }
+
+  const handleSuccessClose = () => {
+    setSuccessOpen(false)
   }
 
   async function handleClickSavedOpen() {
@@ -138,7 +148,8 @@ export default function DescriptionBox({ orgDetails, dbuser }) {
             onClose={handlePostClose}
             result={orgDetails}
             type="trending"
-            dbuser={dbuser}></PostDialog>
+            dbuser={dbuser}
+            handleSuccessOpen={handleSuccessOpen}></PostDialog>
           <SavedDialog
             open={savedOpen}
             onClose={handleSavedClose}
@@ -146,6 +157,7 @@ export default function DescriptionBox({ orgDetails, dbuser }) {
             name={orgDetails.organization.name}
           />
           <UsersOnlyDialog open={verifyUserOpen} onClose={handleVerifyUserClose} />
+          <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
           <Typography gutterBottom variant="h4">
             {orgDetails.organization.name}
           </Typography>

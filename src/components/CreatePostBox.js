@@ -10,8 +10,9 @@ import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
 import Fab from '@material-ui/core/Fab'
 import TextField from '@material-ui/core/TextField'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
 import InfoSmallBox from './InfoSmallBox'
-import SuccessfulPostDialog from './SuccessfulPostDialog'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,41 +63,49 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function CreatePostBox(props) {
-  const [input, setInput] = useState(props.defaultText)
+export default function CreatePostBox({
+  defaultText,
+  closePostDialog,
+  result,
+  type,
+  dbuser,
+  name,
+  icon,
+  handleSuccessOpen,
+}) {
+  const [input, setInput] = useState(defaultText)
   const classes = useStyles()
-  const [successOpen, setSuccessOpen] = useState(false)
+  const [open, setOpen] = useState(false)
 
-  const handleSuccessOpen = () => {
-    setSuccessOpen(true)
+  const handleClose = () => {
+    setOpen(false)
   }
 
-  const handleSuccessClose = () => {
-    setSuccessOpen(false)
+  const handleOpen = () => {
+    setOpen(true)
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setInput('')
-    //send the post data to the post api
-    if (props.result && props.type) {
-      props.closePostDialog()
+    if (input === '' || input === undefined || input === null) {
+      handleOpen()
+    } else {
+      setInput('')
+      //send the post data to the post api
+      handleSuccessOpen()
+      if (result && type) {
+        closePostDialog()
+      }
     }
-    handleSuccessOpen()
   }
 
   return (
     <Paper className={classes.root} variant="outlined">
-      {props.result && props.type ? (
+      {result && type ? (
         <>
           <div className={classes.flex}>
-            <Avatar className={classes.avatar} alt={props.name} src={props.icon}></Avatar>
-            <InfoSmallBox
-              dbuser={props.dbuser}
-              result={props.result}
-              type={props.type}
-              showPopup={false}
-            />
+            <Avatar className={classes.avatar} alt={name} src={icon}></Avatar>
+            <InfoSmallBox dbuser={dbuser} result={result} type={type} showPopup={false} />
           </div>
           <TextField
             id="standard-multiline-flexible"
@@ -115,7 +124,7 @@ export default function CreatePostBox(props) {
       ) : (
         <>
           <div className={classes.top}>
-            <Avatar alt={props.name} src={props.icon}></Avatar>
+            <Avatar alt={name} src={icon}></Avatar>
             <TextField
               id="standard-multiline-flexible"
               label="Share with the community"
@@ -151,7 +160,13 @@ export default function CreatePostBox(props) {
           </div>
         </>
       )}
-      <SuccessfulPostDialog open={successOpen} onClose={handleSuccessClose} />
+      <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+        <div className={classes.root}>
+          <DialogTitle>
+            <Typography> Please type something to share :) </Typography>
+          </DialogTitle>
+        </div>
+      </Dialog>
     </Paper>
   )
 }
@@ -164,4 +179,5 @@ CreatePostBox.propTypes = {
   type: PropTypes.string,
   dbuser: PropTypes.object,
   closePostDialog: PropTypes.func,
+  handleSuccessOpen: PropTypes.func,
 }
