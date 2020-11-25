@@ -13,6 +13,7 @@ import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import InfoSmallBox from './InfoSmallBox'
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -91,8 +92,33 @@ export default function CreatePostBox({
       handleOpen()
     } else {
       setInput('')
+
+      const createPost = async () => {
+        try {
+          const organization_id =
+            type === 'trending'
+              ? result.organization.id.toString()
+              : type === 'organizations'
+              ? result.gg_id
+              : undefined
+          const activity_id = type === 'activities' ? result._id : undefined
+          let response = await axios.post('/api/createPost', {
+            poster: dbuser._id,
+            image: undefined,
+            organization_id: organization_id,
+            activity_id: activity_id,
+            typed_content: input,
+          })
+          //whatever it shows for a successful insert check for that
+          if (response.data.insertedCount === 1) {
+            handleSuccessOpen()
+          }
+        } catch (error) {
+          console.error(error)
+        }
+      }
+      createPost()
       //send the post data to the post api
-      handleSuccessOpen()
       if (result && type) {
         closePostDialog()
       }
@@ -104,7 +130,10 @@ export default function CreatePostBox({
       {result && type ? (
         <>
           <div className={classes.flex}>
-            <Avatar className={classes.avatar} alt={name} src={icon}></Avatar>
+            <Avatar
+              className={classes.avatar}
+              alt={dbuser.name}
+              src={dbuser.profile_picture}></Avatar>
             <InfoSmallBox dbuser={dbuser} result={result} type={type} showPopup={false} />
           </div>
           <TextField
