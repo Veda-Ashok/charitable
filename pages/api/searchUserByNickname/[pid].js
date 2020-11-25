@@ -28,6 +28,14 @@ export default async (req, res) => {
         as: 'saved_orgs_docs',
       },
     },
+    {
+      $lookup: {
+        from: 'activities',
+        localField: 'saved_activities',
+        foreignField: '_id',
+        as: 'saved_activities_docs',
+      },
+    },
   ]
 
   const users = await db.collection('users').aggregate(agg)
