@@ -48,6 +48,7 @@ function ProfilePage(props) {
   const [icon, setIcon] = useState(null)
   const [email_verified, setEmailVerified] = useState(false)
   const [success, setSuccessOpen] = useState(false)
+  const [dbuser, setDbuser] = useState(undefined)
 
   const handleSuccessOpen = () => {
     setSuccessOpen(true)
@@ -72,6 +73,8 @@ function ProfilePage(props) {
         setBanner(response.data.banner_picture)
         setBio(response.data.bio)
         setEmailVerified(response.data.email_verified)
+        setDbuser(response.data)
+        console.log('api result', response.data)
         setIsLoading(false)
       } catch (error) {
         console.error(error)
@@ -104,7 +107,12 @@ function ProfilePage(props) {
             <div>
               {props.isMe ? (
                 <>
-                  <CreatePostBox handleSuccessOpen={handleSuccessOpen} name={name} icon={icon} />{' '}
+                  <CreatePostBox
+                    handleSuccessOpen={handleSuccessOpen}
+                    name={name}
+                    icon={icon}
+                    dbuser={dbuser}
+                  />{' '}
                   <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
                 </>
               ) : null}
@@ -129,7 +137,6 @@ function ProfilePage(props) {
                 <Paper className={classes.title}>
                   <Typography variant="h6">Saved Organizations</Typography>
                 </Paper>
-                {console.log(isLoading)}
                 {isLoading ? <Loading /> : <SavedOrgsScrollview orgs={orgs ? orgs : null} />}
               </div>
             )}

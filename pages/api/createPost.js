@@ -8,12 +8,13 @@ const handler = async (req, res) => {
   try {
     const { db } = await connectToDatabase()
 
+    const activity_id = req.body.activity_id ? ObjectId(req.body.activity_id) : null
     const post = await db.collection('posts').insertOne({
       poster: ObjectId(req.body.poster),
       image: req.body.image,
       organization_id: req.body.organization_id,
-      activity_id: ObjectId(req.body.activity_id),
-      typed_content: req.body.input,
+      activity_id: activity_id,
+      typed_content: req.body.typed_content,
       date_posted: new Date(),
     })
     res.json(post)
