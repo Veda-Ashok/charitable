@@ -110,7 +110,7 @@ export default function CreatePostBox({
             typed_content: input,
           })
           //whatever it shows for a successful insert check for that
-          if (response.data.matchedCount === 1 && response.data.modifiedCount === 1) {
+          if (response.data.insertedCount === 1) {
             handleSuccessOpen()
           }
         } catch (error) {
