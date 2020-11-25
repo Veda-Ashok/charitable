@@ -3,9 +3,10 @@ import Paper from '@material-ui/core/Paper'
 import PropTypes from 'prop-types'
 import List from '@material-ui/core/List'
 import { ListItem } from '@material-ui/core'
-import OrgDialog from './OrgDialog'
+//import OrgDialog from './OrgDialog'
 import { makeStyles } from '@material-ui/core/styles'
-import TrendingListItems from './TrendingListItems'
+import SearchListItems from './SearchListItems'
+import SearchDialog from './SearchDialog'
 // import Loading from './Loading'
 
 const useStyles = makeStyles((theme) => ({
@@ -17,9 +18,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SavedOrgsScrollview({ orgs }) {
+export default function SavedOrgsScrollview({ orgs, dbuser }) {
   const classes = useStyles()
-  if (orgs.size > 1) {
+  if (orgs.length > 0) {
     const [org, setOrg] = useState(orgs[0])
     const [open, setOpen] = useState(false)
 
@@ -32,26 +33,23 @@ export default function SavedOrgsScrollview({ orgs }) {
       setOpen(false)
     }
 
-    let orgSet = new Set()
-
-    const listItems = orgs
-      // fix to take in from api call
-      .filter((org) => {
-        let exists = orgSet.has(org.organization.id)
-        orgSet.add(org)
-        return !exists
-      })
-      .map((org) => (
-        <ListItem key={org.organization.name}>
-          <TrendingListItems onClick={() => handleClickOpen(org)} orgDetails={org} saved={false} />
-        </ListItem>
-      ))
+    const listItems = orgs.map((org) => (
+      <ListItem key={org.gg_id}>
+        <SearchListItems onClick={() => handleClickOpen(org)} result={org} type="organizations" />
+      </ListItem>
+    ))
 
     return (
       <div>
         <Paper className={classes.orgs}>
           <List>{listItems}</List>
-          <OrgDialog org={org} open={open} onClose={handleClose} />
+          <SearchDialog
+            result={org}
+            open={open}
+            onClose={handleClose}
+            type="organizations"
+            dbuser={dbuser}
+          />
         </Paper>
       </div>
     )
@@ -62,4 +60,5 @@ export default function SavedOrgsScrollview({ orgs }) {
 
 SavedOrgsScrollview.propTypes = {
   orgs: PropTypes.array,
+  dbuser: PropTypes.object,
 }

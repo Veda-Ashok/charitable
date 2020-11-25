@@ -33,7 +33,6 @@ const handler = async (req, res) => {
         // "banner_picture": req.body.updatedInfo.bannerUrl,
       }
     )
-    console.log(users)
     res.json(users)
   } catch (error) {
     console.error(error)

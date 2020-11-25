@@ -51,7 +51,6 @@ export default function EditProfile(props) {
   const classes = useStyles()
   const { onClose, open, userInfo } = props
   const [updatedInfo, setUpdatedInfo] = useState({})
-  console.log(userInfo)
 
   const handleClose = () => {
     onClose()

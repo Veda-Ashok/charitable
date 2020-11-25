@@ -43,7 +43,6 @@ export default function TimelinePage({ user }) {
 
   useEffect(() => {
     // Check that a new route is OK
-    console.log('in use eff')
     if (!user) {
       window.location.href = '/api/login'
     }
