@@ -95,9 +95,6 @@ export default function CreatePostBox({
 
       const createPost = async () => {
         try {
-          console.log('result', result)
-          console.log('type', type)
-          console.log('dbuser', dbuser)
           const organization_id =
             type === 'trending'
               ? result.organization.id.toString()
@@ -127,8 +124,6 @@ export default function CreatePostBox({
       }
     }
   }
-
-  console.log('dbuser? ', dbuser)
 
   return (
     <Paper className={classes.root} variant="outlined">
