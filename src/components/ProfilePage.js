@@ -48,6 +48,7 @@ function ProfilePage(props) {
   const [icon, setIcon] = useState(null)
   const [email_verified, setEmailVerified] = useState(false)
   const [success, setSuccessOpen] = useState(false)
+  const [refresh, setRefresh] = useState(false)
 
   const handleSuccessOpen = () => {
     setSuccessOpen(true)
@@ -83,7 +84,7 @@ function ProfilePage(props) {
     return () => {
       didCancel = true
     }
-  }, [])
+  }, [refresh])
 
   const classes = useStyles()
 
@@ -95,10 +96,13 @@ function ProfilePage(props) {
           <ProfileBanner
             bio={bio}
             name={name}
+            nickname={props.user.nickname}
             banner={banner}
             isMe={props.isMe}
             icon={icon}
             isFollower={props.isFollower}
+            setRefresh={setRefresh}
+            refresh={refresh}
           />
           <div className={classes.content}>
             <div>

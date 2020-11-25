@@ -107,7 +107,13 @@ export default function ProfileBanner(props) {
                   <EditIcon fontSize="small" className={classes.editIcon} />
                   Edit Profile
                 </Button>
-                <EditProfile userInfo={props} open={open} onClose={handleClose} />
+                <EditProfile
+                  setRefresh={props.setRefresh}
+                  refresh={props.refresh}
+                  userInfo={props}
+                  open={open}
+                  onClose={handleClose}
+                />
               </div>
             ) : (
               <Button
@@ -128,10 +134,13 @@ export default function ProfileBanner(props) {
 }
 
 ProfileBanner.propTypes = {
+  nickname: PropTypes.string,
   name: PropTypes.string,
   icon: PropTypes.string,
   bio: PropTypes.string,
   isMe: PropTypes.bool,
   isFollower: PropTypes.bool,
   banner: PropTypes.string,
+  setRefresh: PropTypes.func,
+  refresh: PropTypes.bool,
 }
