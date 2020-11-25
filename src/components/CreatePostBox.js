@@ -135,7 +135,10 @@ export default function CreatePostBox({
       {result && type ? (
         <>
           <div className={classes.flex}>
-            <Avatar className={classes.avatar} alt={name} src={icon}></Avatar>
+            <Avatar
+              className={classes.avatar}
+              alt={dbuser.name}
+              src={dbuser.profile_picture}></Avatar>
             <InfoSmallBox dbuser={dbuser} result={result} type={type} showPopup={false} />
           </div>
           <TextField
