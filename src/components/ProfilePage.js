@@ -67,7 +67,7 @@ function ProfilePage(props) {
       try {
         setIsLoading(true)
         const response = await axios.get(`/api/searchUserByNickname/${props.user.nickname}`)
-        setOrgs(response.data.saved_orgs)
+        setOrgs(response.data.saved_orgs_docs)
         setPosts(response.data.posts)
         setIcon(response.data.profile_picture)
         setName(response.data.name)
@@ -75,7 +75,7 @@ function ProfilePage(props) {
         setBio(response.data.bio)
         setEmailVerified(response.data.email_verified)
         setDbuser(response.data)
-        console.log('api result', response.data)
+        // console.log('email', email_verified)
         setIsLoading(false)
       } catch (error) {
         console.error(error)
@@ -94,60 +94,64 @@ function ProfilePage(props) {
   return (
     <div className={classes.banner}>
       <NavigationBar page="Profile" user={props.user} />
-      {email_verified ? (
-        <div>
-          <ProfileBanner
-            bio={bio}
-            name={name}
-            nickname={props.user.nickname}
-            banner={banner}
-            isMe={props.isMe}
-            icon={icon}
-            isFollower={props.isFollower}
-            setRefresh={setRefresh}
-            refresh={refresh}
-          />
-          <div className={classes.content}>
-            <div>
-              {props.isMe ? (
-                <>
-                  <CreatePostBox
-                    handleSuccessOpen={handleSuccessOpen}
-                    name={name}
-                    icon={icon}
-                    dbuser={dbuser}
-                  />{' '}
-                  <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
-                </>
-              ) : null}
-              <PostScrollview posts={posts}></PostScrollview>
-              {!isWidthUp('sm', props.width) && (
-                <div>
-                  {isLoading ? (
-                    <Loading />
-                  ) : (
-                    <div>
-                      <Paper className={classes.title}>
-                        <Typography variant="h6">Saved Organizations</Typography>
-                      </Paper>
-                      <SavedOrgsScrollview orgs={orgs ? orgs : null} />
-                    </div>
-                  )}
+      {dbuser ? (
+        email_verified ? (
+          <div>
+            <ProfileBanner
+              bio={bio}
+              name={name}
+              nickname={props.user.nickname}
+              banner={banner}
+              isMe={props.isMe}
+              icon={icon}
+              isFollower={props.isFollower}
+              setRefresh={setRefresh}
+              refresh={refresh}
+            />
+            <div className={classes.content}>
+              <div>
+                {props.isMe ? (
+                  <>
+                    <CreatePostBox
+                      handleSuccessOpen={handleSuccessOpen}
+                      name={name}
+                      icon={icon}
+                      dbuser={dbuser}
+                    />{' '}
+                    <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
+                  </>
+                ) : null}
+                <PostScrollview posts={posts}></PostScrollview>
+                {!isWidthUp('sm', props.width) && (
+                  <div>
+                    {isLoading ? (
+                      <Loading />
+                    ) : (
+                      <div>
+                        <Paper className={classes.title}>
+                          <Typography variant="h6">Saved Organizations</Typography>
+                        </Paper>
+                        <SavedOrgsScrollview dbuser={dbuser} orgs={orgs ? orgs : null} />
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+              {isWidthUp('sm', props.width) && (
+                <div className={classes.savedOrg}>
+                  <Paper className={classes.title}>
+                    <Typography variant="h6">Saved Organizations</Typography>
+                  </Paper>
+                  {isLoading ? <Loading /> : <SavedOrgsScrollview orgs={orgs ? orgs : null} />}
                 </div>
               )}
             </div>
-            {isWidthUp('sm', props.width) && (
-              <div className={classes.savedOrg}>
-                <Paper className={classes.title}>
-                  <Typography variant="h6">Saved Organizations</Typography>
-                </Paper>
-                {isLoading ? <Loading /> : <SavedOrgsScrollview orgs={orgs ? orgs : null} />}
-              </div>
-            )}
           </div>
-        </div>
+        ) : (
+          <h2>verify your email to access this page</h2>
+        )
       ) : (
-        <h2>verify your email to access this page</h2>
+        <Loading />
       )}
     </div>
   )
@@ -158,7 +162,6 @@ ProfilePage.propTypes = {
   user: PropTypes.object,
   isMe: PropTypes.bool,
   isFollower: PropTypes.bool,
-  orgs: PropTypes.object,
   width: PropTypes.string,
 }
 
