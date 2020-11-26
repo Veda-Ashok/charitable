@@ -3,15 +3,13 @@ import NavigationBar from '../../src/components/NavigationBar'
 import ProfileBanner from './ProfileBanner'
 import { makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
-import SavedOrgsScrollview from './SavedOrgsScrollview'
 import PostScrollview from './PostScrollview'
 import CreatePostBox from './CreatePostBox'
-import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import SuccessfulPostDialog from './SuccessfulPostDialog'
 import Loading from './Loading'
 import axios from 'axios'
+import SavedItems from './SavedItems'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
@@ -40,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ProfilePage(props) {
   const [isLoading, setIsLoading] = useState(true)
+  const [activities, setActivities] = useState(null)
   const [orgs, setOrgs] = useState(null)
   const [posts, setPosts] = useState()
   const [name, setName] = useState(null)
@@ -48,7 +47,8 @@ function ProfilePage(props) {
   const [icon, setIcon] = useState(null)
   const [email_verified, setEmailVerified] = useState(false)
   const [success, setSuccessOpen] = useState(false)
-  const [dbuser, setDbuser] = useState(undefined)
+  const [owner, setOwner] = useState(undefined)
+  const [viewer, setViewer] = useState(undefined)
   const [refresh, setRefresh] = useState(false)
 
   const handleSuccessOpen = () => {
@@ -59,23 +59,39 @@ function ProfilePage(props) {
     setSuccessOpen(false)
   }
 
-  //  FIX THIS TO BE REAL ORGS FROM OUR DATABASE
   useEffect(() => {
     let didCancel = false
     async function fetchData() {
       !didCancel && setIsLoading(true)
       try {
         setIsLoading(true)
-        const response = await axios.get(`/api/searchUserByNickname/${props.user.nickname}`)
-        setOrgs(response.data.saved_orgs_docs)
-        setPosts(response.data.posts)
-        setIcon(response.data.profile_picture)
-        setName(response.data.name)
-        setBanner(response.data.banner_picture)
-        setBio(response.data.bio)
-        setEmailVerified(response.data.email_verified)
-        setDbuser(response.data)
-        // console.log('email', email_verified)
+        if (props.isMe) {
+          const response = await axios.get(`/api/searchUserSavedInfo/${props.user.nickname}`)
+          setOrgs(response.data.saved_orgs_docs)
+          setActivities(response.data.saved_activities_docs)
+          setPosts(response.data.posts)
+          setIcon(response.data.profile_picture)
+          setName(response.data.name)
+          setBanner(response.data.banner_picture)
+          setBio(response.data.bio)
+          setEmailVerified(response.data.email_verified)
+          setOwner(response.data)
+          setViewer(response.data)
+        } else {
+          const profile = await axios.get(`/api/searchUserSavedInfo/${props.pid}`)
+          const myResponse = await axios.get(`/api/searchUserByNickname/${props.user.nickname}`)
+          setOrgs(profile.data.saved_orgs_docs)
+          setActivities(profile.data.saved_activities_docs)
+          setPosts(profile.data.posts)
+          setIcon(profile.data.profile_picture)
+          setName(profile.data.name)
+          setBanner(profile.data.banner_picture)
+          setBio(myResponse.data.bio)
+          setEmailVerified(myResponse.data.email_verified)
+          setOwner(profile.data)
+          setViewer(myResponse.data)
+        }
+
         setIsLoading(false)
       } catch (error) {
         console.error(error)
@@ -94,13 +110,13 @@ function ProfilePage(props) {
   return (
     <div className={classes.banner}>
       <NavigationBar page="Profile" user={props.user} />
-      {dbuser ? (
+      {owner ? (
         email_verified ? (
           <div>
             <ProfileBanner
               bio={bio}
               name={name}
-              nickname={props.user.nickname}
+              nickname={owner.nickname}
               banner={banner}
               isMe={props.isMe}
               icon={icon}
@@ -116,7 +132,7 @@ function ProfilePage(props) {
                       handleSuccessOpen={handleSuccessOpen}
                       name={name}
                       icon={icon}
-                      dbuser={dbuser}
+                      owner={owner}
                     />{' '}
                     <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
                   </>
@@ -127,22 +143,32 @@ function ProfilePage(props) {
                     {isLoading ? (
                       <Loading />
                     ) : (
-                      <div>
-                        <Paper className={classes.title}>
-                          <Typography variant="h6">Saved Organizations</Typography>
-                        </Paper>
-                        <SavedOrgsScrollview dbuser={dbuser} orgs={orgs ? orgs : null} />
-                      </div>
+                      <SavedItems
+                        owner={owner}
+                        viewer={viewer}
+                        orgs={orgs}
+                        activties={activities}
+                        setRefresh={setRefresh}
+                        refresh={refresh}
+                      />
                     )}
                   </div>
                 )}
               </div>
               {isWidthUp('sm', props.width) && (
                 <div className={classes.savedOrg}>
-                  <Paper className={classes.title}>
-                    <Typography variant="h6">Saved Organizations</Typography>
-                  </Paper>
-                  {isLoading ? <Loading /> : <SavedOrgsScrollview orgs={orgs ? orgs : null} />}
+                  {isLoading ? (
+                    <Loading />
+                  ) : (
+                    <SavedItems
+                      owner={owner}
+                      viewer={viewer}
+                      orgs={orgs}
+                      activities={activities}
+                      setRefresh={setRefresh}
+                      refresh={refresh}
+                    />
+                  )}
                 </div>
               )}
             </div>
@@ -158,7 +184,7 @@ function ProfilePage(props) {
 }
 
 ProfilePage.propTypes = {
-  member: PropTypes.string,
+  pid: PropTypes.string,
   user: PropTypes.object,
   isMe: PropTypes.bool,
   isFollower: PropTypes.bool,

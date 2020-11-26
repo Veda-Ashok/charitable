@@ -7,7 +7,7 @@ export default function Profile({ user }) {
     if (!user) {
       window.location.href = '/api/login'
     } else {
-      window.location.href = `/profile/${user.sub}`
+      window.location.href = `/profile/${user.nickname}`
     }
   }, [user])
 

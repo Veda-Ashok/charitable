@@ -3,7 +3,6 @@ import Paper from '@material-ui/core/Paper'
 import PropTypes from 'prop-types'
 import List from '@material-ui/core/List'
 import { ListItem } from '@material-ui/core'
-//import OrgDialog from './OrgDialog'
 import { makeStyles } from '@material-ui/core/styles'
 import SearchListItems from './SearchListItems'
 import SearchDialog from './SearchDialog'
@@ -18,14 +17,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SavedOrgsScrollview({ orgs, dbuser }) {
+export default function SavedScrollview({ results, type, viewer, refresh, setRefresh }) {
+  console.log('type', type)
   const classes = useStyles()
-  if (orgs.length > 0) {
-    const [org, setOrg] = useState(orgs[0])
+  if (results) {
+    const [currentResult, setCurrentResult] = useState(results[0])
     const [open, setOpen] = useState(false)
 
-    const handleClickOpen = (org) => {
-      setOrg(org)
+    const handleClickOpen = (result) => {
+      setCurrentResult(result)
       setOpen(true)
     }
 
@@ -33,9 +33,9 @@ export default function SavedOrgsScrollview({ orgs, dbuser }) {
       setOpen(false)
     }
 
-    const listItems = orgs.map((org) => (
-      <ListItem key={org.gg_id}>
-        <SearchListItems onClick={() => handleClickOpen(org)} result={org} type="organizations" />
+    const listItems = results.map((result) => (
+      <ListItem key={result._id}>
+        <SearchListItems onClick={() => handleClickOpen(result)} result={result} type={type} />
       </ListItem>
     ))
 
@@ -44,11 +44,13 @@ export default function SavedOrgsScrollview({ orgs, dbuser }) {
         <Paper className={classes.orgs}>
           <List>{listItems}</List>
           <SearchDialog
-            result={org}
+            result={currentResult}
             open={open}
             onClose={handleClose}
-            type="organizations"
-            dbuser={dbuser}
+            type={type}
+            dbuser={viewer}
+            refresh={refresh}
+            setRefresh={setRefresh}
           />
         </Paper>
       </div>
@@ -58,7 +60,10 @@ export default function SavedOrgsScrollview({ orgs, dbuser }) {
   }
 }
 
-SavedOrgsScrollview.propTypes = {
-  orgs: PropTypes.array,
-  dbuser: PropTypes.object,
+SavedScrollview.propTypes = {
+  results: PropTypes.array,
+  viewer: PropTypes.object,
+  type: PropTypes.string,
+  refresh: PropTypes.bool,
+  setRefresh: PropTypes.func,
 }

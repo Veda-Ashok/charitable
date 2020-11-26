@@ -33,9 +33,12 @@ export default function SearchDialog(props) {
         </DialogActions>
         <DialogContent>
           <SearchDescriptionBox
+            refresh={props.refresh}
+            setRefresh={props.setRefresh}
             dbuser={props.dbuser}
             result={result}
-            type={props.type}></SearchDescriptionBox>
+            type={props.type}
+          />
         </DialogContent>
       </div>
     </Dialog>
@@ -48,4 +51,6 @@ SearchDialog.propTypes = {
   result: PropTypes.object,
   type: PropTypes.string,
   dbuser: PropTypes.object,
+  refresh: PropTypes.bool,
+  setRefresh: PropTypes.func,
 }
