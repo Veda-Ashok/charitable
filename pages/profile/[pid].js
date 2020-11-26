@@ -13,9 +13,9 @@ export default function Profile({ user }) {
   return (
     <div>
       <ProfilePage
-        member={pid}
+        pid={pid}
         user={user}
-        isMe={user ? pid === user.sub : false}
+        isMe={user ? pid === user.nickname : false}
         isFollower={false}
       />
     </div>

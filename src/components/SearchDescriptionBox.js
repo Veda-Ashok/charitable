@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SearchDescriptionBox({ result, type, dbuser }) {
+export default function SearchDescriptionBox({ result, type, dbuser, refresh, setRefresh }) {
   const classes = useStyles()
   let _id = ''
   let imageSrc = ''
@@ -155,6 +155,7 @@ export default function SearchDescriptionBox({ result, type, dbuser }) {
         if (response.data.matchedCount === 1 && response.data.modifiedCount === 1) {
           setIsSaved(!isSaved)
           setSavedOpen(true)
+          setRefresh(!refresh)
         }
       } catch (error) {
         console.error(error)
@@ -311,4 +312,6 @@ SearchDescriptionBox.propTypes = {
   result: PropTypes.object,
   type: PropTypes.string,
   dbuser: PropTypes.object,
+  refresh: PropTypes.bool,
+  setRefresh: PropTypes.func,
 }
