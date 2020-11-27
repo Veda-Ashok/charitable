@@ -75,6 +75,7 @@ export default function CreatePostBox({
   handleSuccessOpen,
 }) {
   const [input, setInput] = useState(defaultText)
+  const [photo, setPhoto] = useState(null)
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
@@ -86,13 +87,16 @@ export default function CreatePostBox({
     setOpen(true)
   }
 
+  const handlePhoto = (e) => {
+    setPhoto(e.target.files[0])
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     if (input === '' || input === undefined || input === null) {
       handleOpen()
     } else {
       setInput('')
-
       const createPost = async () => {
         try {
           const organization_id =
@@ -100,15 +104,20 @@ export default function CreatePostBox({
               ? result.organization.id.toString()
               : type === 'organizations'
               ? result.gg_id
-              : undefined
-          const activity_id = type === 'activities' ? result._id : undefined
-          let response = await axios.post('/api/createPost', {
-            poster: dbuser._id,
-            image: undefined,
-            organization_id: organization_id,
-            activity_id: activity_id,
-            typed_content: input,
-          })
+              : null
+          const activity_id = type === 'activities' ? result._id : null
+          const formData = new FormData()
+          formData.append('poster', dbuser._id)
+          formData.append('image', photo)
+          formData.append('organization_id', organization_id)
+          formData.append('activity_id', activity_id)
+          formData.append('typed_content', input)
+          const config = {
+            headers: {
+              'content-type': 'multipart/form-data',
+            },
+          }
+          let response = await axios.post('/api/createPost', formData, config)
           //whatever it shows for a successful insert check for that
           if (response.data.insertedCount === 1) {
             handleSuccessOpen()
@@ -118,6 +127,7 @@ export default function CreatePostBox({
         }
       }
       createPost()
+      setPhoto(null)
       //send the post data to the post api
       if (result && type) {
         closePostDialog()
@@ -177,9 +187,10 @@ export default function CreatePostBox({
               <input
                 name="upload-photo"
                 id="upload-photo"
-                accept="image/*"
+                accept="image/png, image/jpeg"
                 style={{ display: 'none' }}
                 type="file"
+                onChange={(e) => handlePhoto(e)}
               />
               <Button className={classes.attachOption} component="div">
                 <PhotoLibraryIcon />

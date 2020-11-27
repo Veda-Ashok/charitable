@@ -1,20 +1,54 @@
 import { connectToDatabase } from '../../utils/mongodb'
 import microCors from 'micro-cors'
+import formidable from 'formidable'
+import { v2 as cloudinary } from 'cloudinary'
 
 const cors = microCors()
 const ObjectId = require('mongodb').ObjectID
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+}
+
 const handler = async (req, res) => {
   try {
+    console.log('hello')
     const { db } = await connectToDatabase()
+    const form = new formidable.IncomingForm()
 
-    const activity_id = req.body.activity_id ? ObjectId(req.body.activity_id) : null
+    const formData = await new Promise(function (resolve, reject) {
+      form.parse(req, function (err, fields, files) {
+        if (err) {
+          reject(err)
+          return
+        }
+        resolve([fields, files])
+      })
+    })
+
+    let photo = null
+    const files = formData[1]
+    const fields = formData[0]
+    console.log('fields', fields)
+    console.log('files', files)
+    if (Object.keys(files).length !== 0) {
+      const image = await cloudinary.uploader.upload(files.image.path, {
+        width: 512,
+        height: 512,
+        crop: 'fill',
+      })
+      photo = image.secure_url
+    }
+
+    const activity_id = fields.activity_id === 'null' ? null : ObjectId(fields.activity_id)
     const post = await db.collection('posts').insertOne({
-      poster: ObjectId(req.body.poster),
-      image: req.body.image,
-      organization_id: req.body.organization_id,
+      poster: ObjectId(fields.poster),
+      image: photo === 'null' ? null : photo,
+      organization_id: fields.organization_id === 'null' ? null : fields.organization_id,
       activity_id: activity_id,
-      typed_content: req.body.typed_content,
+      typed_content: fields.typed_content,
       date_posted: new Date(),
     })
     res.json(post)

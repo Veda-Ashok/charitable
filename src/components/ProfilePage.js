@@ -132,7 +132,7 @@ function ProfilePage(props) {
                       handleSuccessOpen={handleSuccessOpen}
                       name={name}
                       icon={icon}
-                      owner={owner}
+                      dbuser={owner}
                     />{' '}
                     <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
                   </>

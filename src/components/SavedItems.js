@@ -54,8 +54,8 @@ export default function SavedItems({ orgs, activities, owner, viewer, refresh, s
 }
 
 SavedItems.propTypes = {
-  orgs: PropTypes.object,
-  activities: PropTypes.object,
+  orgs: PropTypes.array,
+  activities: PropTypes.array,
   owner: PropTypes.object,
   viewer: PropTypes.object,
   refresh: PropTypes.bool,
