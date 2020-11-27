@@ -80,6 +80,7 @@ export default function TimelinePage({ user }) {
               <div>
                 <CreatePostBox
                   handleSuccessOpen={handleSuccessOpen}
+                  dbuser={charitUser}
                   name={charitUser.name}
                   icon={charitUser.profile_picture}
                 />
