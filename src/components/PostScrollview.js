@@ -15,7 +15,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function PostScrollview({ posts }) {
+export default function PostScrollview({ posts, viewer }) {
+  /*
+  TODO: Change these values depending on the objects returned by the API call
+  */
   const classes = useStyles()
   if (posts) {
     const listItems = posts.map((post) => (
@@ -26,6 +29,7 @@ export default function PostScrollview({ posts }) {
           time={post.time}
           typedContent={post.typedContent}
           image={post.image}
+          viewer={viewer}
           orgDetails={post.orgDetails}
           activityDetails={post.activityDetails}></PostBox>
       </ListItem>
@@ -43,4 +47,5 @@ export default function PostScrollview({ posts }) {
 
 PostScrollview.propTypes = {
   posts: PropTypes.array,
+  viewer: PropTypes.object,
 }

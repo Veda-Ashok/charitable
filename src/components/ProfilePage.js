@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import NavigationBar from '../../src/components/NavigationBar'
 import ProfileBanner from './ProfileBanner'
 import { makeStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
 import PropTypes from 'prop-types'
 import PostScrollview from './PostScrollview'
 import CreatePostBox from './CreatePostBox'
@@ -35,16 +36,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
-  verify: {
-    marginLeft: theme.spacing(4),
-    marginRight: theme.spacing(4),
-    padding: theme.spacing(4),
+  noPosts: {
     display: 'flex',
     justifyContent: 'center',
-  },
-  icon: {
-    marginTop: theme.spacing(2),
-    marginRight: theme.spacing(2),
   },
 }))
 
@@ -52,7 +46,7 @@ function ProfilePage(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [activities, setActivities] = useState(null)
   const [orgs, setOrgs] = useState(null)
-  const [posts, setPosts] = useState()
+  const [posts, setPosts] = useState(null)
   const [name, setName] = useState(null)
   const [bio, setBio] = useState(null)
   const [banner, setBanner] = useState(null)
@@ -81,7 +75,6 @@ function ProfilePage(props) {
           const response = await axios.get(`/api/searchUserSavedInfo/${props.user.nickname}`)
           setOrgs(response.data.saved_orgs_docs)
           setActivities(response.data.saved_activities_docs)
-          setPosts(response.data.posts)
           setIcon(response.data.profile_picture)
           setName(response.data.name)
           setBanner(response.data.banner_picture)
@@ -94,7 +87,6 @@ function ProfilePage(props) {
           const myResponse = await axios.get(`/api/searchUserByNickname/${props.user.nickname}`)
           setOrgs(profile.data.saved_orgs_docs)
           setActivities(profile.data.saved_activities_docs)
-          setPosts(profile.data.posts)
           setIcon(profile.data.profile_picture)
           setName(profile.data.name)
           setBanner(profile.data.banner_picture)
@@ -103,7 +95,9 @@ function ProfilePage(props) {
           setOwner(profile.data)
           setViewer(myResponse.data)
         }
-
+        //TODO: somethign like this
+        //setPosts(await axios.get(`api/getUsersPosts/${props.user.nickname}`))
+        setPosts(null)
         setIsLoading(false)
       } catch (error) {
         console.error(error)
@@ -146,10 +140,20 @@ function ProfilePage(props) {
                       icon={icon}
                       charitUser={owner}
                     />{' '}
-                    <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
+                    <SuccessfulPostDialog
+                      open={success}
+                      onClose={handleSuccessClose}
+                      user={props.user}
+                    />
                   </>
                 ) : null}
-                <PostScrollview posts={posts}></PostScrollview>
+                {posts && posts.length > 0 ? (
+                  <PostScrollview posts={posts} viewer={viewer}></PostScrollview>
+                ) : (
+                  <Paper className={classes.noPosts}>
+                    <h2>No Posts to Display</h2>
+                  </Paper>
+                )}
                 {!isWidthUp('sm', props.width) && (
                   <div className={classes.savedOrg}>
                     {isLoading ? (

@@ -3,7 +3,6 @@ import NavigationBar from './NavigationBar'
 import { makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import PostScrollview from './PostScrollview'
-import { mockPosts } from '../tests/MockAPI/MockPosts'
 import CreatePostBox from './CreatePostBox'
 import Loading from './Loading'
 import Paper from '@material-ui/core/Paper'
@@ -33,6 +32,7 @@ export default function TimelinePage({ user }) {
   const [error, setError] = useState(undefined)
   const [charitUser, setCharitUser] = useState(undefined)
   const [success, setSuccessOpen] = useState(false)
+  const [posts, setPosts] = useState(null)
 
   const handleSuccessOpen = () => {
     setSuccessOpen(true)
@@ -54,6 +54,9 @@ export default function TimelinePage({ user }) {
         setIsLoading(true)
         const response = await axios.get(`/api/searchUserByNickname/${user.nickname}`)
         setCharitUser(response.data)
+        //TODO: somethign like this
+        //setPosts(await axios.get(`api/getFollowingPosts/${props.user.nickname}`))
+        setPosts(null)
         setIsLoading(false)
       } catch (error) {
         setError(error.statusText)
@@ -75,20 +78,27 @@ export default function TimelinePage({ user }) {
       ) : error ? (
         <Typography>{error}</Typography>
       ) : charitUser.email_verified ? (
-        <Paper className={classes.organizations}>
-          <div className={classes.content}>
-            <div>
-              <CreatePostBox
-                handleSuccessOpen={handleSuccessOpen}
-                charitUser={charitUser}
-                name={charitUser.name}
-                icon={charitUser.profile_picture}
-              />
-              <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
-              <PostScrollview posts={mockPosts.posts} className={classes.posts}></PostScrollview>
-            </div>
+        <div className={classes.content}>
+          <div>
+            <CreatePostBox
+              handleSuccessOpen={handleSuccessOpen}
+              charitUser={charitUser}
+              name={charitUser.name}
+              icon={charitUser.profile_picture}
+            />
+            <SuccessfulPostDialog open={success} onClose={handleSuccessClose} user={user} />
+            {posts && posts.length > 0 ? (
+              <PostScrollview
+                posts={posts}
+                className={classes.posts}
+                viewer={charitUser}></PostScrollview>
+            ) : (
+              <Paper className={classes.content}>
+                <h2>No Posts to Display</h2>
+              </Paper>
+            )}
           </div>
-        </Paper>
+        </div>
       ) : (
         <VerifyEmail />
       )}

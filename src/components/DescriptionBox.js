@@ -157,7 +157,7 @@ export default function DescriptionBox({ orgDetails, charitUser }) {
             name={orgDetails.organization.name}
           />
           <UsersOnlyDialog open={verifyUserOpen} onClose={handleVerifyUserClose} />
-          <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
+          <SuccessfulPostDialog open={success} onClose={handleSuccessClose} user={charitUser} />
           <Typography gutterBottom variant="h4">
             {orgDetails.organization.name}
           </Typography>
