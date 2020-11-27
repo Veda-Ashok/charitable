@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SuccessfulPostDialog(props) {
   const classes = useStyles()
-  const { onClose, open } = props
+  const { onClose, open, user } = props
 
   const handleClose = () => {
     onClose()
@@ -48,7 +48,12 @@ export default function SuccessfulPostDialog(props) {
           <Button onClick={handleClose} component={Link} naked href="/timeline" color="primary">
             View on Timeline
           </Button>
-          <Button onClick={handleClose} component={Link} naked href="/profile" color="primary">
+          <Button
+            onClick={handleClose}
+            component={Link}
+            naked
+            href={user ? `/profile/${user.nickname}` : '/profile'}
+            color="primary">
             View on Profile
           </Button>
         </DialogActions>
@@ -60,4 +65,5 @@ export default function SuccessfulPostDialog(props) {
 SuccessfulPostDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
+  user: PropTypes.object,
 }

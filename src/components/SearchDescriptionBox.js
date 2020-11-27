@@ -206,7 +206,7 @@ export default function SearchDescriptionBox({ result, type, charitUser, refresh
               name={name}
             />
             <UsersOnlyDialog open={verifyUserOpen} onClose={handleVerifyUserClose} />
-            <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
+            <SuccessfulPostDialog open={success} onClose={handleSuccessClose} user={charitUser} />
           </CardContent>
           <CardActions>
             {url ? (
