@@ -43,7 +43,7 @@ export default function SearchPage(props) {
   const type = router.query.type ? router.query.type : 'organizations'
   const [resultType, setResultType] = useState(null)
   const [result, setResult] = useState('Loading')
-  const [dbuser, setDbuser] = useState(undefined)
+  const [charitUser, setCharitUser] = useState(undefined)
 
   useEffect(() => {
     const getUser = async () => {
@@ -51,7 +51,7 @@ export default function SearchPage(props) {
         let responseUser
         if (props.user) {
           responseUser = await axios.get(`/api/searchUserByNickname/${props.user.nickname}`)
-          setDbuser(responseUser.data)
+          setCharitUser(responseUser.data)
         }
       } catch (error) {
         console.log(error)
@@ -106,7 +106,7 @@ export default function SearchPage(props) {
                       className={classes.scrollView}
                       result={result}
                       type={type}
-                      dbuser={dbuser}
+                      charitUser={charitUser}
                     />
                   )}
                 </div>

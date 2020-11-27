@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SearchDescriptionBox({ result, type, dbuser, refresh, setRefresh }) {
+export default function SearchDescriptionBox({ result, type, charitUser, refresh, setRefresh }) {
   const classes = useStyles()
   let _id = ''
   let imageSrc = ''
@@ -50,8 +50,8 @@ export default function SearchDescriptionBox({ result, type, dbuser, refresh, se
   let url = ''
   let location = []
   let themes = []
-  let userId = dbuser?._id || undefined
-  let userVerified = dbuser?.email_verified || false
+  let userId = charitUser?._id || undefined
+  let userVerified = charitUser?.email_verified || false
 
   if (type === 'organizations') {
     imageSrc = result.logo_url
@@ -197,7 +197,7 @@ export default function SearchDescriptionBox({ result, type, dbuser, refresh, se
               onClose={handlePostClose}
               result={result}
               type={type}
-              dbuser={dbuser}
+              charitUser={charitUser}
               handleSuccessOpen={handleSuccessOpen}></PostDialog>
             <SavedDialog
               open={savedOpen}
@@ -311,7 +311,7 @@ export default function SearchDescriptionBox({ result, type, dbuser, refresh, se
 SearchDescriptionBox.propTypes = {
   result: PropTypes.object,
   type: PropTypes.string,
-  dbuser: PropTypes.object,
+  charitUser: PropTypes.object,
   refresh: PropTypes.bool,
   setRefresh: PropTypes.func,
 }

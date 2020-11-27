@@ -40,7 +40,7 @@ export default function TrendingPage({ user }) {
   const [isLoading, setIsLoading] = useState(true)
   const [orgs, setOrgs] = useState(null)
   const [error, setError] = useState(undefined)
-  const [dbuser, setDbuser] = useState(undefined)
+  const [charitUser, setCharitUser] = useState(undefined)
 
   useEffect(() => {
     let didCancel = false
@@ -52,7 +52,7 @@ export default function TrendingPage({ user }) {
         const response = await searchFeatured('featured/projects')
         if (user) {
           responseUser = await axios.get(`/api/searchUserByNickname/${user.nickname}`)
-          setDbuser(responseUser.data)
+          setCharitUser(responseUser.data)
         }
         setOrgs(response)
         setIsLoading(false)
@@ -86,7 +86,7 @@ export default function TrendingPage({ user }) {
             <TrendingScrollview
               className={classes.scrollView}
               orgs={orgs ? orgs.projects.project : null}
-              dbuser={dbuser}
+              charitUser={charitUser}
             />
           )}
         </div>

@@ -69,12 +69,13 @@ export default function CreatePostBox({
   closePostDialog,
   result,
   type,
-  dbuser,
+  charitUser,
   name,
   icon,
   handleSuccessOpen,
 }) {
   const [input, setInput] = useState(defaultText)
+  const [photo, setPhoto] = useState(null)
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
@@ -86,13 +87,17 @@ export default function CreatePostBox({
     setOpen(true)
   }
 
+  const handlePhoto = (e) => {
+    setPhoto(e.target.files[0])
+    console.log(e.target.files[0])
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     if (input === '' || input === undefined || input === null) {
       handleOpen()
     } else {
       setInput('')
-
       const createPost = async () => {
         try {
           const organization_id =
@@ -100,15 +105,20 @@ export default function CreatePostBox({
               ? result.organization.id.toString()
               : type === 'organizations'
               ? result.gg_id
-              : undefined
-          const activity_id = type === 'activities' ? result._id : undefined
-          let response = await axios.post('/api/createPost', {
-            poster: dbuser._id,
-            image: undefined,
-            organization_id: organization_id,
-            activity_id: activity_id,
-            typed_content: input,
-          })
+              : null
+          const activity_id = type === 'activities' ? result._id : null
+          const formData = new FormData()
+          formData.append('poster', charitUser._id)
+          formData.append('image', photo)
+          formData.append('organization_id', organization_id)
+          formData.append('activity_id', activity_id)
+          formData.append('typed_content', input)
+          const config = {
+            headers: {
+              'content-type': 'multipart/form-data',
+            },
+          }
+          let response = await axios.post('/api/createPost', formData, config)
           //whatever it shows for a successful insert check for that
           if (response.data.insertedCount === 1) {
             handleSuccessOpen()
@@ -118,6 +128,7 @@ export default function CreatePostBox({
         }
       }
       createPost()
+      setPhoto(null)
       //send the post data to the post api
       if (result && type) {
         closePostDialog()
@@ -132,9 +143,9 @@ export default function CreatePostBox({
           <div className={classes.flex}>
             <Avatar
               className={classes.avatar}
-              alt={dbuser.name}
-              src={dbuser.profile_picture}></Avatar>
-            <InfoSmallBox dbuser={dbuser} result={result} type={type} showPopup={false} />
+              alt={charitUser.name}
+              src={charitUser.profile_picture}></Avatar>
+            <InfoSmallBox charitUser={charitUser} result={result} type={type} showPopup={false} />
           </div>
           <TextField
             id="standard-multiline-flexible"
@@ -177,13 +188,16 @@ export default function CreatePostBox({
               <input
                 name="upload-photo"
                 id="upload-photo"
-                accept="image/*"
+                accept="image/png, image/jpeg"
                 style={{ display: 'none' }}
                 type="file"
+                onChange={(e) => handlePhoto(e)}
               />
               <Button className={classes.attachOption} component="div">
                 <PhotoLibraryIcon />
-                <Typography variant="subtitle2">Attach Image</Typography>
+                <Typography variant="subtitle2">
+                  {photo ? `${photo.name} Attached!` : 'Attach Image'}
+                </Typography>
               </Button>
             </label>
           </div>
@@ -206,7 +220,7 @@ CreatePostBox.propTypes = {
   defaultText: PropTypes.string,
   result: PropTypes.object,
   type: PropTypes.string,
-  dbuser: PropTypes.object,
+  charitUser: PropTypes.object,
   closePostDialog: PropTypes.func,
   handleSuccessOpen: PropTypes.func,
 }
