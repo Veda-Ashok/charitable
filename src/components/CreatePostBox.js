@@ -89,6 +89,7 @@ export default function CreatePostBox({
 
   const handlePhoto = (e) => {
     setPhoto(e.target.files[0])
+    console.log(e.target.files[0])
   }
 
   const handleSubmit = (e) => {
@@ -194,7 +195,9 @@ export default function CreatePostBox({
               />
               <Button className={classes.attachOption} component="div">
                 <PhotoLibraryIcon />
-                <Typography variant="subtitle2">Attach Image</Typography>
+                <Typography variant="subtitle2">
+                  {photo ? `${photo.name} Attached!` : 'Attach Image'}
+                </Typography>
               </Button>
             </label>
           </div>
