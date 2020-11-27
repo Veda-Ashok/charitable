@@ -48,7 +48,7 @@ export default function SavedScrollview({ results, type, viewer, refresh, setRef
             open={open}
             onClose={handleClose}
             type={type}
-            dbuser={viewer}
+            charitUser={viewer}
             refresh={refresh}
             setRefresh={setRefresh}
           />

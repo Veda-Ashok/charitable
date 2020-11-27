@@ -69,7 +69,7 @@ export default function CreatePostBox({
   closePostDialog,
   result,
   type,
-  dbuser,
+  charitUser,
   name,
   icon,
   handleSuccessOpen,
@@ -108,7 +108,7 @@ export default function CreatePostBox({
               : null
           const activity_id = type === 'activities' ? result._id : null
           const formData = new FormData()
-          formData.append('poster', dbuser._id)
+          formData.append('poster', charitUser._id)
           formData.append('image', photo)
           formData.append('organization_id', organization_id)
           formData.append('activity_id', activity_id)
@@ -143,9 +143,9 @@ export default function CreatePostBox({
           <div className={classes.flex}>
             <Avatar
               className={classes.avatar}
-              alt={dbuser.name}
-              src={dbuser.profile_picture}></Avatar>
-            <InfoSmallBox dbuser={dbuser} result={result} type={type} showPopup={false} />
+              alt={charitUser.name}
+              src={charitUser.profile_picture}></Avatar>
+            <InfoSmallBox charitUser={charitUser} result={result} type={type} showPopup={false} />
           </div>
           <TextField
             id="standard-multiline-flexible"
@@ -220,7 +220,7 @@ CreatePostBox.propTypes = {
   defaultText: PropTypes.string,
   result: PropTypes.object,
   type: PropTypes.string,
-  dbuser: PropTypes.object,
+  charitUser: PropTypes.object,
   closePostDialog: PropTypes.func,
   handleSuccessOpen: PropTypes.func,
 }

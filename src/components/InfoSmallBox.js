@@ -5,7 +5,7 @@ import SearchDialog from './SearchDialog'
 import OrgDialog from './OrgDialog'
 import TrendingListItems from './TrendingListItems'
 
-export default function InfoSmallBox({ result, type, dbuser, showPopup }) {
+export default function InfoSmallBox({ result, type, charitUser, showPopup }) {
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
@@ -22,7 +22,7 @@ export default function InfoSmallBox({ result, type, dbuser, showPopup }) {
         <>
           <TrendingListItems orgDetails={result} onClick={() => handleClickOpen()} />
           {showPopup && (
-            <OrgDialog org={result} open={open} onClose={handleClose} dbuser={dbuser} />
+            <OrgDialog org={result} open={open} onClose={handleClose} charitUser={charitUser} />
           )}
         </>
       ) : (
@@ -34,7 +34,7 @@ export default function InfoSmallBox({ result, type, dbuser, showPopup }) {
               open={open}
               onClose={handleClose}
               type={type}
-              dbuser={dbuser}
+              charitUser={charitUser}
             />
           )}
         </>
@@ -46,6 +46,6 @@ export default function InfoSmallBox({ result, type, dbuser, showPopup }) {
 InfoSmallBox.propTypes = {
   result: PropTypes.object,
   type: PropTypes.string,
-  dbuser: PropTypes.object,
+  charitUser: PropTypes.object,
   showPopup: PropTypes.bool,
 }
