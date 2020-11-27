@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import SuccessfulPostDialog from './SuccessfulPostDialog'
 import axios from 'axios'
+import VerifyEmail from './VerifyEmail'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,30 +70,28 @@ export default function TimelinePage({ user }) {
   return (
     <div className={classes.root}>
       <NavigationBar page="Timeline" user={user} />
-      <Paper className={classes.organizations}>
-        <div>
-          {isLoading ? (
-            <Loading />
-          ) : error ? (
-            <Typography>{error}</Typography>
-          ) : charitUser.email_verified ? (
-            <div className={classes.content}>
-              <div>
-                <CreatePostBox
-                  handleSuccessOpen={handleSuccessOpen}
-                  charitUser={charitUser}
-                  name={charitUser.name}
-                  icon={charitUser.profile_picture}
-                />
-                <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
-                <PostScrollview posts={mockPosts.posts} className={classes.posts}></PostScrollview>
-              </div>
+      {isLoading ? (
+        <Loading />
+      ) : error ? (
+        <Typography>{error}</Typography>
+      ) : charitUser.email_verified ? (
+        <Paper className={classes.organizations}>
+          <div className={classes.content}>
+            <div>
+              <CreatePostBox
+                handleSuccessOpen={handleSuccessOpen}
+                charitUser={charitUser}
+                name={charitUser.name}
+                icon={charitUser.profile_picture}
+              />
+              <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
+              <PostScrollview posts={mockPosts.posts} className={classes.posts}></PostScrollview>
             </div>
-          ) : (
-            <h2>Verify Your Email To Acess This Page</h2>
-          )}
-        </div>
-      </Paper>
+          </div>
+        </Paper>
+      ) : (
+        <VerifyEmail />
+      )}
     </div>
   )
 }

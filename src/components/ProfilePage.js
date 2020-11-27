@@ -10,6 +10,7 @@ import SuccessfulPostDialog from './SuccessfulPostDialog'
 import Loading from './Loading'
 import axios from 'axios'
 import SavedItems from './SavedItems'
+import VerifyEmail from './VerifyEmail'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
@@ -33,6 +34,17 @@ const useStyles = makeStyles((theme) => ({
     padding: '1rem',
     display: 'flex',
     justifyContent: 'center',
+  },
+  verify: {
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
+    padding: theme.spacing(4),
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  icon: {
+    marginTop: theme.spacing(2),
+    marginRight: theme.spacing(2),
   },
 }))
 
@@ -86,7 +98,7 @@ function ProfilePage(props) {
           setIcon(profile.data.profile_picture)
           setName(profile.data.name)
           setBanner(profile.data.banner_picture)
-          setBio(myResponse.data.bio)
+          setBio(profile.data.bio)
           setEmailVerified(myResponse.data.email_verified)
           setOwner(profile.data)
           setViewer(myResponse.data)
@@ -174,7 +186,7 @@ function ProfilePage(props) {
             </div>
           </div>
         ) : (
-          <h2>verify your email to access this page</h2>
+          <VerifyEmail />
         )
       ) : (
         <Loading />

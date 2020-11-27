@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function SavedScrollview({ results, type, viewer, refresh, setRefresh }) {
-  console.log('type', type)
   const classes = useStyles()
   if (results) {
     const [currentResult, setCurrentResult] = useState(results[0])
