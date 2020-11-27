@@ -14,7 +14,6 @@ export const config = {
 
 const handler = async (req, res) => {
   try {
-    console.log('hello')
     const { db } = await connectToDatabase()
     const form = new formidable.IncomingForm()
 
@@ -31,8 +30,6 @@ const handler = async (req, res) => {
     let photo = null
     const files = formData[1]
     const fields = formData[0]
-    console.log('fields', fields)
-    console.log('files', files)
     if (Object.keys(files).length !== 0) {
       const image = await cloudinary.uploader.upload(files.image.path, {
         width: 512,

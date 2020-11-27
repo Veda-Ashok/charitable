@@ -20,7 +20,6 @@ const handler = async (req, res) => {
 
     const { db } = await connectToDatabase()
 
-    // console.log()
     const users = await db.collection('users').updateOne(
       { nickname: `${pid.replace(/['"]+/g, '')}` },
       {
