@@ -139,7 +139,7 @@ function ProfilePage(props) {
                 ) : null}
                 <PostScrollview posts={posts}></PostScrollview>
                 {!isWidthUp('sm', props.width) && (
-                  <div>
+                  <div className={classes.savedOrg}>
                     {isLoading ? (
                       <Loading />
                     ) : (
@@ -147,7 +147,7 @@ function ProfilePage(props) {
                         owner={owner}
                         viewer={viewer}
                         orgs={orgs}
-                        activties={activities}
+                        activities={activities}
                         setRefresh={setRefresh}
                         refresh={refresh}
                       />
