@@ -3,15 +3,13 @@ import { makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import Dialog from '@material-ui/core/Dialog'
 import TextField from '@material-ui/core/TextField'
-import ProfileBannerAvatar from './ProfileBannerAvatar'
-import Badge from '@material-ui/core/Badge'
-import AddCircleIcon from '@material-ui/icons/AddCircle'
 import Fab from '@material-ui/core/Fab'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import CloseIcon from '@material-ui/icons/Close'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
@@ -38,32 +36,60 @@ const useStyles = makeStyles((theme) => ({
     top: theme.spacing(1),
     color: theme.palette.grey[500],
   },
-  upload: {
+  banner: {
     display: 'flex',
     justifyContent: 'space-around',
-  },
-  banner: {
-    marginTop: theme.spacing(6.5),
+    margin: theme.spacing(2),
   },
 }))
 
 export default function EditProfile(props) {
   const classes = useStyles()
   const { onClose, open, userInfo } = props
-  const [updatedInfo, setUpdatedInfo] = useState({})
+  const [icon, setIcon] = useState(userInfo.icon)
+  const [banner, setBanner] = useState(userInfo.banner)
+  const [uploadBanner, setUploadBanner] = useState({
+    text: 'Upload Banner Picture',
+    color: 'default',
+  })
+  const [uploadIcon, setUploadIcon] = useState({ text: 'Upload Profile Picture', color: 'default' })
+  const [updatedInfo, setUpdatedInfo] = useState({ name: userInfo.name, bio: userInfo.bio })
 
   const handleClose = () => {
     onClose()
+  }
+
+  const handleIcon = (e) => {
+    setIcon(e.target.files[0])
+    setUploadIcon({
+      text: `Uploaded ${e.target.files[0].name} as Profile Picture!`,
+      color: 'secondary',
+    })
+  }
+
+  const handleBanner = (e) => {
+    setBanner(e.target.files[0])
+    setUploadBanner({ text: `Uploaded ${e.target.files[0].name} as Banner!`, color: 'secondary' })
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
 
     try {
-      await axios.post(`/api/editProfile/${userInfo.nickname}`, {
-        updatedInfo: updatedInfo,
-      })
+      const formData = new FormData()
+      formData.append('name', updatedInfo['name'])
+      formData.append('bio', updatedInfo['bio'])
+      formData.append('icon', icon)
+      formData.append('banner', banner)
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      }
+      await axios.post(`/api/editProfile/${userInfo.nickname}`, formData, config)
       props.setRefresh(!props.refresh)
+      setUploadIcon({ text: 'Upload Icon Picture', color: 'default' })
+      setUploadBanner({ text: 'Upload Banner Picture', color: 'default' })
     } catch (error) {
       console.error(error)
     }
@@ -96,50 +122,48 @@ export default function EditProfile(props) {
       </DialogTitle>
       <div>
         <form onSubmit={handleSubmit} className={classes.form}>
-          <div className={classes.upload}>
-            <div>
-              <Typography className={classes.iconText} variant="body">
-                Upload Icon
-              </Typography>
-              <IconButton className={classes.icon}>
-                <label htmlFor="upload-photo">
-                  <input
-                    name="upload-photo"
-                    id="upload-photo"
-                    accept="image/*"
-                    style={{ display: 'none' }}
-                    type="file"
-                  />
-                  <Badge
-                    overlap="circle"
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'right',
-                    }}
-                    badgeContent={<AddCircleIcon />}>
-                    <ProfileBannerAvatar icon={userInfo.icon} />
-                  </Badge>
-                </label>
-              </IconButton>
-            </div>
-            <div className={classes.banner}>
-              <label htmlFor="upload-photo">
-                <input
-                  name="upload-photo"
-                  id="upload-photo"
-                  accept="image/*"
-                  style={{ display: 'none' }}
-                  type="file"
-                />
-                <Fab variant="extended" className={classes.attachOption} component="div">
-                  <PhotoLibraryIcon />
-                  <Typography variant="subtitle2">Upload Banner Photo</Typography>
-                </Fab>
-              </label>
-            </div>
+          <div className={classes.banner}>
+            <label htmlFor="upload-icon">
+              <input
+                name="upload-icon"
+                id="upload-icon"
+                accept="image/*"
+                style={{ display: 'none' }}
+                type="file"
+                onChange={(e) => handleIcon(e)}
+              />
+              <Fab
+                variant="extended"
+                color={uploadIcon['color']}
+                className={classes.attachOption}
+                component="div">
+                <AccountCircleIcon />
+                <Typography variant="subtitle2">{uploadIcon['text']}</Typography>
+              </Fab>
+            </label>
+          </div>
+          <div className={classes.banner}>
+            <label htmlFor="upload-banner">
+              <input
+                name="upload-banner"
+                id="upload-banner"
+                accept="image/*"
+                style={{ display: 'none' }}
+                type="file"
+                onChange={(e) => handleBanner(e)}
+              />
+              <Fab
+                variant="extended"
+                color={uploadBanner['color']}
+                className={classes.attachOption}
+                component="div">
+                <PhotoLibraryIcon />
+                <Typography variant="subtitle2">{uploadBanner['text']}</Typography>
+              </Fab>
+            </label>
           </div>
           <TextField
-            id="standard-basic"
+            id="edit-name"
             label="Edit Name"
             defaultValue={userInfo.name}
             className={classes.text}
@@ -149,7 +173,7 @@ export default function EditProfile(props) {
             }}
           />
           <TextField
-            id="standard-basic"
+            id="edit-bio"
             label="Edit Bio"
             defaultValue={userInfo.bio}
             multiline
