@@ -41,6 +41,14 @@ export default async (req, res) => {
           as: 'attached_activities_docs',
         },
       },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'poster',
+          foreignField: 'nickname',
+          as: 'poster_docs',
+        },
+      },
     ]
 
     const posts = await db.collection('posts').aggregate(agg)

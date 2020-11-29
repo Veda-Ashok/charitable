@@ -96,8 +96,7 @@ function ProfilePage(props) {
           setViewer(myResponse.data)
         }
         //TODO: somethign like this
-        //setPosts(await axios.get(`api/getUsersPosts/${props.user.nickname}`))
-        setPosts(null)
+        setPosts(await axios.get(`api/getUsersPosts/${props.pid}`))
         setIsLoading(false)
       } catch (error) {
         console.error(error)

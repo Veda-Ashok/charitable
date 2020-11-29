@@ -22,16 +22,18 @@ export default function PostScrollview({ posts, viewer }) {
   const classes = useStyles()
   if (posts) {
     const listItems = posts.map((post) => (
-      <ListItem key={post.name}>
+      <ListItem key={post._id}>
         <PostBox
-          name={post.name}
-          icon={post.icon}
-          time={post.time}
-          typedContent={post.typedContent}
+          name={post.poster_docs[0].name}
+          icon={post.poster_docs[0].profile_picture}
+          time={post.date_posted}
+          typedContent={post.typed_content}
           image={post.image}
           viewer={viewer}
-          orgDetails={post.orgDetails}
-          activityDetails={post.activityDetails}></PostBox>
+          orgDetails={post.attached_orgs_docs.length <= 0 ? null : post.attached_orgs_docs[0]}
+          activityDetails={
+            post.attached_activities_docs.length <= 0 ? null : post.attached_activities_docs[0]
+          }></PostBox>
       </ListItem>
     ))
 
