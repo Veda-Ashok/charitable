@@ -13,7 +13,7 @@ const handler = async (res) => {
       .find({ poster: ObjectId(res.body.userId) })
       .toArray()
 
-    res.json(posts)
+    posts.json()
   } catch (error) {
     console.error(error)
   }
