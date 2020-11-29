@@ -1,17 +1,16 @@
 import { connectToDatabase } from '../../../utils/mongodb'
 import microCors from 'micro-cors'
-
-// const arrayFromCursor = async (cursor) => {
-//   //  cursor.forEach is asynchronous!
-//   const result = []
-//   await cursor.forEach((item) => result.push(item))
-//   return result
-// }
+import formidable from 'formidable'
+import { v2 as cloudinary } from 'cloudinary'
 
 const cors = microCors()
-// const ObjectId = require('mongodb').ObjectID
 
-// bio, name, profile picture, banner??
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+}
+
 const handler = async (req, res) => {
   try {
     const {
@@ -19,22 +18,54 @@ const handler = async (req, res) => {
     } = req
 
     const { db } = await connectToDatabase()
+    const form = new formidable.IncomingForm()
 
-    // console.log()
-    const users = await db.collection('users').updateOne(
+    const formData = await new Promise(function (resolve, reject) {
+      form.parse(req, function (err, fields, files) {
+        if (err) {
+          reject(err)
+          return
+        }
+        resolve([fields, files])
+      })
+    })
+
+    const files = formData[1]
+    const fields = formData[0]
+    let icon = fields?.icon
+    let banner = fields?.banner
+    if (Object.keys(files).length !== 0) {
+      if ('banner' in files) {
+        const banner_url = await cloudinary.uploader.upload(files.banner.path, {
+          width: 850,
+          height: 500,
+          crop: 'fill',
+        })
+        banner = banner_url.secure_url
+      }
+
+      if ('icon' in files) {
+        const icon_url = await cloudinary.uploader.upload(files.icon.path, {
+          width: 100,
+          height: 100,
+          crop: 'fill',
+        })
+        icon = icon_url.secure_url
+      }
+    }
+
+    const user = await db.collection('users').updateOne(
       { nickname: `${pid.replace(/['"]+/g, '')}` },
       {
         $set: {
-          name: req.body.updatedInfo.name,
-          bio: req.body.updatedInfo.bio,
+          name: fields.name,
+          bio: fields.bio,
+          profile_picture: icon,
+          banner_picture: banner,
         },
-
-        // "profile_picture": req.body.updatedInfo.profileUrl,
-        // "banner_picture": req.body.updatedInfo.bannerUrl,
       }
     )
-    console.log(users)
-    res.json(users)
+    res.json(user)
   } catch (error) {
     console.error(error)
   }

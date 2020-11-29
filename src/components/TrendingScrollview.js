@@ -58,12 +58,12 @@ function TrendingScrollview(props) {
         <div className={classes.scroll}>
           <List>{listItems}</List>
           {!isWidthUp('sm', props.width) && (
-            <OrgDialog org={org} open={open} onClose={handleClose} dbuser={props.dbuser} />
+            <OrgDialog org={org} open={open} onClose={handleClose} charitUser={props.charitUser} />
           )}
         </div>
         {isWidthUp('sm', props.width) && (
           <div className={classes.scroll}>
-            <DescriptionBox orgDetails={org} dbuser={props.dbuser} />
+            <DescriptionBox orgDetails={org} charitUser={props.charitUser} />
           </div>
         )}
       </div>
@@ -75,7 +75,7 @@ function TrendingScrollview(props) {
 
 TrendingScrollview.propTypes = {
   orgs: PropTypes.array,
-  dbuser: PropTypes.object,
+  charitUser: PropTypes.object,
 }
 
 export default withWidth()(TrendingScrollview)

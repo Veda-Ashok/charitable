@@ -3,13 +3,13 @@ import NavigationBar from './NavigationBar'
 import { makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import PostScrollview from './PostScrollview'
-import { mockPosts } from '../tests/MockAPI/MockPosts'
 import CreatePostBox from './CreatePostBox'
 import Loading from './Loading'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import SuccessfulPostDialog from './SuccessfulPostDialog'
 import axios from 'axios'
+import VerifyEmail from './VerifyEmail'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +32,7 @@ export default function TimelinePage({ user }) {
   const [error, setError] = useState(undefined)
   const [charitUser, setCharitUser] = useState(undefined)
   const [success, setSuccessOpen] = useState(false)
+  const [posts, setPosts] = useState(null)
 
   const handleSuccessOpen = () => {
     setSuccessOpen(true)
@@ -43,7 +44,6 @@ export default function TimelinePage({ user }) {
 
   useEffect(() => {
     // Check that a new route is OK
-    console.log('in use eff')
     if (!user) {
       window.location.href = '/api/login'
     }
@@ -54,6 +54,9 @@ export default function TimelinePage({ user }) {
         setIsLoading(true)
         const response = await axios.get(`/api/searchUserByNickname/${user.nickname}`)
         setCharitUser(response.data)
+        //TODO: somethign like this
+        //setPosts(await axios.get(`api/getFollowingPosts/${props.user.nickname}`))
+        setPosts(null)
         setIsLoading(false)
       } catch (error) {
         setError(error.statusText)
@@ -70,29 +73,35 @@ export default function TimelinePage({ user }) {
   return (
     <div className={classes.root}>
       <NavigationBar page="Timeline" user={user} />
-      <Paper className={classes.organizations}>
-        <div>
-          {isLoading ? (
-            <Loading />
-          ) : error ? (
-            <Typography>{error}</Typography>
-          ) : charitUser.email_verified ? (
-            <div className={classes.content}>
-              <div>
-                <CreatePostBox
-                  handleSuccessOpen={handleSuccessOpen}
-                  name={charitUser.name}
-                  icon={charitUser.profile_picture}
-                />
-                <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
-                <PostScrollview posts={mockPosts.posts} className={classes.posts}></PostScrollview>
-              </div>
-            </div>
-          ) : (
-            <h2>Verify Your Email To Acess This Page</h2>
-          )}
+      {isLoading ? (
+        <Loading />
+      ) : error ? (
+        <Typography>{error}</Typography>
+      ) : charitUser.email_verified ? (
+        <div className={classes.content}>
+          <div>
+            <CreatePostBox
+              handleSuccessOpen={handleSuccessOpen}
+              charitUser={charitUser}
+              name={charitUser.name}
+              icon={charitUser.profile_picture}
+            />
+            <SuccessfulPostDialog open={success} onClose={handleSuccessClose} user={user} />
+            {posts && posts.length > 0 ? (
+              <PostScrollview
+                posts={posts}
+                className={classes.posts}
+                viewer={charitUser}></PostScrollview>
+            ) : (
+              <Paper className={classes.content}>
+                <h2>No Posts to Display</h2>
+              </Paper>
+            )}
+          </div>
         </div>
-      </Paper>
+      ) : (
+        <VerifyEmail />
+      )}
     </div>
   )
 }

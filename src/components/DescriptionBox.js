@@ -35,13 +35,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function DescriptionBox({ orgDetails, dbuser }) {
+export default function DescriptionBox({ orgDetails, charitUser }) {
   const classes = useStyles()
   const themes = orgDetails.organization.themes.theme
   const countries = orgDetails.organization.countries.country
   /*TODO: get the current user object and pass it down to here from the top level*/
-  let userId = dbuser?._id || undefined
-  let userVerified = dbuser?.email_verified || false
+  let userId = charitUser?._id || undefined
+  let userVerified = charitUser?.email_verified || false
   const [postOpen, setPostOpen] = useState(false)
   const [savedOpen, setSavedOpen] = useState(false)
   const [verifyUserOpen, setVerifyUserOpen] = useState(false)
@@ -148,7 +148,7 @@ export default function DescriptionBox({ orgDetails, dbuser }) {
             onClose={handlePostClose}
             result={orgDetails}
             type="trending"
-            dbuser={dbuser}
+            charitUser={charitUser}
             handleSuccessOpen={handleSuccessOpen}></PostDialog>
           <SavedDialog
             open={savedOpen}
@@ -157,7 +157,7 @@ export default function DescriptionBox({ orgDetails, dbuser }) {
             name={orgDetails.organization.name}
           />
           <UsersOnlyDialog open={verifyUserOpen} onClose={handleVerifyUserClose} />
-          <SuccessfulPostDialog open={success} onClose={handleSuccessClose} />
+          <SuccessfulPostDialog open={success} onClose={handleSuccessClose} user={charitUser} />
           <Typography gutterBottom variant="h4">
             {orgDetails.organization.name}
           </Typography>
@@ -201,5 +201,5 @@ export default function DescriptionBox({ orgDetails, dbuser }) {
 
 DescriptionBox.propTypes = {
   orgDetails: PropTypes.object,
-  dbuser: PropTypes.object,
+  charitUser: PropTypes.object,
 }

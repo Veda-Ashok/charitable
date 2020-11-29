@@ -1,12 +1,5 @@
 import { connectToDatabase } from '../../../utils/mongodb'
 
-const arrayFromCursor = async (cursor) => {
-  //  cursor.forEach is asynchronous!
-  const result = []
-  await cursor.forEach((item) => result.push(item))
-  return result
-}
-
 export default async (req, res) => {
   const {
     query: { pid },
@@ -14,23 +7,13 @@ export default async (req, res) => {
 
   const { db } = await connectToDatabase()
 
-  const agg = [
+  const user = await db.collection('users').findOne(
+    { nickname: `${pid.replace(/['"]+/g, '')}` },
     {
-      $match: {
-        nickname: `${pid.replace(/['"]+/g, '')}`,
-      },
-    },
-    {
-      $lookup: {
-        from: 'organizations',
-        localField: 'saved_orgs',
-        foreignField: 'gg_id',
-        as: 'saved_orgs_docs',
-      },
-    },
-  ]
+      _id: 1,
+      email: 0,
+    }
+  )
 
-  const users = await db.collection('users').aggregate(agg)
-  const result = await arrayFromCursor(users)
-  res.json(result[0])
+  res.json(user)
 }

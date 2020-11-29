@@ -30,29 +30,39 @@ const useStyles = makeStyles({
   },
 })
 
-export default function PostBox(props) {
+export default function PostBox({
+  name,
+  icon,
+  time,
+  typedContent,
+  image,
+  orgDetails,
+  activityDetails,
+  viewer,
+}) {
   const classes = useStyles()
 
   return (
     <Paper className={classes.root}>
       <div className={classes.top}>
-        <Avatar alt={props.name} src={props.icon}></Avatar>
+        <Avatar alt={name} src={icon}></Avatar>
         <div className={classes.topText}>
-          <Typography variant="body1">{props.name}</Typography>
+          <Typography variant="body1">{name}</Typography>
           <Typography color="textSecondary" variant="caption">
-            {props.time}
+            {time}
           </Typography>
         </div>
       </div>
       <div className={classes.bottom}>
-        <Typography variant="body1">{props.typedContent}</Typography>
+        <Typography variant="body1">{typedContent}</Typography>
       </div>
-      {
-        //TODO: In the future this image will be binary data sooo... we need to know what kind
-        props.image && <img alt="postPhoto" src={props.image} />
-      }
-      {props.orgDetails && <InfoSmallBox orgDetails={props.orgDetails} />}
-      {props.activityDetails && <InfoSmallBox activityDetails={props.activityDetails} />}
+      {image && <img alt="postPhoto" src={image} />}
+      {orgDetails && (
+        <InfoSmallBox result={orgDetails} type="organizations" showPopup charitUser={viewer} />
+      )}
+      {activityDetails && (
+        <InfoSmallBox result={orgDetails} type="activities" showPopup charitUser={viewer} />
+      )}
     </Paper>
   )
 }
@@ -65,4 +75,5 @@ PostBox.propTypes = {
   image: PropTypes.string,
   orgDetails: PropTypes.object,
   activityDetails: PropTypes.object,
+  viewer: PropTypes.object,
 }
