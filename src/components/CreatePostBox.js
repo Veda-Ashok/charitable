@@ -108,7 +108,7 @@ export default function CreatePostBox({
               : null
           const activity_id = type === 'activities' ? result._id : null
           const formData = new FormData()
-          formData.append('poster', charitUser._id)
+          formData.append('poster', charitUser.nickname)
           formData.append('image', photo)
           formData.append('organization_id', organization_id)
           formData.append('activity_id', activity_id)

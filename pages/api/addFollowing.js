@@ -15,7 +15,7 @@ const handler = async (req, res) => {
     const users = await db
       .collection('users')
       .updateOne(
-        { _id: ObjectId(res.body.userId) },
+        { _id: ObjectId(req.body.userId) },
         { $addToSet: { following: req.body.result._id } }
       )
 

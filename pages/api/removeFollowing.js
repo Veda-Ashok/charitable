@@ -14,7 +14,7 @@ const handler = async (req, res) => {
 
     const users = await db
       .collection('users')
-      .updateOne({ _id: ObjectId(res.body.userId) }, { $pull: { following: req.body.result._id } })
+      .updateOne({ _id: ObjectId(req.body.userId) }, { $pull: { following: req.body.result._id } })
 
     res.json(users)
   } catch (error) {

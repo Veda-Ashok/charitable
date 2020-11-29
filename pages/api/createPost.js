@@ -41,7 +41,7 @@ const handler = async (req, res) => {
 
     const activity_id = fields.activity_id === 'null' ? null : ObjectId(fields.activity_id)
     const post = await db.collection('posts').insertOne({
-      poster: ObjectId(fields.poster),
+      poster: fields.poster,
       image: photo === 'null' ? null : photo,
       organization_id: fields.organization_id === 'null' ? null : fields.organization_id,
       activity_id: activity_id,
