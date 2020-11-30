@@ -10,6 +10,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle'
 import PropTypes from 'prop-types'
 import EditProfile from './EditProfile'
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,6 +50,8 @@ const useStyles = makeStyles((theme) => ({
 export default function ProfileBanner(props) {
   const classes = useStyles()
 
+  let userId = props.viewer?._id || undefined
+
   const removeIcon = <RemoveCircleIcon fontSize="small" className={classes.editIcon} />
   const addIcon = <PersonAddIcon fontSize="small" className={classes.editIcon} />
 
@@ -66,15 +69,28 @@ export default function ProfileBanner(props) {
     setOpen(false)
   }
 
-  function handleFollow() {
+  async function handleFollow() {
+    let response
     if (FollowMessage === 'Follow') {
-      setFollowMessage('Unfollow')
-      setIcon(removeIcon)
-      setFollowColor('secondary')
+      response = await axios.post('/api/addFollowing', {
+        result: props.owner,
+        userId: userId,
+      })
+      if (response.data.matchedCount === 1 && response.data.modifiedCount === 1) {
+        setFollowMessage('Unfollow')
+        setIcon(removeIcon)
+        setFollowColor('secondary')
+      }
     } else {
-      setFollowMessage('Follow')
-      setIcon(addIcon)
-      setFollowColor('primary')
+      response = await axios.post('/api/removeFollowing', {
+        result: props.owner,
+        userId: userId,
+      })
+      if (response.data.matchedCount === 1 && response.data.modifiedCount === 1) {
+        setFollowMessage('Follow')
+        setIcon(addIcon)
+        setFollowColor('primary')
+      }
     }
     //TODO: We are gonna need to send a request to the DB to remove and add Follow on click
   }
@@ -143,4 +159,6 @@ ProfileBanner.propTypes = {
   banner: PropTypes.string,
   setRefresh: PropTypes.func,
   refresh: PropTypes.bool,
+  viewer: PropTypes.object,
+  owner: PropTypes.object,
 }
