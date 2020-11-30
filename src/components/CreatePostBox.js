@@ -73,6 +73,7 @@ export default function CreatePostBox({
   name,
   icon,
   handleSuccessOpen,
+  getPosts,
 }) {
   const [input, setInput] = useState(defaultText)
   const [photo, setPhoto] = useState(null)
@@ -122,6 +123,9 @@ export default function CreatePostBox({
           //whatever it shows for a successful insert check for that
           if (response.data.insertedCount === 1) {
             handleSuccessOpen()
+            if (getPosts) {
+              getPosts()
+            }
           }
         } catch (error) {
           console.error(error)
@@ -223,4 +227,5 @@ CreatePostBox.propTypes = {
   charitUser: PropTypes.object,
   closePostDialog: PropTypes.func,
   handleSuccessOpen: PropTypes.func,
+  getPosts: PropTypes.any,
 }

@@ -39,6 +39,8 @@ export default function PostBox({
   orgDetails,
   activityDetails,
   viewer,
+  refresh,
+  setRefresh,
 }) {
   const classes = useStyles()
 
@@ -58,10 +60,24 @@ export default function PostBox({
       </div>
       {image && <img alt="postPhoto" src={image} />}
       {orgDetails && (
-        <InfoSmallBox result={orgDetails} type="organizations" showPopup charitUser={viewer} />
+        <InfoSmallBox
+          result={orgDetails}
+          type="organizations"
+          showPopup
+          charitUser={viewer}
+          refresh={refresh}
+          setRefresh={setRefresh}
+        />
       )}
       {activityDetails && (
-        <InfoSmallBox result={orgDetails} type="activities" showPopup charitUser={viewer} />
+        <InfoSmallBox
+          result={activityDetails}
+          refresh={refresh}
+          setRefresh={setRefresh}
+          type="activities"
+          showPopup
+          charitUser={viewer}
+        />
       )}
     </Paper>
   )
@@ -76,4 +92,6 @@ PostBox.propTypes = {
   orgDetails: PropTypes.object,
   activityDetails: PropTypes.object,
   viewer: PropTypes.object,
+  refresh: PropTypes.bool,
+  setRefresh: PropTypes.func,
 }

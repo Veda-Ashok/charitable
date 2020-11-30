@@ -65,6 +65,11 @@ function ProfilePage(props) {
     setSuccessOpen(false)
   }
 
+  async function getPosts() {
+    const posts = await axios.get(`/api/returnUsersPosts/${props.pid}`)
+    setPosts(posts.data)
+  }
+
   useEffect(() => {
     let didCancel = false
     async function fetchData() {
@@ -95,9 +100,7 @@ function ProfilePage(props) {
           setOwner(profile.data)
           setViewer(myResponse.data)
         }
-        //TODO: somethign like this
-        //setPosts(await axios.get(`api/getUsersPosts/${props.user.nickname}`))
-        setPosts(null)
+        getPosts()
         setIsLoading(false)
       } catch (error) {
         console.error(error)
@@ -139,6 +142,7 @@ function ProfilePage(props) {
                       name={name}
                       icon={icon}
                       charitUser={owner}
+                      getPosts={getPosts}
                     />{' '}
                     <SuccessfulPostDialog
                       open={success}
@@ -148,7 +152,11 @@ function ProfilePage(props) {
                   </>
                 ) : null}
                 {posts && posts.length > 0 ? (
-                  <PostScrollview posts={posts} viewer={viewer}></PostScrollview>
+                  <PostScrollview
+                    posts={posts}
+                    viewer={viewer}
+                    refresh={refresh}
+                    setRefresh={setRefresh}></PostScrollview>
                 ) : (
                   <Paper className={classes.noPosts}>
                     <h2>No Posts to Display</h2>
