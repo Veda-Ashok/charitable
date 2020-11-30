@@ -119,50 +119,68 @@ function ProfilePage(props) {
   return (
     <div className={classes.banner}>
       <NavigationBar page="Profile" user={props.user} />
-      {owner ? (
-        email_verified ? (
-          <div>
-            <ProfileBanner
-              bio={bio}
-              name={name}
-              nickname={owner.nickname}
-              banner={banner}
-              isMe={props.isMe}
-              icon={icon}
-              isFollower={props.isFollower}
-              setRefresh={setRefresh}
-              refresh={refresh}
-            />
-            <div className={classes.content}>
-              <div>
-                {props.isMe ? (
-                  <>
-                    <CreatePostBox
-                      handleSuccessOpen={handleSuccessOpen}
-                      name={name}
-                      icon={icon}
-                      charitUser={owner}
-                      getPosts={getPosts}
-                    />{' '}
-                    <SuccessfulPostDialog
-                      open={success}
-                      onClose={handleSuccessClose}
-                      user={props.user}
-                    />
-                  </>
-                ) : null}
-                {posts && posts.length > 0 ? (
-                  <PostScrollview
-                    posts={posts}
-                    viewer={viewer}
-                    refresh={refresh}
-                    setRefresh={setRefresh}></PostScrollview>
-                ) : (
-                  <Paper className={classes.noPosts}>
-                    <h2>No Posts to Display</h2>
-                  </Paper>
-                )}
-                {!isWidthUp('sm', props.width) && (
+      {props.user ? (
+        owner ? (
+          email_verified ? (
+            <div>
+              <ProfileBanner
+                bio={bio}
+                name={name}
+                nickname={owner.nickname}
+                banner={banner}
+                isMe={props.isMe}
+                icon={icon}
+                isFollower={props.isFollower}
+                setRefresh={setRefresh}
+                refresh={refresh}
+              />
+              <div className={classes.content}>
+                <div>
+                  {props.isMe ? (
+                    <>
+                      <CreatePostBox
+                        handleSuccessOpen={handleSuccessOpen}
+                        name={name}
+                        icon={icon}
+                        charitUser={owner}
+                        getPosts={getPosts}
+                      />{' '}
+                      <SuccessfulPostDialog
+                        open={success}
+                        onClose={handleSuccessClose}
+                        user={props.user}
+                      />
+                    </>
+                  ) : null}
+                  {posts && posts.length > 0 ? (
+                    <PostScrollview
+                      posts={posts}
+                      viewer={viewer}
+                      refresh={refresh}
+                      setRefresh={setRefresh}></PostScrollview>
+                  ) : (
+                    <Paper className={classes.noPosts}>
+                      <h2>No Posts to Display</h2>
+                    </Paper>
+                  )}
+                  {!isWidthUp('sm', props.width) && (
+                    <div className={classes.savedOrg}>
+                      {isLoading ? (
+                        <Loading />
+                      ) : (
+                        <SavedItems
+                          owner={owner}
+                          viewer={viewer}
+                          orgs={orgs}
+                          activities={activities}
+                          setRefresh={setRefresh}
+                          refresh={refresh}
+                        />
+                      )}
+                    </div>
+                  )}
+                </div>
+                {isWidthUp('sm', props.width) && (
                   <div className={classes.savedOrg}>
                     {isLoading ? (
                       <Loading />
@@ -179,29 +197,15 @@ function ProfilePage(props) {
                   </div>
                 )}
               </div>
-              {isWidthUp('sm', props.width) && (
-                <div className={classes.savedOrg}>
-                  {isLoading ? (
-                    <Loading />
-                  ) : (
-                    <SavedItems
-                      owner={owner}
-                      viewer={viewer}
-                      orgs={orgs}
-                      activities={activities}
-                      setRefresh={setRefresh}
-                      refresh={refresh}
-                    />
-                  )}
-                </div>
-              )}
             </div>
-          </div>
+          ) : (
+            <VerifyEmail />
+          )
         ) : (
-          <VerifyEmail />
+          <Loading />
         )
       ) : (
-        <Loading />
+        <h2>Log In to view this page</h2>
       )}
     </div>
   )
