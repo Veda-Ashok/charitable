@@ -37,7 +37,7 @@ describe('ProfileBanner', () => {
     expect(queryByText('Edit Profile')).toBeNull()
   })
 
-  it('Changes depending on whether or not a user is following - not following', () => {
+  xit('Changes depending on whether or not a user is following - not following', () => {
     const { getByText } = render(
       <ProfileBanner
         name="BJ Johnson"
@@ -52,7 +52,7 @@ describe('ProfileBanner', () => {
     expect(getByText('Unfollow')).toBeInTheDocument()
   })
 
-  it('Changes depending on whether or not a user is following - not following', () => {
+  xit('Changes depending on whether or not a user is not following - following', () => {
     const { getByText } = render(
       <ProfileBanner
         name="BJ Johnson"
