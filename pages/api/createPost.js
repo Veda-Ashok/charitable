@@ -33,7 +33,7 @@ const handler = async (req, res) => {
     if (Object.keys(files).length !== 0) {
       const image = await cloudinary.uploader.upload(files.image.path, {
         width: 512,
-        height: 512,
+        height: 350,
         crop: 'fill',
       })
       photo = image.secure_url

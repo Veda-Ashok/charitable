@@ -313,5 +313,5 @@ SearchDescriptionBox.propTypes = {
   type: PropTypes.string,
   charitUser: PropTypes.object,
   refresh: PropTypes.bool,
-  setRefresh: PropTypes.func,
+  setRefresh: PropTypes.any,
 }

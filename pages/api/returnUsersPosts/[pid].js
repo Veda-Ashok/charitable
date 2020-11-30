@@ -49,9 +49,14 @@ export default async (req, res) => {
           as: 'poster_docs',
         },
       },
+      {
+        $set: {
+          pretty_date: { $dateToString: { format: '%m-%d-%Y %H:%M', date: '$date_posted' } },
+        },
+      },
     ]
 
-    const posts = await db.collection('posts').aggregate(agg)
+    const posts = await db.collection('posts').aggregate(agg).sort({ date_posted: -1 })
     const result = await arrayFromCursor(posts)
 
     res.json(result)
