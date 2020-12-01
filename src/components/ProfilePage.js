@@ -133,6 +133,8 @@ function ProfilePage(props) {
                 isFollower={props.isFollower}
                 setRefresh={setRefresh}
                 refresh={refresh}
+                viewer={viewer}
+                owner={owner}
               />
               <div className={classes.content}>
                 <div>
