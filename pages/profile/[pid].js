@@ -12,12 +12,7 @@ export default function Profile({ user }) {
 
   return (
     <div>
-      <ProfilePage
-        pid={pid}
-        user={user}
-        isMe={user ? pid === user.nickname : false}
-        isFollower={false}
-      />
+      <ProfilePage pid={pid} user={user} isMe={user ? pid === user.nickname : false} />
     </div>
   )
 }

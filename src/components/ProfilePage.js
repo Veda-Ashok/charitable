@@ -123,19 +123,23 @@ function ProfilePage(props) {
         owner ? (
           email_verified ? (
             <div>
-              <ProfileBanner
-                bio={bio}
-                name={name}
-                nickname={owner.nickname}
-                banner={banner}
-                isMe={props.isMe}
-                icon={icon}
-                isFollower={props.isFollower}
-                setRefresh={setRefresh}
-                refresh={refresh}
-                viewer={viewer}
-                owner={owner}
-              />
+              {viewer ? (
+                <ProfileBanner
+                  bio={bio}
+                  name={name}
+                  nickname={owner.nickname}
+                  banner={banner}
+                  isMe={props.isMe}
+                  icon={icon}
+                  isFollower={viewer.following.includes(props.pid)}
+                  setRefresh={setRefresh}
+                  refresh={refresh}
+                  viewer={viewer}
+                  owner={owner}
+                />
+              ) : (
+                <Loading></Loading>
+              )}
               <div className={classes.content}>
                 <div>
                   {props.isMe ? (
@@ -217,7 +221,6 @@ ProfilePage.propTypes = {
   pid: PropTypes.string,
   user: PropTypes.object,
   isMe: PropTypes.bool,
-  isFollower: PropTypes.bool,
   width: PropTypes.string,
 }
 
