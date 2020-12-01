@@ -1,13 +1,19 @@
 import { render, fireEvent } from '@testing-library/react'
 import ProfileBanner from '../components/ProfileBanner'
+import axios from 'axios'
+jest.mock('axios')
 
 describe('ProfileBanner', () => {
+  beforeEach(() => {
+    // Clear all instances and calls to constructor and all methods:
+    axios.post.mockReset()
+  })
+
   it('Renders my Profile Banner correctly', () => {
     const { getByText, queryByText, getByAltText } = render(
       <ProfileBanner
         name="BJ Johnson"
         icon="/media/BJIcon.jpg"
-        FollowCount={100}
         bio="I love volunteering"
         isMe={true}
         isFollower={false}
@@ -37,7 +43,8 @@ describe('ProfileBanner', () => {
     expect(queryByText('Edit Profile')).toBeNull()
   })
 
-  xit('Changes depending on whether or not a user is following - not following', () => {
+  it('Changes depending on whether or not a user is following - not following', () => {
+    axios.post.mockImplementationOnce(() => Promise.resolve({}))
     const { getByText } = render(
       <ProfileBanner
         name="BJ Johnson"
@@ -49,10 +56,12 @@ describe('ProfileBanner', () => {
     )
     expect(getByText('Follow')).toBeInTheDocument()
     fireEvent.click(getByText('Follow'))
-    expect(getByText('Unfollow')).toBeInTheDocument()
+    expect(axios.post).toHaveBeenCalledTimes(1)
   })
 
-  xit('Changes depending on whether or not a user is not following - following', () => {
+  it('Changes depending on whether or not a user is not following - following', () => {
+    axios.post.mockImplementationOnce(() => Promise.resolve({}))
+
     const { getByText } = render(
       <ProfileBanner
         name="BJ Johnson"
@@ -64,6 +73,6 @@ describe('ProfileBanner', () => {
     )
     expect(getByText('Unfollow')).toBeInTheDocument()
     fireEvent.click(getByText('Unfollow'))
-    expect(getByText('Follow')).toBeInTheDocument()
+    expect(axios.post).toHaveBeenCalledTimes(1)
   })
 })
