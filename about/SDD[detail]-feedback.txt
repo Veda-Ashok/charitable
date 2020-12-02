@@ -1,0 +1,45 @@
+
+
+Group 1: [5 souls] *
+   Veda Ashok, Sam Gibson, Rachel Nguyen, Bridget O'Connor, Krysten Tachiyama
+   synopsis:   Charitable ~ web app to centralize ways to give back to your community
+=====================================================================================
+
+Architectural Design Section:
+-----------------------------
+Another great effort on this deliverable!
+
+Your description is, of course, excellent.  I love the screen views which show
+examples [how did you know I love pancakes?!].  Your diagrams are perfect for
+the level needed for architectural view.
+
+One very minor point: the color in the diagram boxes is very pleasing, but
+white text doesn't show too well, so it's a bit harder to read.
+
+
+Another outstanding work product!!  EXCELLENT!!
+
+Evaluation score:
+
+    10% out of 10% for this deliverable:  A-plus
+
+
+------------------------
+Detailed Design Section:
+------------------------
+Excellent work here, as well.  Wonderful detail and I feel like if I were to
+be given this design I could start coding right away!  The color coding on
+the diagram is very helpful, and your ER diagram is perfect in its detail.
+
+One thing to note, perhaps, is that "strictly speaking" since you are using
+Mongo for your database, this isn't *actually* an ERD, since it's relational.
+However, you communicate the ideas effectively by using the JSON objects you
+show, so that's fine.
+
+All told, great job!
+
+Evaluation score:
+
+      15% out of 15% for this deliverable:   A-plus
+         Note that the "CDR presentation is folded into "ABCDR"
+            so the 15% reflects 10% for detail and 5% for CDR
