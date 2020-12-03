@@ -25,30 +25,66 @@ export default async (req, res) => {
         from: 'posts',
         localField: 'following',
         foreignField: 'poster',
-        as: 'friends_posts',
-        pipeline: [
-          {
-            $lookup: {
-              from: 'activities',
-              localField: 'activity_id',
-              foreignField: '_id',
-              as: 'attached_activity',
-            },
-          },
-          {
-            $lookup: {
-              from: 'organizations',
-              localField: 'organization_id',
-              foreignField: 'gg_id',
-              as: 'attached_organization',
-            },
-          },
-        ],
+        as: 'post_docs',
       },
     },
+    {
+      $unwind: {
+        path: '$post_docs',
+      },
+    },
+    {
+      $lookup: {
+        from: 'organizations',
+        localField: 'post_docs.organization_id',
+        foreignField: 'gg_id',
+        as: 'attached_organizations',
+      },
+    },
+    {
+      $lookup: {
+        from: 'activities',
+        localField: 'post_docs.activity_id',
+        foreignField: '_id',
+        as: 'attached_activities',
+      },
+    },
+    { $project: { post_docs: 1, attached_organization: 1, attached_activity: 1 } },
   ]
 
+  // pipeline: [
+  //   {
+  //     $unwind: {
+  //       path: '$friends_posts',
+  //     },
+  //   },
+  //   {
+  //     $lookup: {
+  //       from: 'activities',
+  //       localField: 'activity_id',
+  //       foreignField: '_id',
+  //       as: 'attached_activity',
+  //     },
+  //   },
+  // ],
+  // {
+  //   $lookup: {
+  //     from: 'organizations',
+  //     localField: 'organization_id',
+  //     foreignField: 'gg_id',
+  //     as: 'attached_organization',
+  //   },
+  // },
+  //   {
+  //     $lookup: {
+  //       from: 'activities',
+  //       localField: 'activity_id',
+  //       foreignField: '_id',
+  //       as: 'attached_activity',
+  //     },
+  //   },
+  console.log(agg)
   const users = await db.collection('users').aggregate(agg)
   const result = await arrayFromCursor(users)
-  res.json(result[0])
+  res.json(result)
 }
