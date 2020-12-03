@@ -50,7 +50,14 @@ export default async (req, res) => {
       },
     },
     { $project: { post_docs: 1, attached_organizations: 1, attached_activities: 1 } },
-    { $sort: { post_docs: -1 } },
+    {
+      $set: {
+        pretty_date: {
+          $dateToString: { format: '%m-%d-%Y %H:%M', date: '$post_docs.date_posted' },
+        },
+      },
+    },
+    { $sort: { 'post_docs.date_posted': -1 } },
   ]
 
   // pipeline: [
