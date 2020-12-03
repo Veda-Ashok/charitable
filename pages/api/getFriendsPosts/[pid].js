@@ -25,12 +25,12 @@ export default async (req, res) => {
         from: 'posts',
         localField: 'following',
         foreignField: 'poster',
-        as: 'post_docs',
+        as: 'poster_docs',
       },
     },
     {
       $unwind: {
-        path: '$post_docs',
+        path: '$poster_docs',
       },
     },
     {
@@ -49,8 +49,8 @@ export default async (req, res) => {
         as: 'attached_activities',
       },
     },
-    { $project: { post_docs: 1, attached_organizations: 1, attached_activities: 1 } },
-    { $sort: { post_docs: -1 } },
+    { $project: { poster_docs: 1, attached_organizations: 1, attached_activities: 1 } },
+    { $sort: { poster_docs: -1 } },
   ]
 
   // pipeline: [
