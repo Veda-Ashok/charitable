@@ -50,6 +50,7 @@ export default async (req, res) => {
       },
     },
     { $project: { post_docs: 1, attached_organizations: 1, attached_activities: 1 } },
+    { $sort: { post_docs: -1 } },
   ]
 
   // pipeline: [
@@ -83,7 +84,6 @@ export default async (req, res) => {
   //       as: 'attached_activity',
   //     },
   //   },
-  console.log(agg)
   const users = await db.collection('users').aggregate(agg)
   const result = await arrayFromCursor(users)
   res.json(result)
