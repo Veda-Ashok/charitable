@@ -49,7 +49,7 @@ export default async (req, res) => {
         as: 'attached_activities',
       },
     },
-    { $project: { post_docs: 1, attached_organization: 1, attached_activity: 1 } },
+    { $project: { post_docs: 1, attached_organizations: 1, attached_activities: 1 } },
   ]
 
   // pipeline: [
