@@ -61,8 +61,34 @@ export default function TimelinePage({ user }) {
         const response = await axios.get(`/api/searchUserByNickname/${user.nickname}`)
         const friendsPostsResponse = await axios.get(`/api/getFriendsPosts/${user.nickname}`)
         setCharitUser(response.data)
+        let response_posts = friendsPostsResponse.data
+        // posts = {poster: '', post_docs: {poster: '', date_posted: ''}, attached_orgs: [], attached_activites: [], poster_docs: {}}
+        // returnUsersPosts: post = {poster: '', date_posted: '', attached_orgs: [], attached_activites: [], poster_docs: {}}
 
-        setPosts(friendsPostsResponse.data)
+        for (let post of response_posts) {
+          for (let post_doc of Object.keys(post.post_docs)) {
+            post[post_doc] = post.post_docs[post_doc]
+          }
+          // const {
+          //   _id,
+          //   activity_id,
+          //   date_posted,
+          //   image,
+          //   organization_id,
+          //   poster,
+          //   typed_content,
+          // } = post.post_docs
+          // post._id = _id
+          // post.activity_id = activity_id
+          // post.date_posted = date_posted
+          // post.image = image
+          // post.organization_id = organization_id
+          // post.poster = poster
+          // post.typed_content = typed_content
+          delete post.post_docs
+        }
+
+        setPosts(response_posts)
         // console.log('POSTS: ', posts)
         // try ?         // rachel
         // my console saysy charit user is undefined when it logs
@@ -109,6 +135,8 @@ export default function TimelinePage({ user }) {
             <SuccessfulPostDialog open={success} onClose={handleSuccessClose} user={user} />
             {posts && posts.length > 0 ? (
               <PostScrollview
+                // getFriendsPosts: post = {post_docs: {poster: '', date_posted: ''}, attached_orgs: [], attached_activites: [], poster_docs: {}}
+                // returnUsersPosts: post = {poster: '', date_posted: '', attached_orgs: [], attached_activites: [], poster_docs: {}}
                 posts={posts}
                 // className={classes.posts}
                 refresh={refresh}

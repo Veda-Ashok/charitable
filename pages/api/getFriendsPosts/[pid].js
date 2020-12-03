@@ -25,12 +25,12 @@ export default async (req, res) => {
         from: 'posts',
         localField: 'following',
         foreignField: 'poster',
-        as: 'poster_docs',
+        as: 'post_docs',
       },
     },
     {
       $unwind: {
-        path: '$poster_docs',
+        path: '$post_docs',
       },
     },
     {
@@ -38,7 +38,7 @@ export default async (req, res) => {
         from: 'organizations',
         localField: 'post_docs.organization_id',
         foreignField: 'gg_id',
-        as: 'attached_organizations',
+        as: 'attached_orgs_docs',
       },
     },
     {
@@ -46,11 +46,33 @@ export default async (req, res) => {
         from: 'activities',
         localField: 'post_docs.activity_id',
         foreignField: '_id',
-        as: 'attached_activities',
+        as: 'attached_activities_docs',
       },
     },
-    { $project: { poster_docs: 1, attached_organizations: 1, attached_activities: 1 } },
-    { $sort: { poster_docs: -1 } },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'post_docs.poster',
+        foreignField: 'nickname',
+        as: 'poster_docs',
+      },
+    },
+    {
+      $project: {
+        post_docs: 1,
+        attached_orgs_docs: 1,
+        attached_activities_docs: 1,
+        poster_docs: 1,
+      },
+    },
+    {
+      $set: {
+        pretty_date: {
+          $dateToString: { format: '%m-%d-%Y %H:%M', date: '$post_docs.date_posted' },
+        },
+      },
+    },
+    { $sort: { 'post_docs.date_posted': -1 } },
   ]
 
   // pipeline: [

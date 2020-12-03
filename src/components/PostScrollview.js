@@ -24,12 +24,13 @@ export default function PostScrollview({ posts, viewer, refresh, setRefresh }) {
     const listItems = posts.map((post) => (
       <ListItem key={post._id}>
         <PostBox
-          name={post.poster_docs[0].poster}
+          name={post.poster_docs[0].name}
           // icon={post.poster_docs[0].profile_picture}
           time={post.pretty_date}
           typedContent={post.typed_content}
           image={post.image}
           viewer={viewer}
+          icon={post.poster_docs[0].profile_picture}
           refresh={refresh}
           setRefresh={setRefresh}
           orgDetails={post.attached_orgs_docs.length <= 0 ? null : post.attached_orgs_docs[0]}
