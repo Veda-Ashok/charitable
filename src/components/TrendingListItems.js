@@ -31,7 +31,7 @@ export default function TrendingListItems({ orgDetails, onClick }) {
   const classes = useStyles()
   const icon = details.organization.logoUrl
     ? details.organization.logoUrl
-    : details.organization_logo_url[0]
+    : details.organization_logo_url
   let themes = []
   for (const theme of details.themes.theme) {
     themes.push(theme.name)
