@@ -163,7 +163,8 @@ function ProfilePage(props) {
                       posts={posts}
                       viewer={viewer}
                       refresh={refresh}
-                      setRefresh={setRefresh}></PostScrollview>
+                      setRefresh={setRefresh}
+                      isProfile={true}></PostScrollview>
                   ) : (
                     <Paper className={classes.noPosts}>
                       <h2>No Posts to Display</h2>

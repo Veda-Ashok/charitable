@@ -1,10 +1,12 @@
 import React from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import { makeStyles } from '@material-ui/core/styles'
-import Paper from '@material-ui/core/Paper'
+import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
 import InfoSmallBox from './InfoSmallBox'
+import Link from './Link'
+import CardActionArea from '@material-ui/core/CardActionArea'
 
 const useStyles = makeStyles({
   root: {
@@ -32,6 +34,8 @@ const useStyles = makeStyles({
 
 export default function PostBox({
   name,
+  isProfile,
+  nickname,
   icon,
   time,
   typedContent,
@@ -44,17 +48,27 @@ export default function PostBox({
 }) {
   const classes = useStyles()
 
-  return (
-    <Paper className={classes.root}>
-      <div className={classes.top}>
-        <Avatar alt={name} src={icon}></Avatar>
-        <div className={classes.topText}>
-          <Typography variant="body1">{name}</Typography>
-          <Typography color="textSecondary" variant="caption">
-            {time}
-          </Typography>
-        </div>
+  let header = (
+    <div className={classes.top}>
+      <Avatar alt={name} src={icon}></Avatar>
+      <div className={classes.topText}>
+        <Typography variant="body1">{name}</Typography>
+        <Typography color="textSecondary" variant="caption">
+          {time}
+        </Typography>
       </div>
+    </div>
+  )
+
+  return (
+    <Card className={classes.root}>
+      {isProfile ? (
+        <CardActionArea>{header}</CardActionArea>
+      ) : (
+        <CardActionArea href={`/profile/${nickname}`} as={Link}>
+          {header}
+        </CardActionArea>
+      )}
       <div className={classes.bottom}>
         <Typography variant="body1">{typedContent}</Typography>
       </div>
@@ -79,12 +93,13 @@ export default function PostBox({
           charitUser={viewer}
         />
       )}
-    </Paper>
+    </Card>
   )
 }
 
 PostBox.propTypes = {
   name: PropTypes.string,
+  nickname: PropTypes.string,
   icon: PropTypes.string,
   time: PropTypes.string,
   typedContent: PropTypes.string,
@@ -94,4 +109,5 @@ PostBox.propTypes = {
   viewer: PropTypes.object,
   refresh: PropTypes.bool,
   setRefresh: PropTypes.func,
+  isProfile: PropTypes.bool,
 }

@@ -15,17 +15,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function PostScrollview({ posts, viewer, refresh, setRefresh }) {
-  /*
-  TODO: Change these values depending on the objects returned by the API call
-  */
+export default function PostScrollview({ posts, viewer, refresh, setRefresh, isProfile }) {
   const classes = useStyles()
   if (posts) {
     const listItems = posts.map((post) => (
       <ListItem key={post._id}>
         <PostBox
+          isProfile={isProfile}
           name={post.poster_docs[0].name}
-          // icon={post.poster_docs[0].profile_picture}
+          nickname={post.poster_docs[0].nickname}
           time={post.pretty_date}
           typedContent={post.typed_content}
           image={post.image}
@@ -55,4 +53,5 @@ PostScrollview.propTypes = {
   viewer: PropTypes.object,
   refresh: PropTypes.bool,
   setRefresh: PropTypes.func,
+  isProfile: PropTypes.bool,
 }

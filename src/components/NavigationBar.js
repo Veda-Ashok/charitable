@@ -12,6 +12,8 @@ import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import IconWithLabelPath from './IconWithLabelPath'
 import SearchFilter from './SearchFilter'
+import Link from './Link'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -103,10 +105,12 @@ function NavigationBar({ user, page }) {
     <div className={classes.grow}>
       <AppBar color="inherit">
         <Toolbar>
-          <img alt="charitable-logo" className={classes.logo} src="/media/Logo.svg" />
-          <Typography className={classes.title} variant="h6" noWrap>
-            Charitable
-          </Typography>
+          <Button style={{ textTransform: 'none' }} naked component={Link} href={'/'}>
+            <img alt="charitable-logo" className={classes.logo} src="/media/Logo.svg" />
+            <Typography className={classes.title} variant="h6" noWrap>
+              Charitable
+            </Typography>
+          </Button>
           <div className={classes.filterAndSearch}>
             <form onSubmit={onSubmit}>
               <div className={classes.search}>
