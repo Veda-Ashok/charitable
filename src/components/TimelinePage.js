@@ -54,7 +54,7 @@ export default function TimelinePage({ user }) {
       try {
         setIsLoading(true)
         const response = await axios.get(`/api/searchUserByNickname/${user.nickname}`)
-        const friendsPostsResponse = await axios.get(`/api/getFriendsPosts/${user.nickname}`)
+        const friendsPostsResponse = await axios.get(`/api/getTimelinePosts/${user.nickname}`)
         setCharitUser(response.data)
         let response_posts = friendsPostsResponse.data
 

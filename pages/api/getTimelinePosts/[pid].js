@@ -25,7 +25,22 @@ export default async (req, res) => {
         from: 'posts',
         localField: 'following',
         foreignField: 'poster',
-        as: 'post_docs',
+        as: 'friends_docs',
+      },
+    },
+    {
+      $lookup: {
+        from: 'posts',
+        localField: 'nickname',
+        foreignField: 'poster',
+        as: 'my_docs',
+      },
+    },
+    {
+      $project: {
+        post_docs: {
+          $setUnion: ['$my_docs', '$friends_docs'],
+        },
       },
     },
     {
@@ -74,38 +89,6 @@ export default async (req, res) => {
     },
     { $sort: { 'post_docs.date_posted': -1 } },
   ]
-
-  // pipeline: [
-  //   {
-  //     $unwind: {
-  //       path: '$friends_posts',
-  //     },
-  //   },
-  //   {
-  //     $lookup: {
-  //       from: 'activities',
-  //       localField: 'activity_id',
-  //       foreignField: '_id',
-  //       as: 'attached_activity',
-  //     },
-  //   },
-  // ],
-  // {
-  //   $lookup: {
-  //     from: 'organizations',
-  //     localField: 'organization_id',
-  //     foreignField: 'gg_id',
-  //     as: 'attached_organization',
-  //   },
-  // },
-  //   {
-  //     $lookup: {
-  //       from: 'activities',
-  //       localField: 'activity_id',
-  //       foreignField: '_id',
-  //       as: 'attached_activity',
-  //     },
-  //   },
   const users = await db.collection('users').aggregate(agg)
   const result = await arrayFromCursor(users)
   res.json(result)
