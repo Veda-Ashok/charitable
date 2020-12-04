@@ -34,6 +34,7 @@ export default function TimelinePage({ user }) {
   const [success, setSuccessOpen] = useState(false)
   const [posts, setPosts] = useState([])
   const [refresh, setRefresh] = useState(false)
+  // const isTimeline = true
 
   const handleSuccessOpen = () => {
     setSuccessOpen(true)
@@ -41,11 +42,6 @@ export default function TimelinePage({ user }) {
 
   const handleSuccessClose = () => {
     setSuccessOpen(false)
-  }
-
-  async function getPosts() {
-    const posts = await axios.get(`/api/getFriendsPosts/${user.nickname}`)
-    setPosts(posts.data)
   }
 
   useEffect(() => {
@@ -89,18 +85,6 @@ export default function TimelinePage({ user }) {
         }
 
         setPosts(response_posts)
-        // console.log('POSTS: ', posts)
-        // try ?         // rachel
-        // my console saysy charit user is undefined when it logs
-        // omg what if it's bc it's like the 2nd api call depends on the 1st
-        // and the first might be a bit slow so everything's undefined in that moment
-        // i feel like it's not always doing the api call either that or it's hella slow
-        // wait i see 7 things in the data array
-        // wtf, wack
-        // setPosts(null)
-        // wait i wanted to look at it again bc now i cant see it anymore
-        // we def want to set to the data okk
-        // getPosts()  hi lol hi bro i am confused bc when i use the getposts function then my posts is always null but then when i try to do setPosts inside of here it does not give a fat error but i see nothing
         setIsLoading(false)
       } catch (error) {
         setError(error.statusText)
@@ -130,15 +114,12 @@ export default function TimelinePage({ user }) {
               charitUser={charitUser}
               name={charitUser.name}
               icon={charitUser.profile_picture}
-              getPosts={getPosts}
             />
             <SuccessfulPostDialog open={success} onClose={handleSuccessClose} user={user} />
             {posts && posts.length > 0 ? (
               <PostScrollview
-                // getFriendsPosts: post = {post_docs: {poster: '', date_posted: ''}, attached_orgs: [], attached_activites: [], poster_docs: {}}
-                // returnUsersPosts: post = {poster: '', date_posted: '', attached_orgs: [], attached_activites: [], poster_docs: {}}
                 posts={posts}
-                // className={classes.posts}
+                className={classes.posts}
                 refresh={refresh}
                 setRefresh={setRefresh}
                 viewer={charitUser}></PostScrollview>

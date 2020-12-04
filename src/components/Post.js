@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
 import InfoSmallBox from './InfoSmallBox'
+import IconWithLabelPath from './IconWithLabelPath'
 
 const useStyles = makeStyles({
   root: {
@@ -32,6 +33,7 @@ const useStyles = makeStyles({
 
 export default function PostBox({
   name,
+  nickname,
   icon,
   time,
   typedContent,
@@ -47,7 +49,9 @@ export default function PostBox({
   return (
     <Paper className={classes.root}>
       <div className={classes.top}>
-        <Avatar alt={name} src={icon}></Avatar>
+        <IconWithLabelPath
+          icon={<Avatar alt={name} src={icon}></Avatar>}
+          path={`/profile/${nickname}`}></IconWithLabelPath>
         <div className={classes.topText}>
           <Typography variant="body1">{name}</Typography>
           <Typography color="textSecondary" variant="caption">
@@ -85,6 +89,7 @@ export default function PostBox({
 
 PostBox.propTypes = {
   name: PropTypes.string,
+  nickname: PropTypes.string,
   icon: PropTypes.string,
   time: PropTypes.string,
   typedContent: PropTypes.string,
