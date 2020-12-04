@@ -15,12 +15,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function PostScrollview({ posts, viewer, refresh, setRefresh }) {
+export default function PostScrollview({ posts, viewer, refresh, setRefresh, isProfile }) {
   const classes = useStyles()
   if (posts) {
     const listItems = posts.map((post) => (
       <ListItem key={post._id}>
         <PostBox
+          isProfile={isProfile}
           name={post.poster_docs[0].name}
           nickname={post.poster_docs[0].nickname}
           time={post.pretty_date}
@@ -52,4 +53,5 @@ PostScrollview.propTypes = {
   viewer: PropTypes.object,
   refresh: PropTypes.bool,
   setRefresh: PropTypes.func,
+  isProfile: PropTypes.bool,
 }

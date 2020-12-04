@@ -34,7 +34,6 @@ export default function TimelinePage({ user }) {
   const [success, setSuccessOpen] = useState(false)
   const [posts, setPosts] = useState([])
   const [refresh, setRefresh] = useState(false)
-  // const isTimeline = true
 
   const handleSuccessOpen = () => {
     setSuccessOpen(true)
@@ -58,29 +57,11 @@ export default function TimelinePage({ user }) {
         const friendsPostsResponse = await axios.get(`/api/getFriendsPosts/${user.nickname}`)
         setCharitUser(response.data)
         let response_posts = friendsPostsResponse.data
-        // posts = {poster: '', post_docs: {poster: '', date_posted: ''}, attached_orgs: [], attached_activites: [], poster_docs: {}}
-        // returnUsersPosts: post = {poster: '', date_posted: '', attached_orgs: [], attached_activites: [], poster_docs: {}}
 
         for (let post of response_posts) {
           for (let post_doc of Object.keys(post.post_docs)) {
             post[post_doc] = post.post_docs[post_doc]
           }
-          // const {
-          //   _id,
-          //   activity_id,
-          //   date_posted,
-          //   image,
-          //   organization_id,
-          //   poster,
-          //   typed_content,
-          // } = post.post_docs
-          // post._id = _id
-          // post.activity_id = activity_id
-          // post.date_posted = date_posted
-          // post.image = image
-          // post.organization_id = organization_id
-          // post.poster = poster
-          // post.typed_content = typed_content
           delete post.post_docs
         }
 
@@ -101,7 +82,6 @@ export default function TimelinePage({ user }) {
   return (
     <div className={classes.root}>
       <NavigationBar page="Timeline" user={user} />
-      {console.log('POSTS: ', posts)}
       {isLoading ? (
         <Loading />
       ) : error ? (
