@@ -48,8 +48,7 @@ export default function SearchListItems({ result, onClick, type }) {
     name = result.name
     theme = result.themes
   } else if (type === 'activities') {
-    //TODO: We need to have a lookup query to get the logo image of the org connected to the activity
-    imageSrc = undefined
+    imageSrc = result.organization_logo_url[0]
     theme = [result.theme]
     name = result.title
   } else if (type === 'users') {

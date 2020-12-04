@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
 export default function TrendingListItems({ orgDetails, onClick }) {
   const details = orgDetails
   const classes = useStyles()
+  const icon = details.organization.logoUrl
+    ? details.organization.logoUrl
+    : details.organization_logo_url[0]
   let themes = []
   for (const theme of details.themes.theme) {
     themes.push(theme.name)
@@ -39,11 +42,7 @@ export default function TrendingListItems({ orgDetails, onClick }) {
       <CardActionArea onClick={onClick}>
         <CardContent>
           <div className={classes.leftSymbols}>
-            <Avatar
-              className={classes.avatar}
-              src={details.organization.logoUrl}
-              alt={orgDetails.organization.name}
-            />
+            <Avatar className={classes.avatar} src={icon} alt={orgDetails.organization.name} />
             <div className={classes.text}>
               <Typography variant="body1">{details.organization.name}</Typography>
               <Typography color="textSecondary" variant="caption">

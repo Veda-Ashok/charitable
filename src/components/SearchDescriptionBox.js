@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
     float: 'right',
   },
 }))
-
 export default function SearchDescriptionBox({ result, type, charitUser, refresh, setRefresh }) {
   const classes = useStyles()
   let _id = ''
@@ -52,7 +51,6 @@ export default function SearchDescriptionBox({ result, type, charitUser, refresh
   let themes = []
   let userId = charitUser?._id || undefined
   let userVerified = charitUser?.email_verified || false
-
   if (type === 'organizations') {
     imageSrc = result.logo_url
     description = result.mission
@@ -62,7 +60,7 @@ export default function SearchDescriptionBox({ result, type, charitUser, refresh
     url = result.url
     _id = result.gg_id
   } else if (type === 'activities') {
-    imageSrc = undefined
+    imageSrc = result.organization_logo_url[0]
     description = result.description
     location = [result.country]
     themes = [result.theme]
