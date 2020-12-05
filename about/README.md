@@ -8,6 +8,8 @@
 
 ### Who is Charitable?
 
+Charitable in **you**.
+
 Charitable is a community of people in the U.S. who have the means to donate their time or money and want to make a positive contribution to society. Members of Charitable are also likely people who are comfortable navigating social media.
 
 ---
