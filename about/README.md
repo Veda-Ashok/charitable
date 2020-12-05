@@ -66,4 +66,5 @@ For developmental purposes, we are using the GlobalGiving API to aid us in acces
 
 Thanks for visiting our page! You can learn more about how to use Charitable here:
 
-## We are looking forward to making your day for Charitable. ![Logo](../public/media/Logo.svg)
+## We are looking forward to making your day for Charitable.
+                                                                                             ![Logo](../public/media/Logo.svg)
