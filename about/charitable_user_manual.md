@@ -36,7 +36,7 @@ Once we fill out all the information we need to sign up, we have to verify our a
 
 ![VerifyButton]()
 
-### Loggin In
+### Logging In
 
 We can now log into our Charitable account. Navigate back to the Charitable website to the Login Page, and use the login credentials we just created to log in.
 
