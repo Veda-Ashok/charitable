@@ -1,5 +1,3 @@
-# Charitable
-
 ![Logo](../public/media/CharitableReadmeBanner.png)
 
 ## Welcome to Charitable.
