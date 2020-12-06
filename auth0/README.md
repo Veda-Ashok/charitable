@@ -7,7 +7,7 @@ We will need to select requires username on the database connection page as well
 
 In Tenant Settings -> Advanced -> Tenant Login URI = https://charitable.vercel.app/
 
-Universal Login -> New
+Universal Login -> Classic
 
 Applications -> New Application -> Regular Web Application -> Allowed Callback URLs = http://localhost:3000/api/callback, https://charitable.vercel.app/api/callback
 
@@ -19,7 +19,7 @@ Custom Database -> Use my own database = true
 Input the scripts
 -> Settings -> MONGO_PASSWORD = ....
 
-Application -> Charitable = true
+Application -> Charitable = true, turn everything else to false as well
 
 Emails -> Email Templates -> Verification Email (using Link) 
 Status = On 

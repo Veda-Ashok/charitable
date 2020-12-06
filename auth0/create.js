@@ -54,12 +54,9 @@
 //         user.password = hash
 //         user.email_verified = false
 //         user.name = 'Please add your name'
-//         user.profile_picture =
-//           'https://s.gravatar.com/avatar/cf6070d47355f0a844834883f8aa5dec?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fbo.png'
-//         user.banner_picture =
-//           'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.eukanuba.com%2Fdog-articles%2Fpuppy%2F12-puppy-feeding-tips&psig=AOvVaw17YwsnJ92lTwbx9FgOwnvZ&ust=1603603569678000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPCOg_y-zOwCFQAAAAAdAAAAABAD'
+//         user.profile_picture = '/media/default_prof_pic.png'
+//         user.banner_picture = '/media/default_banner_pic.png'
 //         user.bio = 'Please add your own bio'
-//         user.posts = []
 //         user.saved_orgs = []
 //         user.saved_activities = []
 //         user.following = []
