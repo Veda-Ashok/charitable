@@ -8,7 +8,9 @@
 
 If you are interesed in joining the Charitable community, keep reading!
 
-Hi! I am Timmy Chu. I am here to help you join Charitable. ![Timmy1](./Images/Timmy1.png)
+Hi! I am Timmy Chu. I am here to help you join Charitable.
+
+![Timmy1](./Images/Timmy1.png)
 
 ### Getting Started
 
