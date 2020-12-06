@@ -66,6 +66,8 @@ For developmental purposes, we are using the GlobalGiving API to aid us in acces
 
 Thanks for visiting our page! You can learn more about how to use Charitable here:
 
+https://github.com/Veda-Ashok/charitable/blob/master/about/charitable_user_manual.md
+
 ## We are looking forward to making your day for Charitable.
 
 ![Logo](../public/media/Logo.svg)
