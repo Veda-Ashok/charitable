@@ -58,7 +58,7 @@ Click on the orange "Verify" button in the email. We have now successfully verif
 
 We can now log into our Charitable account. Navigate back to the Charitable website to the Login Page, and use the login credentials we just created to log in, you can login with your username or email.
 
-![Login](Login.png)
+![Login](./Images/Login.png)
 
 ## Setting Up Our Profile
 
@@ -152,7 +152,7 @@ To search for a user, go to the search bar that is in the top left corner of the
 
 ## Following A User
 
-There he is! Timmy is a great friend of mine.
+There he is! Timmy is a great friend and roommate of mine.
 
 ![TimmyHu](./Images/TimmyHuSearchCircled.png)
 
