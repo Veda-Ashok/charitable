@@ -12,7 +12,7 @@ Hi! I am Timmy Chu. I am here to help you join Charitable.
 
 ![Timmy1](./Images/Timmy1.png =100x20)
 
-### Getting Started
+## Getting Started
 
 To begin your Charitable journey, we simply visit Charitable's website at:
 
@@ -24,7 +24,7 @@ We should see the Charitable Trending Page, which looks like this.
 
 This page is displaying the top 10 organizations in the world! We can use the search bar at the top of each page to search for organizations and activities related to a particualar location, theme, or title.
 
-### Signing Up
+## Signing Up
 
 From here, we can navigate to the Login Page by clicking on the profile icon in the top right of the page. By clicking here, we will see a drop-down menu that has two items: 'My Profile", and "Login'. We can click on the "Login" option.
 
@@ -32,14 +32,21 @@ From here, we can navigate to the Login Page by clicking on the profile icon in 
 
 Now we have come to the Login Page! Since we don't have an account yet, we can click on the "Sign Up" option on the page.
 
+
 ![SignUpButton](./Images/SignUpButton.png)
 
+
 To sign up you need to fill in a username, email, and password.
+
+
 ![SignUpInformation](./Images/SignUpInformation.png)
+
 
 Once we fill out all the information we need to sign up, we have to verify our account. Simply log the email account you used to sign up and look for the "Verify Your Email" email from Charitable.
 
+
 ![CharitableEmail](./Images/CharitableEmail.png)
+
 
 Click on the orange "Verify" button in the email. We have now successfully verified our email!
 
@@ -47,13 +54,13 @@ Click on the orange "Verify" button in the email. We have now successfully verif
 
 ![VerifyEmail](./Images/VerifyEmail.png)
 
-### Logging In
+## Logging In
 
 We can now log into our Charitable account. Navigate back to the Charitable website to the Login Page, and use the login credentials we just created to log in, you can login with your username or email.
 
 ![Login](Login.png)
 
-### Setting Up Our Profile
+## Setting Up Our Profile
 
 Now that we have logged in, let us set up our profile! Follow the same dropdown that we used to get to the login page. This time, the dropdown menu should have the items "My Profile" and "Logout". Click "My Profile".
 
@@ -67,13 +74,13 @@ We can change our profile picture and banner photo by clicking on the "Upload Pr
 
 ![EditProfilePopup](./Images/EditProfilePopup.png)
 
-### Editing Our Profile
+## Editing Our Profile
 
 To edit our profile, we can follow the same steps as we did to set up our profile to find the "Edit Profile" button. Then, by clicking on the "Edit Profile" button again, we can change any text or images that we want to change. Don't forget to click the "Save" button after making any changes to your profile!
 
 ![EditProfilePopup2](./Images/EditProfilePopup2.png)
 
-### Searching For An Organization
+## Searching For An Organization
 
 Now that we have finished setting up our profile, we can start learning about Charitable organizations and activities!
 
@@ -97,7 +104,7 @@ By default we can see the information of the first organization. Let's click on 
 
 ![TurtleSearchResultsDescription](./Images/TurtleSearchResultsDescription.png)
 
-### Searching For An Activity
+## Searching For An Activity
 
 Now, I don't know about you, but I am excited to learn more about projects that I can get involved in to help the turtles! To search for an activity, we can do the same thing we did to search for an organization, but we need to make sure we change the "Filter Search" from "Organizations" to "Activities".
 
@@ -111,7 +118,7 @@ Then if we hit enter, we can see the result for our search for turtle activities
 
 ![ActivityTurtleSearchResults](./Images/ActivityTurtleSearchResults.png)
 
-### Saving An Organization Or Activity
+## Saving An Organization Or Activity
 
 If we find an organization or activity that we really like, we can save it! To save an organization or activity, we find the organization or activity we like and click on the heart icon in the top right corner. We know an item is saved when the heart is filled in.
 
@@ -125,13 +132,13 @@ Our saved organizations and activities can be found on our profile page! After s
 
 ![SavedScrollViews](./Images/SavedScrollViews.png)
 
-### Unsaving An Organization Or Activity
+## Unsaving An Organization Or Activity
 
 If we don't want an organization or activity saved anymore, we can simply click on the heard icon again. If the heart icon is not filled-in, we know that we have un-saved it.
 
 ![UnsavedHeart](./Images/UnsavedHeart.png)
 
-### Searching For A User
+## Searching For A User
 
 Now that we have learned a little bit about Charitable organizations and activities, we can start buildinng our Charitable network!
 
@@ -143,7 +150,7 @@ To search for a user, go to the search bar that is in the top left corner of the
 
 ![TimmyHu](./Images/TimmySearch.png)
 
-### Following A User
+## Following A User
 
 There he is! Timmy is a great friend of mine.
 
@@ -157,13 +164,13 @@ We know that we have successfully followed Timmy when the orange "Follow" button
 
 ![UnfollowButton](./Images/UnfollowButton.png)
 
-### Unfollowing A User
+## Unfollowing A User
 
 If we ever want to unfollow Timmy, we can naviage to his profile page and click the yellow "Unfollow" button. We know that we have successfully unfollowed Timmy when the yello "Unfollow" button turns into an orange "Follow" button again.
 
 ![UnfollowButtonCircled](./Images/TimmyHuUnfollowButton.png)
 
-### Creating A Post
+## Creating A Post
 
 If we want to share something, we can make a post! We can create a post from either our profile page or our timeline page.
 
@@ -181,7 +188,7 @@ If the post was successful, you should see this message:
 
 ![PostConfirmation](./Images/PostConfirmation.png)
 
-### Sharing an Organization or Activity
+## Sharing an Organization or Activity
 
 One of my favortie features on Charitable is the ability to share an organization or activity. We can do this by clicking on the post + button for an organization or activity:
 
@@ -203,7 +210,7 @@ Then a pop up opens with all the organization or activity information, so all yo
 
 ![PostOrgPopUp](./Images/PostOrgPopUp.png)
 
-### Logging Out
+## Logging Out
 
 Whew, that was fun! When you are ready to step away from Charitable, simple use the dropdown menu in the top right corner to logout of your account until you want to log in again!
 
@@ -213,7 +220,7 @@ Thanks for stopping by! I hope this was helpful.
 
 ---
 
-### Need More Help?
+## Need More Help?
 
 If you need any help with Charitable, feel free to contact the team at
 
@@ -223,4 +230,4 @@ Charitable401@gmail.com
 
 Thanks for joining the Charitable community! We are so happy that you are here.
 
-## We are looking forward to making your day for Charitable.
+# We are looking forward to making your day for Charitable.
