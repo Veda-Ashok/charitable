@@ -13,7 +13,7 @@ import VerifyEmail from './VerifyEmail'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(12),
+    marginTop: theme.spacing(15),
     [theme.breakpoints.up('sm')]: {
       marginTop: theme.spacing(9),
       flexGrow: 1,

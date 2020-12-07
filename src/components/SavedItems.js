@@ -13,6 +13,13 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  noContent: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: theme.spacing(1.5),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(2),
+  },
 }))
 
 export default function SavedItems({ orgs, activities, owner, viewer, refresh, setRefresh }) {
@@ -23,7 +30,9 @@ export default function SavedItems({ orgs, activities, owner, viewer, refresh, s
         <Typography variant="h6">Saved Organizations</Typography>
       </Paper>
       {orgs.length <= 0 ? (
-        <h1>You have no saved orgs</h1>
+        <Paper className={classes.noContent}>
+          <h2>You have no saved organizations to display</h2>
+        </Paper>
       ) : (
         <SavedScrollview
           owner={owner}
@@ -38,7 +47,9 @@ export default function SavedItems({ orgs, activities, owner, viewer, refresh, s
         <Typography variant="h6">Saved Activities</Typography>
       </Paper>
       {activities.length <= 0 ? (
-        <h1>You have no saved activities</h1>
+        <Paper className={classes.noContent}>
+          <h2>You have no saved activities to display</h2>
+        </Paper>
       ) : (
         <SavedScrollview
           owner={owner}

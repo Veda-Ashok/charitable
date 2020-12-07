@@ -12,6 +12,7 @@ import Loading from './Loading'
 import axios from 'axios'
 import SavedItems from './SavedItems'
 import VerifyEmail from './VerifyEmail'
+import CreateAccount from './CreateAccount'
 
 const useStyles = makeStyles((theme) => ({
   banner: {
@@ -24,10 +25,16 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(1),
+    justifyContent: 'space-around',
   },
   savedOrg: {
     marginRight: theme.spacing(3),
     marginLeft: theme.spacing(3),
+  },
+  savedOrgSmall: {
+    marginRight: theme.spacing(4),
+    marginLeft: theme.spacing(4),
+    marginTop: theme.spacing(5),
   },
   title: {
     backgroundColor: theme.palette.text.primary,
@@ -167,24 +174,8 @@ function ProfilePage(props) {
                       isProfile={true}></PostScrollview>
                   ) : (
                     <Paper className={classes.noPosts}>
-                      <h2>No Posts to Display</h2>
+                      <h2>You have no posts to display</h2>
                     </Paper>
-                  )}
-                  {!isWidthUp('sm', props.width) && (
-                    <div className={classes.savedOrg}>
-                      {isLoading ? (
-                        <Loading />
-                      ) : (
-                        <SavedItems
-                          owner={owner}
-                          viewer={viewer}
-                          orgs={orgs}
-                          activities={activities}
-                          setRefresh={setRefresh}
-                          refresh={refresh}
-                        />
-                      )}
-                    </div>
                   )}
                 </div>
                 {isWidthUp('sm', props.width) && (
@@ -204,6 +195,22 @@ function ProfilePage(props) {
                   </div>
                 )}
               </div>
+              {!isWidthUp('sm', props.width) && (
+                <div className={classes.savedOrgSmall}>
+                  {isLoading ? (
+                    <Loading />
+                  ) : (
+                    <SavedItems
+                      owner={owner}
+                      viewer={viewer}
+                      orgs={orgs}
+                      activities={activities}
+                      setRefresh={setRefresh}
+                      refresh={refresh}
+                    />
+                  )}
+                </div>
+              )}
             </div>
           ) : (
             <VerifyEmail />
@@ -212,7 +219,7 @@ function ProfilePage(props) {
           <Loading />
         )
       ) : (
-        <h2>Log In to view this page</h2>
+        <CreateAccount />
       )}
     </div>
   )

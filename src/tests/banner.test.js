@@ -13,7 +13,7 @@ describe('ProfileBanner', () => {
     const { getByText, queryByText, getByAltText } = render(
       <ProfileBanner
         name="BJ Johnson"
-        icon="/media/BJIcon.jpg"
+        icon="/media/default_prof_pic.png"
         bio="I love volunteering"
         isMe={true}
         isFollower={false}
@@ -30,7 +30,7 @@ describe('ProfileBanner', () => {
     const { getByText, queryByText, getByAltText } = render(
       <ProfileBanner
         name="BJ Johnson"
-        icon="/media/BJIcon.jpg"
+        icon="/media/default_prof_pic.png"
         bio="I love volunteering"
         isMe={false}
         isFollower={false}
@@ -48,7 +48,7 @@ describe('ProfileBanner', () => {
     const { getByText } = render(
       <ProfileBanner
         name="BJ Johnson"
-        icon="/media/BJIcon.jpg"
+        icon="/media/default_prof_pic.png"
         bio="I love volunteering"
         isMe={false}
         isFollower={false}
@@ -65,7 +65,7 @@ describe('ProfileBanner', () => {
     const { getByText } = render(
       <ProfileBanner
         name="BJ Johnson"
-        icon="/media/BJIcon.jpg"
+        icon="/media/default_prof_pic.png"
         bio="I love volunteering"
         isMe={false}
         isFollower={true}
