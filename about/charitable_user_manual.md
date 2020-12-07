@@ -108,7 +108,7 @@ By default we can see the information of the first organization. Let's click on 
 
 Now, I don't know about you, but I am excited to learn more about projects that I can get involved in to help the turtles! To search for an activity, we can do the same thing we did to search for an organization, but we need to make sure we change the "Filter Search" from "Organizations" to "Activities".
 
-![FilterDropDownActivitiesCircled](./Images/FilterDropDownActivitiesCircled)
+![FilterDropDownActivitiesCircled](./Images/FilterDropDownActivitiesCircled.png)
 
 From here, just like we did for organizations, we can type in an activity title, a theme, a location, or any other keyword that we want to find activities for!
 
