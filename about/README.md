@@ -1,4 +1,4 @@
-![Logo](.Images/CharitableReadmeBanner.png)
+![Logo](./Images/CharitableReadmeBanner.png)
 
 ## Welcome to Charitable.
 
