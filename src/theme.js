@@ -1,17 +1,4 @@
 import { createMuiTheme } from '@material-ui/core/styles'
-// import TypoHoopDemo from './fonts/Typo-Hoop_bold-Demo.ttf'
-
-// const typoHoop = {
-//   fontFamily: 'Typo Hoop Demo',
-//   fontStyle: 'bold',
-//   fontWeight: 400,
-//   src: `
-//     local('Typo Hoop Demo'),
-//     local('Typo Hoop Demo-Bold'),
-//     url(${TypoHoopDemo}) format('ttf')
-//   `,
-//   unicodeRange: 'U+0000-00FF',
-// }
 
 const jasmine = '#F4D58D'
 const flame = '#E7592C'
