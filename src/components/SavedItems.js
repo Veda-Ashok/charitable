@@ -38,7 +38,7 @@ export default function SavedItems({ orgs, activities, owner, viewer, refresh, s
         <Typography variant="h6">Saved Activities</Typography>
       </Paper>
       {activities.length <= 0 ? (
-        <h1>You have no saved activities: LOOOOOOOOOOOOOOOSERRRRRRRRRR</h1>
+        <h1>You have no saved activities</h1>
       ) : (
         <SavedScrollview
           owner={owner}
