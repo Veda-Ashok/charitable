@@ -212,7 +212,7 @@ Then a pop up opens with all the organization or activity information, so all yo
 
 ## Logging Out
 
-Whew, that was fun! When you are ready to step away from Charitable, simple use the dropdown menu in the top right corner to logout of your account until you want to log in again!
+Whew, that was fun! When you are ready to step away from Charitable, simply use the dropdown menu in the top right corner to logout of your account until you want to log in again!
 
 ![LogoutDropdownCircled](./Images/LogoutCircled.png)
 
