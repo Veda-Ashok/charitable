@@ -44,7 +44,7 @@ describe('ProfileBanner', () => {
   })
 
   it('Changes depending on whether or not a user is following - not following', () => {
-    axios.post.mockImplementationOnce(() => Promise.resolve({}))
+    axios.post.mockResolvedValue({ data: { matchedCount: 1 } })
     const { getByText } = render(
       <ProfileBanner
         name="BJ Johnson"
@@ -60,7 +60,7 @@ describe('ProfileBanner', () => {
   })
 
   it('Changes depending on whether or not a user is not following - following', () => {
-    axios.post.mockImplementationOnce(() => Promise.resolve({}))
+    axios.post.mockResolvedValue({ data: { matchedCount: 1 } })
 
     const { getByText } = render(
       <ProfileBanner

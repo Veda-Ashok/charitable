@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(2),
   },
+  content: {
+    marginRight: theme.spacing(10),
+  },
 }))
 
 export default function SavedItems({ orgs, activities, owner, viewer, refresh, setRefresh }) {

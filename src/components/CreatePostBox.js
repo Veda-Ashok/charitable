@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     color: grey,
     flexDirection: 'column',
-    maxWidth: '50rem',
+    // maxWidth: '65rem',
+    width: '100%',
     padding: theme.spacing(1),
   },
   top: {

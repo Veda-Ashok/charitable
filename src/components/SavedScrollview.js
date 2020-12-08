@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     maxHeight: '80vh',
     overflow: 'auto',
-    maxWidth: '50rem',
+    width: '100%',
   },
 }))
 
