@@ -23,9 +23,10 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     display: 'flex',
+    // flexShrink: 0,
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(1),
-    justifyContent: 'space-around',
+    justifyContent: 'center',
   },
   savedOrg: {
     marginRight: theme.spacing(3),
@@ -148,7 +149,7 @@ function ProfilePage(props) {
                 <Loading></Loading>
               )}
               <div className={classes.content}>
-                <div>
+                <div style={{ width: '100%' }}>
                   {props.isMe ? (
                     <>
                       <CreatePostBox
@@ -178,22 +179,24 @@ function ProfilePage(props) {
                     </Paper>
                   )}
                 </div>
-                {isWidthUp('sm', props.width) && (
-                  <div className={classes.savedOrg}>
-                    {isLoading ? (
-                      <Loading />
-                    ) : (
-                      <SavedItems
-                        owner={owner}
-                        viewer={viewer}
-                        orgs={orgs}
-                        activities={activities}
-                        setRefresh={setRefresh}
-                        refresh={refresh}
-                      />
-                    )}
-                  </div>
-                )}
+                <div style={{ width: '100%' }}>
+                  {isWidthUp('sm', props.width) && (
+                    <div className={classes.savedOrg}>
+                      {isLoading ? (
+                        <Loading />
+                      ) : (
+                        <SavedItems
+                          owner={owner}
+                          viewer={viewer}
+                          orgs={orgs}
+                          activities={activities}
+                          setRefresh={setRefresh}
+                          refresh={refresh}
+                        />
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
               {!isWidthUp('sm', props.width) && (
                 <div className={classes.savedOrgSmall}>

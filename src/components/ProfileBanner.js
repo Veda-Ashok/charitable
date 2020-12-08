@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   bioText: {
     marginRight: theme.spacing(2),
     paddingBottom: theme.spacing(3),
+    overflow: 'auto',
   },
   button: {
     minWidth: '6rem',
@@ -90,9 +91,9 @@ export default function ProfileBanner(props) {
         setFollowMessage('Follow')
         setIcon(addIcon)
         setFollowColor('primary')
+        console.log(response.data)
       }
     }
-    //TODO: We are gonna need to send a request to the DB to remove and add Follow on click
   }
 
   return (

@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
+    maxWidth: theme.spacing(125),
   },
   heart: {
     height: theme.spacing(5),
@@ -21,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
   leftSymbols: {
     display: 'flex',
     justifyContent: 'space-between',
+    width: '100%',
+  },
+  leftUsers: {
+    display: 'flex',
     width: '100%',
   },
   innerBox: {
@@ -54,7 +59,7 @@ export default function SearchListItems({ result, onClick, type }) {
   } else if (type === 'users') {
     imageSrc = result.profile_picture
     name = result.name
-    theme = [result.nickname]
+    theme = [result.bio]
   }
 
   const classes = useStyles()
@@ -64,7 +69,7 @@ export default function SearchListItems({ result, onClick, type }) {
       {type === 'users' ? (
         <CardActionArea href={`/profile/${result.nickname}`} component={Link} naked>
           <CardContent>
-            <div className={classes.leftSymbols}>
+            <div className={classes.leftUsers}>
               <Avatar className={classes.avatar} src={imageSrc} alt={name} />
               <div className={classes.text}>
                 <Typography variant="body1">{name}</Typography>
