@@ -70,4 +70,4 @@ https://github.com/Veda-Ashok/charitable/blob/master/about/charitable_user_manua
 
 # We are looking forward to making your day for Charitable.
 
-![Logo](../public/media/Logo.svg)
+![Logo](./public/media/Logo.svg)
