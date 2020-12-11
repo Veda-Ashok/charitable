@@ -1,3 +1,26 @@
+/*
+Creation: CreatePost
+Description: This allows a user to create a post with a message that they desire. For the mongo shell command below you will create a post,
+with some text so the function parameter is a string. However in our app the posts can also post photos which is dependent on our third party API
+cloudinary which would be very difficult.
+So for our mongo shell command we create a simple post that contains some text. Thus the parameters for our mongo shell command is just two strings
+the poster, and the typed content.
+We HIGHLY RECOMMEND that you test this api call from the GUI not by endpoint. So make a charitable account and create a post through the frontend,
+in this way it will be easy to make sure the input is formdata as expected. Also our frontend makes sure that users can only attach images as files,
+and provides some text limitations, and also has a modal that shows up when the user doesn't input any text.
+Function Parameters: Array formData that contains the String fields poster, image, organization_id, activity_id, typed_content, date_posted
+Return Value: JSON Object confirming if the post was successfully created
+Query:
+db.posts.insertOne({
+    poster: 'krys',
+    image: null,
+    organization_id: null,
+    activity_id: null,
+    typed_content: 'found a new amazing opportunity! : )',
+    date_posted: new Date(),
+})
+*/
+
 import { connectToDatabase } from '../../utils/mongodb'
 import microCors from 'micro-cors'
 import formidable from 'formidable'

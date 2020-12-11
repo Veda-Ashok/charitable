@@ -1,3 +1,31 @@
+// Query  # 2: searchUserSavedInfo
+// Description: Query to find one user based on their nickname,
+// and return all the info for that user, including all the info for the organizations
+// they have saved and the activities they have saved.
+// Function Parameters: string: user nickname
+// Return Value: A JSON object with all the user's info
+// Query:
+// db.users.aggregate([
+//     {$match: {
+//         nickname: 'krys',
+//     },
+//     },
+//     {$lookup: {
+//         from: 'organizations',
+//         localField: 'saved_orgs',
+//         foreignField: 'gg_id',
+//         as: 'saved_orgs_docs',
+//     },
+//     },
+//     {$lookup: {
+//         from: 'activities',
+//         localField: 'saved_activities',
+//         foreignField: '_id',
+//         as: 'saved_activities_docs',
+//     },
+//     },
+// ])
+
 import { connectToDatabase } from '../../../utils/mongodb'
 
 const arrayFromCursor = async (cursor) => {
