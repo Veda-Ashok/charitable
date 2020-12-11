@@ -1,5 +1,5 @@
 /*
-Update: UpdatePost
+Update: updatePost
 
 Description: Allows user to update the typed content of a post. For testing 
 the api call in postman by selecting Body then x-www-form-urlencoded with the keys as postId, and 
@@ -11,7 +11,6 @@ Function Parameters: String(postId), String(newContent)
 Return Value: JSON Object: nModified field indicates if modification succeeded
 
 Query:
-
 db.posts.updateOne(
     {_id: ObjectId('5fd3e9d75a10770008905f6f')},
     {$set: {

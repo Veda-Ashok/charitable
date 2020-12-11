@@ -11,11 +11,13 @@ We HIGHLY RECOMMEND that you test this api call from the GUI not by endpoint. Yo
 will be easy to make sure the input is formdata as expected. Also our frontend makes sure that users can only attach images as files,
 and provides some text limitations, and also has a modal that shows up when the user doesn't input any text.
 
-
 You can also test in Postman!
 Select body, then form data, and enter in all the fields, such as: poster, image, organization_id, activity_id, typed_content, and date_posted.
 
+Function Parameters: Array formData that contains the String fields poster, image, organization_id, activity_id, typed_content, date_posted
+
 Return Value: JSON Object confirming if the post was successfully created
+
 Query:
 db.posts.insertOne({
     poster: 'krys',

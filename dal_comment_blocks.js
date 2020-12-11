@@ -17,7 +17,7 @@
 //     date_posted: new Date(),
 // })
 
-// User-readable search function:  SearchPost
+// User-readable search function:  returnUsersPosts
 // Description: Query to search for posts by nickname
 // Function Parameters: Nickname(String)
 // Return Value: Array of posts made by user
