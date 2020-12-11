@@ -13,6 +13,7 @@ export default async (req, res) => {
       { _id: ObjectId(pid.replace(/['"]+/g, '')) },
       {
         _id: 0,
+        password: 0,
         saved_orgs: 1,
       }
     )

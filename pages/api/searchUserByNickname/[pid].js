@@ -11,6 +11,7 @@ export default async (req, res) => {
     { nickname: `${pid.replace(/['"]+/g, '')}` },
     {
       _id: 1,
+      password: 0,
       email: 0,
     }
   )

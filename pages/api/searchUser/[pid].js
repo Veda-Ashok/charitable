@@ -14,6 +14,7 @@ export default async (req, res) => {
       { name: { $regex: `${pid}`, $options: 'i' } },
       {
         _id: 1,
+        password: 0,
         email: 0,
       }
     )
