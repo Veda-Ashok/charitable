@@ -36,6 +36,12 @@ export default async (req, res) => {
         as: 'saved_activities_docs',
       },
     },
+    {
+      $project: {
+        _id: 0,
+        password: 0,
+      },
+    },
   ]
 
   const users = await db.collection('users').aggregate(agg)
