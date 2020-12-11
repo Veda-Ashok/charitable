@@ -10,14 +10,8 @@ export default async (req, res) => {
 
   const users = await db
     .collection('users')
-    .find(
-      { name: { $regex: `${pid}`, $options: 'i' } },
-      {
-        _id: 1,
-        password: 0,
-        email: 0,
-      }
-    )
+    .find({ name: { $regex: `${pid}`, $options: 'i' } })
+    .project({ email: 0, password: 0 })
     .limit(20)
     .toArray()
 

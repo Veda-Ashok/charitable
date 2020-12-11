@@ -7,14 +7,12 @@ export default async (req, res) => {
 
   const { db } = await connectToDatabase()
 
-  const user = await db.collection('users').findOne(
-    { nickname: `${pid.replace(/['"]+/g, '')}` },
-    {
-      _id: 1,
-      password: 0,
-      email: 0,
-    }
-  )
+  const user = await db
+    .collection('users')
+    .findOne(
+      { nickname: `${pid.replace(/['"]+/g, '')}` },
+      { projection: { email: 0, password: 0 } }
+    )
 
   res.json(user)
 }
