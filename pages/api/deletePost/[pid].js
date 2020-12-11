@@ -1,11 +1,15 @@
 /* 
 Delete: deletePost
+
 Description: Allows a user to delete a post they have made. The reason we accept
 a post _id is because if we were to implement this in the frontend it would 
 make the most sense to send the specific id of the post, though you would be testing
 this by endpoint since that would be a next semester feature. 
+
 Function Parameters: post _id as a string
-Return Value:
+
+Return Value: JSON Object: nModified field indicates if deletion succeeded
+
 Query:
     db.posts.deleteOne(
         {_id: ObjectId('5fd3e9d75a10770008905f6f')}
