@@ -39,26 +39,3 @@ export async function connectToDatabase() {
   await cached.promise
   return cached.conn
 }
-
-/*
-Example import is:
-const { db } = await connectToDatabase()
-  const users = await db.collection('users').find({}).limit(5).toArray()
-  //$lt less than,
-  const orgs = await db
-    .collection('organization')
-    .find(
-      {
-        $and: [{ name: /love/i }, { mission: /love/i }],
-      },
-      {
-        _id: 0,
-        gg_id: 1,
-        name: 1,
-      }
-    )
-    .limit(1)
-    .sort({ name: 1 })
-    .limit(10)
-    .toArray()
-*/
