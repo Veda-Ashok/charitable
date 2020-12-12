@@ -7,19 +7,27 @@ export default async (req, res) => {
   } = req
 
   try {
+    const id = ObjectId(pid.replace(/['"]+/g, ''))
     const { db } = await connectToDatabase()
 
-    const users = await db.collection('users').findOne(
-      { _id: ObjectId(pid.replace(/['"]+/g, '')) },
+    const user = await db.collection('users').findOne(
+      { _id: id },
       {
-        _id: 0,
-        password: 0,
-        saved_orgs: 1,
+        projection: {
+          _id: 0,
+          saved_orgs: 1,
+        },
       }
     )
 
-    res.json(users.saved_orgs)
+    res.json(user ? user.saved_orgs : [])
   } catch (error) {
-    console.error(error)
+    console.log(error)
+    res.statusCode = 400
+    res.setHeader('Content-Type', 'application/json')
+    res.end(error.message)
+    // res.status(400).json({ name: 'Next.js' })
+    // console.log('type', typeof error)
+    // // res.json(error.message)
   }
 }
