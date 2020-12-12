@@ -20,9 +20,14 @@ export default async (req, res) => {
       }
     )
 
-    res.json(user)
+    res.json(user ? user.saved_orgs : [])
   } catch (error) {
-    console.error(error)
-    res.json('IDK WTF TO PUT IN HEREEEEEE')
+    console.log(error)
+    res.statusCode = 400
+    res.setHeader('Content-Type', 'application/json')
+    res.end(error.message)
+    // res.status(400).json({ name: 'Next.js' })
+    // console.log('type', typeof error)
+    // // res.json(error.message)
   }
 }

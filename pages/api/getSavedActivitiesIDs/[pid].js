@@ -14,12 +14,12 @@ export default async (req, res) => {
       {
         projection: {
           _id: 0,
-          saved_orgs: 1,
+          saved_activities: 1,
         },
       }
     )
 
-    res.json(users.saved_activities)
+    res.json(users ? users.saved_activities : [])
   } catch (error) {
     console.error(error)
   }
