@@ -72,8 +72,8 @@ export default async (req, res) => {
     },
     {
       $project: {
-        _id: 0,
         password: 0,
+        email: 0,
       },
     },
   ]

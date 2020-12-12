@@ -107,6 +107,7 @@ function ProfilePage(props) {
           setEmailVerified(myResponse.data.email_verified)
           setOwner(profile.data)
           setViewer(myResponse.data)
+          console.log(viewer)
         }
         getPosts()
         setIsLoading(false)
@@ -128,26 +129,23 @@ function ProfilePage(props) {
     <div className={classes.banner}>
       <NavigationBar page="Profile" user={props.user} />
       {props.user ? (
-        owner ? (
+        owner && viewer ? (
           email_verified ? (
             <div>
-              {viewer ? (
-                <ProfileBanner
-                  bio={bio}
-                  name={name}
-                  nickname={owner.nickname}
-                  banner={banner}
-                  isMe={props.isMe}
-                  icon={icon}
-                  isFollower={viewer.following.includes(props.pid)}
-                  setRefresh={setRefresh}
-                  refresh={refresh}
-                  viewer={viewer}
-                  owner={owner}
-                />
-              ) : (
-                <Loading></Loading>
-              )}
+              {console.log(viewer)}
+              <ProfileBanner
+                bio={bio}
+                name={name}
+                nickname={owner.nickname}
+                banner={banner}
+                isMe={props.isMe}
+                icon={icon}
+                isFollower={viewer.following.includes(props.pid)}
+                setRefresh={setRefresh}
+                refresh={refresh}
+                viewer={viewer}
+                owner={owner}
+              />
               <div className={classes.content}>
                 <div style={{ width: '100%' }}>
                   {props.isMe ? (
