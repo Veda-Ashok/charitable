@@ -12,8 +12,10 @@ export default async (req, res) => {
     const users = await db.collection('users').findOne(
       { _id: ObjectId(pid.replace(/['"]+/g, '')) },
       {
-        _id: 0,
-        saved_activities: 1,
+        projection: {
+          _id: 0,
+          saved_orgs: 1,
+        },
       }
     )
 

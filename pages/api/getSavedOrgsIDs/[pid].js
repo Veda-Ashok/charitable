@@ -7,18 +7,22 @@ export default async (req, res) => {
   } = req
 
   try {
+    const id = ObjectId(pid.replace(/['"]+/g, ''))
     const { db } = await connectToDatabase()
 
-    const users = await db.collection('users').findOne(
-      { _id: ObjectId(pid.replace(/['"]+/g, '')) },
+    const user = await db.collection('users').findOne(
+      { _id: id },
       {
-        _id: 0,
-        saved_orgs: 1,
+        projection: {
+          _id: 0,
+          saved_orgs: 1,
+        },
       }
     )
 
-    res.json(users.saved_orgs)
+    res.json(user)
   } catch (error) {
     console.error(error)
+    res.json('IDK WTF TO PUT IN HEREEEEEE')
   }
 }
