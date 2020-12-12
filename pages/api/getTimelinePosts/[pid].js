@@ -156,6 +156,11 @@ export default async (req, res) => {
       },
     },
     {
+      $project: {
+        poster_docs: { password: 0, email: 0 },
+      },
+    },
+    {
       $set: {
         pretty_date: {
           $dateToString: { format: '%m-%d-%Y %H:%M', date: '$post_docs.date_posted' },
