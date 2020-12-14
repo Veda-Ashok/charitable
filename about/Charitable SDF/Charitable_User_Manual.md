@@ -1,6 +1,6 @@
 # How to use Charitable
 
-![Logo](../public/media/Logo.svg)
+![Logo](../../public/media/Logo.svg)
 
 ## Welcome to Charitable.
 
