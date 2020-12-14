@@ -43,6 +43,16 @@ export const config = {
   },
 }
 
+// Check if we got something that could be a MongoDB object ID value. This is semi-lazy: we try
+// to instantiate an ObjectID with it and return null if it fails.
+const objectIdOrNull = (idString) => {
+  try {
+    return ObjectId(idString)
+  } catch (error) {
+    return null
+  }
+}
+
 const handler = async (req, res) => {
   try {
     const { db } = await connectToDatabase()
@@ -70,7 +80,7 @@ const handler = async (req, res) => {
       photo = image.secure_url
     }
 
-    const activity_id = fields.activity_id === 'null' ? null : ObjectId(fields.activity_id)
+    const activity_id = fields.activity_id === 'null' ? null : objectIdOrNull(fields.activity_id)
     const post = await db.collection('posts').insertOne({
       poster: fields.poster,
       image: photo === 'null' ? null : photo,
@@ -81,7 +91,10 @@ const handler = async (req, res) => {
     })
     res.json(post)
   } catch (error) {
-    console.error(error)
+    console.log(error)
+    res.statusCode = 400
+    res.setHeader('Content-Type', 'application/json')
+    res.json({ errorCode: error.message })
   }
 }
 
