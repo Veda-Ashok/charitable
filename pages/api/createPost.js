@@ -53,13 +53,13 @@ const objectIdOrNull = async (idString) => {
   }
 }
 
-async function checkInputs(activity_id, organization_id, poster, db) {
-  const doesActivityExist = (await db.collection('activities').exists({ _id: activity_id })) || null
-  const doesOrganizationExist =
-    (await db.collections('organizations').exists({ gg_id: organization_id })) || null
-  const doesPosterExist = (await db.collections('users').exists({ nickname: poster })) || null
-  return doesActivityExist && doesOrganizationExist && doesPosterExist
-}
+// async function checkInputs(activity_id, organization_id, poster, db) {
+//   const doesActivityExist = (await db.collection('activities').exists({ _id: activity_id })) || null
+//   const doesOrganizationExist =
+//     (await db.collections('organizations').exists({ gg_id: organization_id })) || null
+//   const doesPosterExist = (await db.collections('users').exists({ nickname: poster })) || null
+//   return doesActivityExist && doesOrganizationExist && doesPosterExist
+// }
 
 const handler = async (req, res) => {
   try {
@@ -89,9 +89,9 @@ const handler = async (req, res) => {
     }
 
     const activity_id = fields.activity_id === 'null' ? null : objectIdOrNull(fields.activity_id)
-    if (!checkInputs(activity_id, fields.organization_id, fields.poster, db)) {
-      throw new Error('Input invalid')
-    }
+    // if (!checkInputs(activity_id, fields.organization_id, fields.poster, db)) {
+    //   throw new Error('Input invalid')
+    // }
     const post = await db.collection('posts').insertOne({
       poster: fields.poster,
       image: photo === 'null' ? null : photo,
