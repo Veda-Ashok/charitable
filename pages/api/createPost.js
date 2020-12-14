@@ -45,12 +45,20 @@ export const config = {
 
 // Check if we got something that could be a MongoDB object ID value. This is semi-lazy: we try
 // to instantiate an ObjectID with it and return null if it fails.
-const objectIdOrNull = (idString) => {
+const objectIdOrNull = async (idString) => {
   try {
     return ObjectId(idString)
   } catch (error) {
     return null
   }
+}
+
+async function checkInputs(activity_id, organization_id, poster, db) {
+  const doesActivityExist = (await db.collection('activities').exists({ _id: activity_id })) || null
+  const doesOrganizationExist =
+    (await db.collections('organizations').exists({ gg_id: organization_id })) || null
+  const doesPosterExist = (await db.collections('users').exists({ nickname: poster })) || null
+  return doesActivityExist && doesOrganizationExist && doesPosterExist
 }
 
 const handler = async (req, res) => {
@@ -81,6 +89,9 @@ const handler = async (req, res) => {
     }
 
     const activity_id = fields.activity_id === 'null' ? null : objectIdOrNull(fields.activity_id)
+    if (!checkInputs(activity_id, fields.organization_id, fields.poster, db)) {
+      throw new Error('Input invalid')
+    }
     const post = await db.collection('posts').insertOne({
       poster: fields.poster,
       image: photo === 'null' ? null : photo,
