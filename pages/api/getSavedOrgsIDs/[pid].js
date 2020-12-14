@@ -25,7 +25,7 @@ export default async (req, res) => {
     console.log(error)
     res.statusCode = 400
     res.setHeader('Content-Type', 'application/json')
-    res.end(error.message)
+    res.json({ errorCode: error.message })
     // res.status(400).json({ name: 'Next.js' })
     // console.log('type', typeof error)
     // // res.json(error.message)

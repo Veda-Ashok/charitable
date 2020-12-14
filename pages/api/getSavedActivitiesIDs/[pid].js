@@ -7,10 +7,11 @@ export default async (req, res) => {
   } = req
 
   try {
+    const id = ObjectId(pid.replace(/['"]+/g, ''))
     const { db } = await connectToDatabase()
 
     const users = await db.collection('users').findOne(
-      { _id: ObjectId(pid.replace(/['"]+/g, '')) },
+      { _id: id },
       {
         projection: {
           _id: 0,
@@ -21,6 +22,12 @@ export default async (req, res) => {
 
     res.json(users ? users.saved_activities : [])
   } catch (error) {
-    console.error(error)
+    console.log(error)
+    res.statusCode = 400
+    res.setHeader('Content-Type', 'application/json')
+    res.json({ errorCode: error.message })
+    // res.status(400).json({ name: 'Next.js' })
+    // console.log('type', typeof error)
+    // // res.json(error.message)
   }
 }
