@@ -91,7 +91,6 @@ export default function ProfileBanner(props) {
         setFollowMessage('Follow')
         setIcon(addIcon)
         setFollowColor('primary')
-        console.log(response.data)
       }
     }
   }

@@ -15,21 +15,17 @@ Query:
         {_id: ObjectId('5fd3e9d75a10770008905f6f')}
     } 
 */
-import { connectToDatabase } from '../../../utils/mongodb'
+import { connectToDatabase } from '../../utils/mongodb'
 import microCors from 'micro-cors'
 
 const cors = microCors()
 const ObjectId = require('mongodb').ObjectID
 
 const handler = async (req, res) => {
-  const {
-    query: { pid },
-  } = req
-
   try {
     const { db } = await connectToDatabase()
-
-    const posts = await db.collection('posts').deleteOne({ _id: ObjectId(pid) })
+    console.log(req.body.postId)
+    const posts = await db.collection('posts').deleteOne({ _id: ObjectId(req.body.postId) })
 
     res.json(posts)
   } catch (error) {

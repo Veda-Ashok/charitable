@@ -16,13 +16,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function PostScrollview({ posts, viewer, refresh, setRefresh, isProfile }) {
+export default function PostScrollview({ posts, viewer, refresh, setRefresh }) {
   const classes = useStyles()
   if (posts) {
     const listItems = posts.map((post) => (
       <ListItem key={post._id}>
         <PostBox
-          isProfile={isProfile}
+          postId={post._id}
+          editable={post.poster_docs[0].nickname === viewer.nickname}
           name={post.poster_docs[0].name}
           nickname={post.poster_docs[0].nickname}
           time={post.pretty_date}

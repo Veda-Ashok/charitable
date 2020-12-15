@@ -107,7 +107,6 @@ function ProfilePage(props) {
           setEmailVerified(myResponse.data.email_verified)
           setOwner(profile.data)
           setViewer(myResponse.data)
-          console.log(viewer)
         }
         getPosts()
         setIsLoading(false)
@@ -132,7 +131,6 @@ function ProfilePage(props) {
         owner && viewer ? (
           email_verified ? (
             <div>
-              {console.log(viewer)}
               <ProfileBanner
                 bio={bio}
                 name={name}
@@ -164,17 +162,22 @@ function ProfilePage(props) {
                       />
                     </>
                   ) : null}
-                  {posts && posts.length > 0 ? (
-                    <PostScrollview
-                      posts={posts}
-                      viewer={viewer}
-                      refresh={refresh}
-                      setRefresh={setRefresh}
-                      isProfile={true}></PostScrollview>
+                  {posts ? (
+                    posts.length > 0 ? (
+                      <PostScrollview
+                        posts={posts}
+                        viewer={viewer}
+                        owner={owner}
+                        refresh={refresh}
+                        setRefresh={setRefresh}
+                        isProfile={true}></PostScrollview>
+                    ) : (
+                      <Paper className={classes.noPosts}>
+                        <h2>You have no posts to display</h2>
+                      </Paper>
+                    )
                   ) : (
-                    <Paper className={classes.noPosts}>
-                      <h2>You have no posts to display</h2>
-                    </Paper>
+                    <Loading />
                   )}
                 </div>
                 <div style={{ width: '100%' }}>
