@@ -43,26 +43,41 @@ export const config = {
   },
 }
 
-// Check if we got something that could be a MongoDB object ID value. This is semi-lazy: we try
-// to instantiate an ObjectID with it and return null if it fails.
-// const objectIdOrNull = async (idString) => {
-//   try {
-//     return ObjectId(idString)
-//   } catch (error) {
-//     return null
-//   }
-// }
+/* 
+In our front end if the user didn't attach an activity_id or organization_id, we pass in null.
+The form-data converts null to the string 'null', since it is ok to make a post without an 
+activity or an organization, if it is the string null it is valid input
+*/
 
-async function checkInputs(activity_id, organization_id, poster, db) {
+async function checkInputs(activity_id, organization_id, user_nickname, files, db) {
   const doesActivityExist =
     (await db.collection('activities').find({ _id: activity_id }).count()) > 0 ||
     activity_id === null
   const doesOrganizationExist =
     (await db.collection('organizations').find({ gg_id: organization_id }).count()) > 0 ||
     organization_id === null
-  const doesPosterExist = (await db.collection('users').find({ nickname: poster }).count()) > 0
-  console.log(doesActivityExist, doesOrganizationExist, doesPosterExist)
-  return doesActivityExist && doesOrganizationExist && doesPosterExist
+  const doesUserNicknameExist =
+    (await db.collection('users').find({ nickname: user_nickname }).count()) > 0
+  if (!doesActivityExist) {
+    throw new Error('Invalid Activity')
+  }
+  if (!doesOrganizationExist) {
+    throw new Error('Invalid Organization')
+  }
+  if (!doesUserNicknameExist) {
+    throw new Error('Invalid User Nickname')
+  }
+
+  const validImageTypes = new Set(['image/png', 'image/jpg', 'image/jpeg'])
+  if (Object.keys(files).length !== 0) {
+    if (!validImageTypes.has(files.image.type)) {
+      throw new Error('Invalid Image Type')
+    }
+  }
+
+  // console.log(activity_id, organization_id)
+  // console.log(doesActivityExist, doesOrganizationExist, doesPosterExist)
+  // return doesActivityExist && doesOrganizationExist && doesPosterExist
 }
 
 const handler = async (req, res) => {
@@ -80,9 +95,18 @@ const handler = async (req, res) => {
       })
     })
 
-    let photo = null
     const files = formData[1]
     const fields = formData[0]
+
+    const activity_id =
+      fields.activity_id === 'null'
+        ? null
+        : fields.activity_id === undefined
+        ? undefined
+        : ObjectId(fields.activity_id)
+    const organization_id = fields.organization_id === 'null' ? null : fields.organization_id
+    await checkInputs(activity_id, organization_id, fields.poster, files, db)
+    let photo = null
     if (Object.keys(files).length !== 0) {
       const image = await cloudinary.uploader.upload(files.image.path, {
         width: 512,
@@ -92,17 +116,10 @@ const handler = async (req, res) => {
       photo = image.secure_url
     }
 
-    const activity_id = fields.activity_id === 'null' ? null : ObjectId(fields.activity_id)
-    const isValidInputs = await checkInputs(activity_id, fields.organization_id, fields.poster, db)
-    console.log(isValidInputs)
-    if (!isValidInputs) {
-      console.log('in if')
-      throw new Error('Input invalid')
-    }
     const post = await db.collection('posts').insertOne({
       poster: fields.poster,
-      image: photo === 'null' ? null : photo,
-      organization_id: fields.organization_id === 'null' ? null : fields.organization_id,
+      image: (photo = photo === 'null' ? null : photo),
+      organization_id: organization_id,
       activity_id: activity_id,
       typed_content: fields.typed_content,
       date_posted: new Date(),
