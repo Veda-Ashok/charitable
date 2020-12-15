@@ -45,23 +45,23 @@ export const config = {
 
 // Check if we got something that could be a MongoDB object ID value. This is semi-lazy: we try
 // to instantiate an ObjectID with it and return null if it fails.
-const objectIdOrNull = async (idString) => {
-  try {
-    return ObjectId(idString)
-  } catch (error) {
-    return null
-  }
-}
+// const objectIdOrNull = async (idString) => {
+//   try {
+//     return ObjectId(idString)
+//   } catch (error) {
+//     return null
+//   }
+// }
 
 async function checkInputs(activity_id, organization_id, poster, db) {
   const doesActivityExist =
     (await db.collection('activities').find({ _id: activity_id }).count()) > 0 ||
     activity_id === null
   const doesOrganizationExist =
-    (await db.collections('organizations').find({ gg_id: organization_id }).count()) > 0 ||
+    (await db.collection('organizations').find({ gg_id: organization_id }).count()) > 0 ||
     organization_id === null
-  const doesPosterExist =
-    (await db.collections('users').find({ nickname: poster }).count()) > 0 || poster === null
+  const doesPosterExist = (await db.collection('users').find({ nickname: poster }).count()) > 0
+  console.log(doesActivityExist, doesOrganizationExist, doesPosterExist)
   return doesActivityExist && doesOrganizationExist && doesPosterExist
 }
 
@@ -92,8 +92,11 @@ const handler = async (req, res) => {
       photo = image.secure_url
     }
 
-    const activity_id = fields.activity_id === 'null' ? null : objectIdOrNull(fields.activity_id)
-    if (!checkInputs(activity_id, fields.organization_id, fields.poster, db)) {
+    const activity_id = fields.activity_id === 'null' ? null : ObjectId(fields.activity_id)
+    const isValidInputs = await checkInputs(activity_id, fields.organization_id, fields.poster, db)
+    console.log(isValidInputs)
+    if (!isValidInputs) {
+      console.log('in if')
       throw new Error('Input invalid')
     }
     const post = await db.collection('posts').insertOne({
