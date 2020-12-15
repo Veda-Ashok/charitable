@@ -7,8 +7,8 @@ cloudinary which would be very difficult.
 So for our mongo shell command we create a simple post that contains some text. Thus the parameters for our mongo shell command is just two strings
 the poster, and the typed content.
 
-We HIGHLY RECOMMEND that you test this api call from the GUI not by endpoint. You can make a charitable account and create a post through the frontend- it
-will be easy to make sure the input is formdata as expected. Also our frontend makes sure that users can only attach images as files,
+You can test this api call from the GUI or endpoint (in Postman). You can make a charitable account and create a post through the frontend- it
+will be easy to make sure the input is form-data as expected. Also our frontend makes sure that users can only attach png/jpeg,
 and provides some text limitations, and also has a modal that shows up when the user doesn't input any text.
 
 You can also test in Postman!
@@ -67,8 +67,7 @@ async function checkInputs(activity_id, organization_id, user_nickname, files, d
   if (!doesUserNicknameExist) {
     throw new Error('Invalid User Nickname')
   }
-
-  const validImageTypes = new Set(['image/png', 'image/jpg', 'image/jpeg'])
+  const validImageTypes = new Set(['image/png', 'image/jpg', 'image/jpeg', null])
   if (Object.keys(files).length !== 0) {
     if (!validImageTypes.has(files.image.type)) {
       throw new Error('Invalid Image Type')
@@ -97,7 +96,14 @@ const handler = async (req, res) => {
 
     const files = formData[1]
     const fields = formData[0]
+    console.log('fields', fields)
 
+    if (fields.typed_content === undefined || fields.typed_content === '') {
+      throw new Error('Posts must have text content')
+    }
+    if (fields.typed_content.length > 3000) {
+      throw new Error('Post is too long')
+    }
     const activity_id =
       fields.activity_id === 'null'
         ? null
@@ -107,7 +113,7 @@ const handler = async (req, res) => {
     const organization_id = fields.organization_id === 'null' ? null : fields.organization_id
     await checkInputs(activity_id, organization_id, fields.poster, files, db)
     let photo = null
-    if (Object.keys(files).length !== 0) {
+    if (Object.keys(files).length !== 0 && files.image.type !== null) {
       const image = await cloudinary.uploader.upload(files.image.path, {
         width: 512,
         height: 350,
@@ -118,7 +124,7 @@ const handler = async (req, res) => {
 
     const post = await db.collection('posts').insertOne({
       poster: fields.poster,
-      image: (photo = photo === 'null' ? null : photo),
+      image: photo === 'null' ? null : photo,
       organization_id: organization_id,
       activity_id: activity_id,
       typed_content: fields.typed_content,
@@ -129,7 +135,7 @@ const handler = async (req, res) => {
     console.log(error)
     res.statusCode = 400
     res.setHeader('Content-Type', 'application/json')
-    res.json({ errorCode: error.message })
+    res.json({ errorName: error.name, errorMessage: error.message })
   }
 }
 
