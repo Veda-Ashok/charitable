@@ -39,3 +39,29 @@ export async function connectToDatabase() {
   await cached.promise
   return cached.conn
 }
+
+export async function checkInputs(activity_id, organization_id, user_nickname, files, db) {
+  const doesActivityExist =
+    (await db.collection('activities').find({ _id: activity_id }).count()) > 0 ||
+    activity_id === null
+  const doesOrganizationExist =
+    (await db.collection('organizations').find({ gg_id: organization_id }).count()) > 0 ||
+    organization_id === null
+  const doesUserNicknameExist =
+    (await db.collection('users').find({ nickname: user_nickname }).count()) > 0
+  if (!doesActivityExist) {
+    throw new Error('Invalid Activity')
+  }
+  if (!doesOrganizationExist) {
+    throw new Error('Invalid Organization')
+  }
+  if (!doesUserNicknameExist) {
+    throw new Error('Invalid User Nickname')
+  }
+  const validImageTypes = new Set(['image/png', 'image/jpg', 'image/jpeg', null])
+  if (Object.keys(files).length !== 0) {
+    if (!validImageTypes.has(files.image.type)) {
+      throw new Error('Invalid Image Type')
+    }
+  }
+}
