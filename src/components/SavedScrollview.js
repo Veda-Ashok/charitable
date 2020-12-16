@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SavedScrollview({ results, type, viewer, refresh, setRefresh }) {
+export default function SavedScrollview({ results, type, viewer, refresh, setRefresh, getPosts }) {
   const classes = useStyles()
   if (results) {
     const [currentResult, setCurrentResult] = useState(results[0])
@@ -49,6 +49,7 @@ export default function SavedScrollview({ results, type, viewer, refresh, setRef
             charitUser={viewer}
             refresh={refresh}
             setRefresh={setRefresh}
+            getPosts={getPosts}
           />
         </Paper>
       </div>
@@ -64,4 +65,5 @@ SavedScrollview.propTypes = {
   type: PropTypes.string,
   refresh: PropTypes.bool,
   setRefresh: PropTypes.func,
+  getPosts: PropTypes.any,
 }

@@ -33,7 +33,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SavedItems({ orgs, activities, owner, viewer, refresh, setRefresh }) {
+export default function SavedItems({
+  orgs,
+  activities,
+  owner,
+  viewer,
+  refresh,
+  setRefresh,
+  getPosts,
+}) {
   const classes = useStyles()
   return (
     <div>
@@ -52,6 +60,7 @@ export default function SavedItems({ orgs, activities, owner, viewer, refresh, s
           type="organizations"
           setRefresh={setRefresh}
           refresh={refresh}
+          getPosts={getPosts}
         />
       )}
       <Paper className={classes.activityTitle}>
@@ -69,6 +78,7 @@ export default function SavedItems({ orgs, activities, owner, viewer, refresh, s
           type="activities"
           setRefresh={setRefresh}
           refresh={refresh}
+          getPosts={getPosts}
         />
       )}
     </div>
@@ -82,4 +92,5 @@ SavedItems.propTypes = {
   viewer: PropTypes.object,
   refresh: PropTypes.bool,
   setRefresh: PropTypes.func,
+  getPosts: PropTypes.any,
 }

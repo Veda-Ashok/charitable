@@ -40,7 +40,14 @@ const useStyles = makeStyles((theme) => ({
     float: 'right',
   },
 }))
-export default function SearchDescriptionBox({ result, type, charitUser, refresh, setRefresh }) {
+export default function SearchDescriptionBox({
+  result,
+  type,
+  charitUser,
+  refresh,
+  setRefresh,
+  getPosts,
+}) {
   const classes = useStyles()
   let _id = ''
   let imageSrc = ''
@@ -196,7 +203,8 @@ export default function SearchDescriptionBox({ result, type, charitUser, refresh
               result={result}
               type={type}
               charitUser={charitUser}
-              handleSuccessOpen={handleSuccessOpen}></PostDialog>
+              handleSuccessOpen={handleSuccessOpen}
+              getPosts={getPosts}></PostDialog>
             <SavedDialog
               open={savedOpen}
               onClose={handleSavedClose}
@@ -312,4 +320,5 @@ SearchDescriptionBox.propTypes = {
   charitUser: PropTypes.object,
   refresh: PropTypes.bool,
   setRefresh: PropTypes.any,
+  getPosts: PropTypes.any,
 }

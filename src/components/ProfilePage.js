@@ -193,6 +193,7 @@ function ProfilePage(props) {
                           activities={activities}
                           setRefresh={setRefresh}
                           refresh={refresh}
+                          getPosts={getPosts}
                         />
                       )}
                     </div>
