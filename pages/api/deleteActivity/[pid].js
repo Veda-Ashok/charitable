@@ -1,4 +1,10 @@
-/* To test in Mongo Shell, run this:
+/*
+Transaction: deleteActivity
+
+Description: If an activity is ever deleted, this query will subsequently delete any posts made about the deleted activity, 
+and it will also remove the activity from a user's Saved Activities if they had saved it.
+
+To test in Mongo Shell, run this:
 session = db.getMongo().startSession( { readPreference: { mode: "primary" } } );
  
 activites_coll=session.getDatabase('charitable').activities;
@@ -44,6 +50,17 @@ const handler = async (req, res) => {
     const {
       query: { pid },
     } = req
+
+    // if (!req.body.postId) {
+    //   throw new Error('No ID provided.')
+    // }
+
+    const id = ObjectId(pid)
+    const isValidActivityId = (await db.collection('activity').find({ _id: id }).count()) > 0
+
+    if (!isValidActivityId) {
+      throw new Error('Invalid activity id')
+    }
 
     const { MONGODB_URI, MONGODB_DB } = process.env
 
@@ -93,7 +110,10 @@ const handler = async (req, res) => {
       res.json({ activity: activityResult, post: postResult, user: userResult })
     }
   } catch (error) {
-    console.error(error)
+    console.log(error)
+    res.statusCode = 400
+    res.setHeader('Content-Type', 'application/json')
+    res.json({ errorName: error.name, errorMessage: error.message })
   }
 }
 

@@ -2,19 +2,26 @@
 Creation: createPost
 
 Description: This allows a user to create a post with a message that they desire. For the mongo shell command below you will create a post,
-with some text so the function parameter is a string. However in our app the posts can also post photos which is dependent on our third party API
-cloudinary which would be very difficult.
+with some text so the function parameter is a string. However, in our app, the posts can also post photos which is dependent on our third party API
+cloudinary, which would be very difficult. 
+
 So for our mongo shell command we create a simple post that contains some text. Thus the parameters for our mongo shell command is just two strings
 the poster, and the typed content.
 
-You can test this api call from the GUI or endpoint (in Postman). You can make a charitable account and create a post through the frontend- it
-will be easy to make sure the input is form-data as expected. Also our frontend makes sure that users can only attach png/jpeg,
+You can test this API call from the GUI or endpoint (in Postman). You can make a charitable account and create a post through the frontend- it
+will be easy to make sure the input is form-data as expected. Also, our frontend makes sure that users can only attach png/jpeg,
 and provides some text limitations, and also has a modal that shows up when the user doesn't input any text.
 
 You can also test in Postman!
-Select body, then form data, and enter in all the fields, such as: poster, image, organization_id, activity_id, typed_content, and date_posted.
+Select body, then form data, and enter in all the fields 
+(NOTE: All fields except for the image should be text value, so no quotes):
+poster: krys
+image: *You can choose to attach an image if you would like using the 'Select File' option in the image field of Postman*
+organization_id: null OR 62
+activity_id: null OR 5fba1bd390f1ca3ae93a5ffc 
+typed_content: my first post!
 
-Function Parameters: Array formData that contains the String fields poster, image, organization_id, activity_id, typed_content, date_posted
+Function Parameters: Array formData that contains the String fields: poster, image, organization_id, activity_id, typed_content
 
 Return Value: JSON Object confirming if the post was successfully created
 
@@ -42,38 +49,6 @@ export const config = {
     bodyParser: false,
   },
 }
-
-/* 
-In our front end if the user didn't attach an activity_id or organization_id, we pass in null.
-The form-data converts null to the string 'null', since it is ok to make a post without an 
-activity or an organization, if it is the string null it is valid input
-*/
-
-// async function checkInputs(activity_id, organization_id, user_nickname, files, db) {
-//   const doesActivityExist =
-//     (await db.collection('activities').find({ _id: activity_id }).count()) > 0 ||
-//     activity_id === null
-//   const doesOrganizationExist =
-//     (await db.collection('organizations').find({ gg_id: organization_id }).count()) > 0 ||
-//     organization_id === null
-//   const doesUserNicknameExist =
-//     (await db.collection('users').find({ nickname: user_nickname }).count()) > 0
-//   if (!doesActivityExist) {
-//     throw new Error('Invalid Activity')
-//   }
-//   if (!doesOrganizationExist) {
-//     throw new Error('Invalid Organization')
-//   }
-//   if (!doesUserNicknameExist) {
-//     throw new Error('Invalid User Nickname')
-//   }
-//   const validImageTypes = new Set(['image/png', 'image/jpg', 'image/jpeg', null])
-//   if (Object.keys(files).length !== 0) {
-//     if (!validImageTypes.has(files.image.type)) {
-//       throw new Error('Invalid Image Type')
-//     }
-//   }
-// }
 
 const handler = async (req, res) => {
   try {

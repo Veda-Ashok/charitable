@@ -40,6 +40,15 @@ export async function connectToDatabase() {
   return cached.conn
 }
 
+export const arrayFromCursor = async (cursor) => {
+  const result = []
+  await cursor.forEach((item) => result.push(item))
+  return result
+}
+
+/* 
+In our front end if the user didn't attach an activity_id or organization_id, we pass in null.
+*/
 export async function checkInputs(activity_id, organization_id, user_nickname, files, db) {
   const doesActivityExist =
     (await db.collection('activities').find({ _id: activity_id }).count()) > 0 ||
