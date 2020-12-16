@@ -24,11 +24,10 @@ const handler = async (req, res) => {
     }
 
     const id = ObjectId(req.body.userId)
-    const saved_organization_id = ObjectId(req.body.result.gg_id)
 
     const users = await db
       .collection('users')
-      .updateOne({ _id: id }, { $addToSet: { saved_orgs: saved_organization_id } })
+      .updateOne({ _id: id }, { $addToSet: { saved_orgs: req.body.result.gg_id } })
 
     res.json(users)
   } catch (error) {
