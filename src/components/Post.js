@@ -55,6 +55,7 @@ export default function PostBox({
   setRefresh,
   editable,
   postId,
+  getPosts,
 }) {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
@@ -74,7 +75,7 @@ export default function PostBox({
       if (response.data.deletedCount === 1) {
         setDialogText('Your post has been deleted!')
         handleOpen()
-        setRefresh(!refresh)
+        getPosts()
       } else {
         setDialogText('Sorry, we could not delete your post :(')
         handleOpen()
@@ -139,6 +140,7 @@ export default function PostBox({
           charitUser={viewer}
           refresh={refresh}
           setRefresh={setRefresh}
+          getPosts={getPosts}
         />
       )}
       {activityDetails && (
@@ -149,6 +151,7 @@ export default function PostBox({
           type="activities"
           showPopup
           charitUser={viewer}
+          getPosts={getPosts}
         />
       )}
       <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
@@ -177,4 +180,5 @@ PostBox.propTypes = {
   isProfile: PropTypes.bool,
   editable: PropTypes.bool,
   postId: PropTypes.string,
+  getPosts: PropTypes.any,
 }

@@ -33,7 +33,6 @@ export default function TimelinePage({ user }) {
   const [charitUser, setCharitUser] = useState(undefined)
   const [success, setSuccessOpen] = useState(false)
   const [posts, setPosts] = useState(null)
-  const [refresh, setRefresh] = useState(false)
 
   const handleSuccessOpen = () => {
     setSuccessOpen(true)
@@ -79,7 +78,7 @@ export default function TimelinePage({ user }) {
     return () => {
       didCancel = true
     }
-  }, [refresh])
+  }, [])
 
   return (
     <div className={classes.root}>
@@ -105,9 +104,8 @@ export default function TimelinePage({ user }) {
                 <PostScrollview
                   posts={posts}
                   className={classes.posts}
-                  refresh={refresh}
-                  setRefresh={setRefresh}
-                  viewer={charitUser}></PostScrollview>
+                  viewer={charitUser}
+                  getPosts={getPosts}></PostScrollview>
               ) : (
                 <Paper className={classes.content}>
                   <h2>No Posts to Display</h2>
