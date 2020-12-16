@@ -51,17 +51,6 @@ const handler = async (req, res) => {
       query: { pid },
     } = req
 
-    // if (!req.body.postId) {
-    //   throw new Error('No ID provided.')
-    // }
-
-    const id = ObjectId(pid)
-    const isValidActivityId = (await db.collection('activity').find({ _id: id }).count()) > 0
-
-    if (!isValidActivityId) {
-      throw new Error('Invalid activity id')
-    }
-
     const { MONGODB_URI, MONGODB_DB } = process.env
 
     if (!MONGODB_URI) {
@@ -89,6 +78,18 @@ const handler = async (req, res) => {
     let activityResult
     let postResult
     let userResult
+
+    // if (!req.body.postId) {
+    //   throw new Error('No ID provided.')
+    // }
+
+    const id = ObjectId(pid)
+    const isValidActivityId =
+      (await client.db('charitable').collection('activity').find({ _id: id }).count()) > 0
+
+    if (!isValidActivityId) {
+      throw new Error('Invalid activity id')
+    }
 
     try {
       await session.withTransaction(async () => {
