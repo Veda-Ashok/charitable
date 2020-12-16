@@ -1,3 +1,6 @@
+/*
+Description: Use auth0 to login.
+*/
 import auth0 from '../../utils/auth0'
 
 export default async function login(req, res) {

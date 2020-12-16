@@ -1,3 +1,11 @@
+/*
+Description: Search call for activities; returns activity search results that match query to activity title, theme, country, 
+or organization name.
+
+Parameters: pid: string that can be specifying either an activity title, theme, country, or organization name
+
+Type: GET
+*/
 import { connectToDatabase } from '../../../utils/mongodb'
 
 export default async (req, res) => {

@@ -5,7 +5,7 @@ Description: Query to search for posts by nickname
 
 Test in PostMan by hitting the endpoint api/returnUsersPosts/sam
 
-Function Parameters: a user's nickname
+Function Parameters: pid: user nickname
 
 Return Value: Array of posts made by user
 

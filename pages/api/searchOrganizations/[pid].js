@@ -1,6 +1,12 @@
-import { connectToDatabase } from '../../../utils/mongodb'
+/*
+Description: Search call for organizations; returns organization search results that match query to organization name, 
+theme, and country.
 
-//http://localhost:3000/api/searchOrganizations/Uganda
+Parameters: pid: string that can be specifying either an organization name, theme, or country.
+
+Type: GET
+*/
+import { connectToDatabase } from '../../../utils/mongodb'
 
 export default async (req, res) => {
   const {

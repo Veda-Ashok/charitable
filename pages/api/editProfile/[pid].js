@@ -1,4 +1,13 @@
-import { connectToDatabase, checkInputs } from '../../../utils/mongodb'
+/*
+Description: Allows users to edit their profile (including display name, icon photo, banner photo, and bio) 
+based on their nickname.
+
+Parameters: pid: nickname of user to edit, name: new display name of user, icon : image, banner: image
+
+Type: POST
+*/
+
+import { connectToDatabase, checkProfileImages } from '../../../utils/mongodb'
 import microCors from 'micro-cors'
 import formidable from 'formidable'
 import { v2 as cloudinary } from 'cloudinary'
@@ -38,9 +47,7 @@ const handler = async (req, res) => {
 
     const nickname = pid.replace(/['"]+/g, '')
 
-    console.log(files)
-
-    await checkInputs(null, null, nickname, files, db)
+    await checkProfileImages(files)
 
     if (Object.keys(files).length !== 0) {
       if ('banner' in files) {

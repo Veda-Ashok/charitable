@@ -34,9 +34,6 @@ session.commitTransaction();
 session.endSession();
 */
 
-// 5fd41347466167d5dfd6dbec
-// 5fd41355466167d5dfd6dbed
-
 import { MongoClient } from 'mongodb'
 
 import microCors from 'micro-cors'
@@ -79,13 +76,9 @@ const handler = async (req, res) => {
     let postResult
     let userResult
 
-    // if (!req.body.postId) {
-    //   throw new Error('No ID provided.')
-    // }
-
     const id = ObjectId(pid)
     const isValidActivityId =
-      (await client.db('charitable').collection('activity').find({ _id: id }).count()) > 0
+      (await client.db('charitable').collection('activities').find({ _id: id }).count()) > 0
 
     if (!isValidActivityId) {
       throw new Error('Invalid activity id')
@@ -97,11 +90,11 @@ const handler = async (req, res) => {
         const posts_coll = client.db('charitable').collection('posts')
         const users_coll = client.db('charitable').collection('users')
 
-        activityResult = await activites_coll.deleteOne({ _id: ObjectId(pid) }, { session })
-        postResult = await posts_coll.deleteMany({ activity_id: ObjectId(pid) }, { session })
+        activityResult = await activites_coll.deleteOne({ _id: id }, { session })
+        postResult = await posts_coll.deleteMany({ activity_id: id }, { session })
         userResult = await users_coll.updateMany(
           {},
-          { $pull: { saved_activities: ObjectId(pid) } },
+          { $pull: { saved_activities: id } },
           { session }
         )
       }, transactionOptions)

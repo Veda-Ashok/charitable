@@ -6,7 +6,7 @@ has made as well as those made by the people they are following.
 
 To test in postman, hit the endpoint /api/getTimelinePosts/sam
 
-Function Parameters: string: user nickname
+Function Parameters: string: pid: user nickname
 
 Return Value: post_docs: Array of post objects, attached_orgs_docs: array of organization objects, attached_activities_docs: array of activity objects, and 
 poster_docs: an array of user objects
