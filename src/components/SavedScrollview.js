@@ -6,12 +6,11 @@ import { ListItem } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import SearchListItems from './SearchListItems'
 import SearchDialog from './SearchDialog'
-// import Loading from './Loading'
 
 const useStyles = makeStyles((theme) => ({
   orgs: {
     marginTop: theme.spacing(1),
-    maxHeight: '80vh',
+    maxHeight: '35vh',
     overflow: 'auto',
     width: '100%',
   },

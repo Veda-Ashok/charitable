@@ -13,6 +13,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  activityTitle: {
+    backgroundColor: theme.palette.text.primary,
+    color: theme.palette.common.white,
+    padding: '1rem',
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: theme.spacing(1),
+  },
   noContent: {
     display: 'flex',
     justifyContent: 'center',
@@ -46,7 +54,7 @@ export default function SavedItems({ orgs, activities, owner, viewer, refresh, s
           refresh={refresh}
         />
       )}
-      <Paper className={classes.title}>
+      <Paper className={classes.activityTitle}>
         <Typography variant="h6">Saved Activities</Typography>
       </Paper>
       {activities.length <= 0 ? (

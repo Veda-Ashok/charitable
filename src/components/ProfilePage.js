@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     display: 'flex',
-    // flexShrink: 0,
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(1),
     justifyContent: 'center',
@@ -82,17 +81,6 @@ function ProfilePage(props) {
     let didCancel = false
     async function fetchData() {
       !didCancel && setIsLoading(true)
-      /*
-      setOwner(response.data)
-      setViewer(response.data)
-      setOrgs(response.data.saved_orgs_docs)
-      setActivities(null)
-      setIcon(null)
-      setName(null)
-      setBanner(null)
-      setBio(null)
-      setEmailVerified(false)
-       */
       try {
         setIsLoading(true)
         if (props.isMe) {

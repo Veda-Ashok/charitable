@@ -58,6 +58,7 @@ export default function PostBox({
 }) {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
+  const [dialogText, setDialogText] = useState('')
 
   const handleClose = () => {
     setOpen(false)
@@ -71,8 +72,11 @@ export default function PostBox({
     try {
       let response = await axios.post(`/api/deletePost`, { postId: postId })
       if (response.data.deletedCount === 1) {
+        setDialogText('Your post has been deleted!')
+        handleOpen()
         setRefresh(!refresh)
       } else {
+        setDialogText('Sorry, we could not delete your post :(')
         handleOpen()
       }
     } catch (error) {
@@ -150,7 +154,7 @@ export default function PostBox({
       <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
         <div className={classes.root}>
           <DialogTitle>
-            <Typography>Sorry, we could not delete your post :(</Typography>
+            <Typography>{dialogText}</Typography>
           </DialogTitle>
         </div>
       </Dialog>
