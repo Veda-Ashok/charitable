@@ -86,7 +86,7 @@ export default async (req, res) => {
   try {
     const { db } = await connectToDatabase()
     const nickname = pid.replace(/['"]+/g, '')
-    await checkInputs(null, null, nickname, [], db)
+    await checkInputs(null, null, nickname, {}, db)
 
     const agg = [
       {
