@@ -127,8 +127,6 @@ export default function ProfileBanner(props) {
                   setRefresh={props.setRefresh}
                   refresh={props.refresh}
                   userInfo={props.viewer}
-                  // banner={props.banner}
-                  // icon={props.icon}
                   open={open}
                   onClose={handleClose}
                 />
