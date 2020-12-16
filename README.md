@@ -64,7 +64,7 @@ For developmental purposes, we are using the GlobalGiving API to aid us in acces
 
 ---
 
-Thanks for visiting our page! You can learn more about how to use Charitable with our ![User Manual](./about/Charitable SDF/Charitable_User_Manual).
+Thanks for visiting our page! You can learn more about how to use Charitable with our ![User Manual](./about/Charitable_SDF/Charitable_User_Manual.md).
 
 # We are looking forward to making your day for Charitable.
 
