@@ -1,3 +1,6 @@
+/*
+Description: Use auth0 to logout.
+*/
 import auth0 from '../../utils/auth0'
 
 export default async function logout(req, res) {

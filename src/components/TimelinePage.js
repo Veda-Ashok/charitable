@@ -32,8 +32,7 @@ export default function TimelinePage({ user }) {
   const [error, setError] = useState(undefined)
   const [charitUser, setCharitUser] = useState(undefined)
   const [success, setSuccessOpen] = useState(false)
-  const [posts, setPosts] = useState([])
-  const [refresh, setRefresh] = useState(false)
+  const [posts, setPosts] = useState(null)
 
   const handleSuccessOpen = () => {
     setSuccessOpen(true)
@@ -41,6 +40,18 @@ export default function TimelinePage({ user }) {
 
   const handleSuccessClose = () => {
     setSuccessOpen(false)
+  }
+
+  async function getPosts() {
+    const posts = await axios.get(`/api/getTimelinePosts/${user.nickname}`)
+    let response_posts = posts.data
+    for (let post of response_posts) {
+      for (let post_doc of Object.keys(post.post_docs)) {
+        post[post_doc] = post.post_docs[post_doc]
+      }
+      delete post.post_docs
+    }
+    setPosts(posts.data)
   }
 
   useEffect(() => {
@@ -54,18 +65,8 @@ export default function TimelinePage({ user }) {
       try {
         setIsLoading(true)
         const response = await axios.get(`/api/searchUserByNickname/${user.nickname}`)
-        const friendsPostsResponse = await axios.get(`/api/getTimelinePosts/${user.nickname}`)
+        getPosts()
         setCharitUser(response.data)
-        let response_posts = friendsPostsResponse.data
-
-        for (let post of response_posts) {
-          for (let post_doc of Object.keys(post.post_docs)) {
-            post[post_doc] = post.post_docs[post_doc]
-          }
-          delete post.post_docs
-        }
-
-        setPosts(response_posts)
         setIsLoading(false)
       } catch (error) {
         setError(error.statusText)
@@ -77,7 +78,7 @@ export default function TimelinePage({ user }) {
     return () => {
       didCancel = true
     }
-  }, [refresh])
+  }, [])
 
   return (
     <div className={classes.root}>
@@ -94,19 +95,24 @@ export default function TimelinePage({ user }) {
               charitUser={charitUser}
               name={charitUser.name}
               icon={charitUser.profile_picture}
+              getPosts={getPosts}
             />
+
             <SuccessfulPostDialog open={success} onClose={handleSuccessClose} user={user} />
-            {posts && posts.length > 0 ? (
-              <PostScrollview
-                posts={posts}
-                className={classes.posts}
-                refresh={refresh}
-                setRefresh={setRefresh}
-                viewer={charitUser}></PostScrollview>
+            {posts ? (
+              posts.length > 0 ? (
+                <PostScrollview
+                  posts={posts}
+                  className={classes.posts}
+                  viewer={charitUser}
+                  getPosts={getPosts}></PostScrollview>
+              ) : (
+                <Paper className={classes.content}>
+                  <h2>No Posts to Display</h2>
+                </Paper>
+              )
             ) : (
-              <Paper className={classes.content}>
-                <h2>No Posts to Display</h2>
-              </Paper>
+              <Loading />
             )}
           </div>
         </div>

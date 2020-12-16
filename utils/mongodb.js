@@ -39,3 +39,47 @@ export async function connectToDatabase() {
   await cached.promise
   return cached.conn
 }
+
+export const arrayFromCursor = async (cursor) => {
+  const result = []
+  await cursor.forEach((item) => result.push(item))
+  return result
+}
+
+export async function checkProfileImages(files) {
+  const validImageTypes = new Set(['image/png', 'image/jpg', 'image/jpeg'])
+  for (let image of Object.keys(files)) {
+    if (!validImageTypes.has(files[image].type)) {
+      throw new Error('Invalid Banner or Icon Image Type')
+    }
+  }
+}
+
+/* 
+In our front end if the user didn't attach an activity_id or organization_id, we pass in null.
+*/
+export async function checkInputs(activity_id, organization_id, user_nickname, files, db) {
+  const doesUserNicknameExist =
+    (await db.collection('users').find({ nickname: user_nickname }).count()) > 0
+  if (!doesUserNicknameExist) {
+    throw new Error('Invalid User Nickname')
+  }
+  const doesActivityExist =
+    (await db.collection('activities').find({ _id: activity_id }).count()) > 0 ||
+    activity_id === null
+  if (!doesActivityExist) {
+    throw new Error('Invalid Activity')
+  }
+  const doesOrganizationExist =
+    (await db.collection('organizations').find({ gg_id: organization_id }).count()) > 0 ||
+    organization_id === null
+  if (!doesOrganizationExist) {
+    throw new Error('Invalid Organization')
+  }
+  const validImageTypes = new Set(['image/png', 'image/jpg', 'image/jpeg', null])
+  if (Object.keys(files).length !== 0) {
+    if (!validImageTypes.has(files.image.type)) {
+      throw new Error('Invalid Image Type')
+    }
+  }
+}

@@ -1,3 +1,10 @@
+/*
+Description: Get all the ids of the activities that a user has saved using user _id.
+
+Parameters: pid: user _id
+
+Type: GET
+*/
 import { connectToDatabase } from '../../../utils/mongodb'
 const ObjectId = require('mongodb').ObjectID
 
@@ -7,10 +14,11 @@ export default async (req, res) => {
   } = req
 
   try {
+    const id = ObjectId(pid.replace(/['"]+/g, ''))
     const { db } = await connectToDatabase()
 
     const users = await db.collection('users').findOne(
-      { _id: ObjectId(pid.replace(/['"]+/g, '')) },
+      { _id: id },
       {
         projection: {
           _id: 0,
@@ -21,6 +29,9 @@ export default async (req, res) => {
 
     res.json(users ? users.saved_activities : [])
   } catch (error) {
-    console.error(error)
+    console.log(error)
+    res.statusCode = 400
+    res.setHeader('Content-Type', 'application/json')
+    res.json({ errorCode: error.message })
   }
 }

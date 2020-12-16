@@ -38,6 +38,7 @@ export default function SearchDialog(props) {
             charitUser={props.charitUser}
             result={result}
             type={props.type}
+            getPosts={props.getPosts}
           />
         </DialogContent>
       </div>
@@ -53,4 +54,5 @@ SearchDialog.propTypes = {
   charitUser: PropTypes.object,
   refresh: PropTypes.bool,
   setRefresh: PropTypes.func,
+  getPosts: PropTypes.any,
 }

@@ -1,4 +1,10 @@
-/* To test in Mongo Shell, run this:
+/*
+Transaction: deleteActivity
+
+Description: If an activity is ever deleted, this query will subsequently delete any posts made about the deleted activity, 
+and it will also remove the activity from a user's Saved Activities if they had saved it.
+
+To test in Mongo Shell, run this:
 session = db.getMongo().startSession( { readPreference: { mode: "primary" } } );
  
 activites_coll=session.getDatabase('charitable').activities;
@@ -27,9 +33,6 @@ try {
 session.commitTransaction();
 session.endSession();
 */
-
-// 5fd41347466167d5dfd6dbec
-// 5fd41355466167d5dfd6dbed
 
 import { MongoClient } from 'mongodb'
 
@@ -73,17 +76,25 @@ const handler = async (req, res) => {
     let postResult
     let userResult
 
+    const id = ObjectId(pid)
+    const isValidActivityId =
+      (await client.db('charitable').collection('activities').find({ _id: id }).count()) > 0
+
+    if (!isValidActivityId) {
+      throw new Error('Invalid activity id')
+    }
+
     try {
       await session.withTransaction(async () => {
         const activites_coll = client.db('charitable').collection('activities')
         const posts_coll = client.db('charitable').collection('posts')
         const users_coll = client.db('charitable').collection('users')
 
-        activityResult = await activites_coll.deleteOne({ _id: ObjectId(pid) }, { session })
-        postResult = await posts_coll.deleteMany({ activity_id: ObjectId(pid) }, { session })
+        activityResult = await activites_coll.deleteOne({ _id: id }, { session })
+        postResult = await posts_coll.deleteMany({ activity_id: id }, { session })
         userResult = await users_coll.updateMany(
           {},
-          { $pull: { saved_activities: ObjectId(pid) } },
+          { $pull: { saved_activities: id } },
           { session }
         )
       }, transactionOptions)
@@ -93,7 +104,10 @@ const handler = async (req, res) => {
       res.json({ activity: activityResult, post: postResult, user: userResult })
     }
   } catch (error) {
-    console.error(error)
+    console.log(error)
+    res.statusCode = 400
+    res.setHeader('Content-Type', 'application/json')
+    res.json({ errorName: error.name, errorMessage: error.message })
   }
 }
 

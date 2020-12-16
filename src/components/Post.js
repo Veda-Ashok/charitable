@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
 import InfoSmallBox from './InfoSmallBox'
 import Link from './Link'
 import CardActionArea from '@material-ui/core/CardActionArea'
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
+import axios from 'axios'
 
 const useStyles = makeStyles({
   root: {
@@ -16,7 +21,6 @@ const useStyles = makeStyles({
   },
   top: {
     display: 'flex',
-    borderBottom: '1px solid #eff2f5',
     padding: '1rem',
   },
   topForm: {
@@ -29,6 +33,10 @@ const useStyles = makeStyles({
   },
   bottom: {
     padding: '1rem',
+  },
+  headerOuter: {
+    display: 'flex',
+    borderBottom: '1px solid #eff2f5',
   },
 })
 
@@ -45,8 +53,37 @@ export default function PostBox({
   viewer,
   refresh,
   setRefresh,
+  editable,
+  postId,
+  getPosts,
 }) {
   const classes = useStyles()
+  const [open, setOpen] = useState(false)
+  const [dialogText, setDialogText] = useState('')
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  async function handleDeletePost() {
+    try {
+      let response = await axios.post(`/api/deletePost`, { postId: postId })
+      if (response.data.deletedCount === 1) {
+        setDialogText('Your post has been deleted!')
+        handleOpen()
+        getPosts()
+      } else {
+        setDialogText('Sorry, we could not delete your post :(')
+        handleOpen()
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   let header = (
     <div className={classes.top}>
@@ -63,11 +100,33 @@ export default function PostBox({
   return (
     <Card className={classes.root}>
       {isProfile ? (
-        <CardActionArea>{header}</CardActionArea>
+        <div className={classes.headerOuter}>
+          <CardActionArea>{header}</CardActionArea>
+          <div>
+            {editable && (
+              <div>
+                <IconButton aria-label="delete" onClick={handleDeletePost}>
+                  <CloseIcon />
+                </IconButton>
+              </div>
+            )}
+          </div>
+        </div>
       ) : (
-        <CardActionArea href={`/profile/${nickname}`} as={Link}>
-          {header}
-        </CardActionArea>
+        <div className={classes.headerOuter}>
+          <CardActionArea href={`/profile/${nickname}`} as={Link}>
+            {header}
+          </CardActionArea>
+          <div>
+            {editable && (
+              <div>
+                <IconButton aria-label="delete" onClick={handleDeletePost}>
+                  <CloseIcon />
+                </IconButton>
+              </div>
+            )}
+          </div>
+        </div>
       )}
       <div className={classes.bottom}>
         <Typography variant="body1">{typedContent}</Typography>
@@ -81,6 +140,7 @@ export default function PostBox({
           charitUser={viewer}
           refresh={refresh}
           setRefresh={setRefresh}
+          getPosts={getPosts}
         />
       )}
       {activityDetails && (
@@ -91,8 +151,16 @@ export default function PostBox({
           type="activities"
           showPopup
           charitUser={viewer}
+          getPosts={getPosts}
         />
       )}
+      <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+        <div className={classes.root}>
+          <DialogTitle>
+            <Typography>{dialogText}</Typography>
+          </DialogTitle>
+        </div>
+      </Dialog>
     </Card>
   )
 }
@@ -110,4 +178,7 @@ PostBox.propTypes = {
   refresh: PropTypes.bool,
   setRefresh: PropTypes.func,
   isProfile: PropTypes.bool,
+  editable: PropTypes.bool,
+  postId: PropTypes.string,
+  getPosts: PropTypes.any,
 }

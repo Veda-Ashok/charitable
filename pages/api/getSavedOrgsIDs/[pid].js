@@ -1,3 +1,10 @@
+/*
+Description: Get all the ids of the organizations that a user has saved using user _id.
+
+Parameters: pid: user _id
+
+Type: GET
+*/
 import { connectToDatabase } from '../../../utils/mongodb'
 const ObjectId = require('mongodb').ObjectID
 
@@ -25,9 +32,6 @@ export default async (req, res) => {
     console.log(error)
     res.statusCode = 400
     res.setHeader('Content-Type', 'application/json')
-    res.end(error.message)
-    // res.status(400).json({ name: 'Next.js' })
-    // console.log('type', typeof error)
-    // // res.json(error.message)
+    res.json({ errorCode: error.message })
   }
 }

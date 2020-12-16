@@ -17,13 +17,17 @@ describe('ProfileBanner', () => {
         bio="I love volunteering"
         isMe={true}
         isFollower={false}
+        nickname="beej"
+        banner="/media/default_prof_pic.png"
+        viewer={{}}
+        owner={{}}
       />
     )
     expect(getByText('BJ Johnson')).toBeInTheDocument()
     expect(getByText('I love volunteering')).toBeTruthy()
     expect(getByAltText('BJ Johnson')).toBeTruthy()
     expect(getByText('Edit Profile')).toBeInTheDocument()
-    expect(queryByText('Add Follow')).toBeNull()
+    expect(queryByText('Follow')).toBeNull()
   })
 
   it('Renders other peoples Profile Banners correctly', () => {
@@ -34,6 +38,10 @@ describe('ProfileBanner', () => {
         bio="I love volunteering"
         isMe={false}
         isFollower={false}
+        nickname="beej"
+        banner="/media/default_prof_pic.png"
+        viewer={{}}
+        owner={{}}
       />
     )
     expect(getByText('BJ Johnson')).toBeInTheDocument()

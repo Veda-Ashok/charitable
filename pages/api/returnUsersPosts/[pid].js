@@ -3,7 +3,9 @@ User-readable search function:  returnUsersPost
 
 Description: Query to search for posts by nickname
 
-Function Parameters: Nickname(String)
+Test in PostMan by hitting the endpoint api/returnUsersPosts/sam
+
+Function Parameters: pid: user nickname
 
 Return Value: Array of posts made by user
 
@@ -43,31 +45,21 @@ db.posts.aggregate([
 ])
 */
 
-import { connectToDatabase } from '../../../utils/mongodb'
-// import microCors from 'micro-cors'
-
-// const cors = microCors()
-// const ObjectId = require('mongodb').ObjectID
-
-const arrayFromCursor = async (cursor) => {
-  //  cursor.forEach is asynchronous!
-  const result = []
-  await cursor.forEach((item) => result.push(item))
-  return result
-}
+import { connectToDatabase, checkInputs, arrayFromCursor } from '../../../utils/mongodb'
 
 export default async (req, res) => {
   try {
     const {
       query: { pid },
     } = req
-
     const { db } = await connectToDatabase()
+    const nickname = pid.replace(/['"]+/g, '')
+    await checkInputs(null, null, nickname, [], db)
 
     const agg = [
       {
         $match: {
-          poster: `${pid.replace(/['"]+/g, '')}`,
+          poster: `${nickname}`,
         },
       },
       {
@@ -111,8 +103,9 @@ export default async (req, res) => {
 
     res.json(result)
   } catch (error) {
-    console.error(error)
+    console.log(error)
+    res.statusCode = 400
+    res.setHeader('Content-Type', 'application/json')
+    res.json({ errorName: error.name, errorMessage: error.message })
   }
 }
-
-// export default cors(handler)

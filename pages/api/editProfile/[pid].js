@@ -1,4 +1,13 @@
-import { connectToDatabase } from '../../../utils/mongodb'
+/*
+Description: Allows users to edit their profile (including display name, icon photo, banner photo, and bio) 
+based on their nickname.
+
+Parameters: pid: nickname of user to edit, name: new display name of user, icon : image, banner: image
+
+Type: POST
+*/
+
+import { connectToDatabase, checkProfileImages } from '../../../utils/mongodb'
 import microCors from 'micro-cors'
 import formidable from 'formidable'
 import { v2 as cloudinary } from 'cloudinary'
@@ -18,6 +27,7 @@ const handler = async (req, res) => {
     } = req
 
     const { db } = await connectToDatabase()
+
     const form = new formidable.IncomingForm()
 
     const formData = await new Promise(function (resolve, reject) {
@@ -34,6 +44,11 @@ const handler = async (req, res) => {
     const fields = formData[0]
     let icon = fields?.icon
     let banner = fields?.banner
+
+    const nickname = pid.replace(/['"]+/g, '')
+
+    await checkProfileImages(files)
+
     if (Object.keys(files).length !== 0) {
       if ('banner' in files) {
         const banner_url = await cloudinary.uploader.upload(files.banner.path, {
@@ -54,8 +69,18 @@ const handler = async (req, res) => {
       }
     }
 
+    const isValidName =
+      fields.name !== undefined &&
+      fields.name !== '' &&
+      fields.name !== null &&
+      fields.name !== 'null'
+
+    if (!isValidName) {
+      throw new Error('Invalid name.')
+    }
+
     const user = await db.collection('users').updateOne(
-      { nickname: `${pid.replace(/['"]+/g, '')}` },
+      { nickname: `${nickname}` },
       {
         $set: {
           name: fields.name,
@@ -67,7 +92,10 @@ const handler = async (req, res) => {
     )
     res.json(user)
   } catch (error) {
-    console.error(error)
+    console.log(error)
+    res.statusCode = 400
+    res.setHeader('Content-Type', 'application/json')
+    res.json({ errorName: error.name, errorMessage: error.message })
   }
 }
 

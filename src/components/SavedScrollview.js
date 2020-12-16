@@ -6,18 +6,17 @@ import { ListItem } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import SearchListItems from './SearchListItems'
 import SearchDialog from './SearchDialog'
-// import Loading from './Loading'
 
 const useStyles = makeStyles((theme) => ({
   orgs: {
     marginTop: theme.spacing(1),
-    maxHeight: '80vh',
+    maxHeight: '35vh',
     overflow: 'auto',
     width: '100%',
   },
 }))
 
-export default function SavedScrollview({ results, type, viewer, refresh, setRefresh }) {
+export default function SavedScrollview({ results, type, viewer, refresh, setRefresh, getPosts }) {
   const classes = useStyles()
   if (results) {
     const [currentResult, setCurrentResult] = useState(results[0])
@@ -50,6 +49,7 @@ export default function SavedScrollview({ results, type, viewer, refresh, setRef
             charitUser={viewer}
             refresh={refresh}
             setRefresh={setRefresh}
+            getPosts={getPosts}
           />
         </Paper>
       </div>
@@ -65,4 +65,5 @@ SavedScrollview.propTypes = {
   type: PropTypes.string,
   refresh: PropTypes.bool,
   setRefresh: PropTypes.func,
+  getPosts: PropTypes.any,
 }

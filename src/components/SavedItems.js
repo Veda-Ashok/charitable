@@ -13,6 +13,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  activityTitle: {
+    backgroundColor: theme.palette.text.primary,
+    color: theme.palette.common.white,
+    padding: '1rem',
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: theme.spacing(1),
+  },
   noContent: {
     display: 'flex',
     justifyContent: 'center',
@@ -25,7 +33,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SavedItems({ orgs, activities, owner, viewer, refresh, setRefresh }) {
+export default function SavedItems({
+  orgs,
+  activities,
+  owner,
+  viewer,
+  refresh,
+  setRefresh,
+  getPosts,
+}) {
   const classes = useStyles()
   return (
     <div>
@@ -44,9 +60,10 @@ export default function SavedItems({ orgs, activities, owner, viewer, refresh, s
           type="organizations"
           setRefresh={setRefresh}
           refresh={refresh}
+          getPosts={getPosts}
         />
       )}
-      <Paper className={classes.title}>
+      <Paper className={classes.activityTitle}>
         <Typography variant="h6">Saved Activities</Typography>
       </Paper>
       {activities.length <= 0 ? (
@@ -61,6 +78,7 @@ export default function SavedItems({ orgs, activities, owner, viewer, refresh, s
           type="activities"
           setRefresh={setRefresh}
           refresh={refresh}
+          getPosts={getPosts}
         />
       )}
     </div>
@@ -74,4 +92,5 @@ SavedItems.propTypes = {
   viewer: PropTypes.object,
   refresh: PropTypes.bool,
   setRefresh: PropTypes.func,
+  getPosts: PropTypes.any,
 }

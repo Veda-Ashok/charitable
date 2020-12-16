@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     display: 'flex',
-    // flexShrink: 0,
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(1),
     justifyContent: 'center',
@@ -86,6 +85,8 @@ function ProfilePage(props) {
         setIsLoading(true)
         if (props.isMe) {
           const response = await axios.get(`/api/searchUserSavedInfo/${props.user.nickname}`)
+          setOwner(response.data)
+          setViewer(response.data)
           setOrgs(response.data.saved_orgs_docs)
           setActivities(response.data.saved_activities_docs)
           setIcon(response.data.profile_picture)
@@ -93,11 +94,11 @@ function ProfilePage(props) {
           setBanner(response.data.banner_picture)
           setBio(response.data.bio)
           setEmailVerified(response.data.email_verified)
-          setOwner(response.data)
-          setViewer(response.data)
         } else {
           const profile = await axios.get(`/api/searchUserSavedInfo/${props.pid}`)
           const myResponse = await axios.get(`/api/searchUserByNickname/${props.user.nickname}`)
+          setOwner(profile.data)
+          setViewer(myResponse.data)
           setOrgs(profile.data.saved_orgs_docs)
           setActivities(profile.data.saved_activities_docs)
           setIcon(profile.data.profile_picture)
@@ -105,9 +106,6 @@ function ProfilePage(props) {
           setBanner(profile.data.banner_picture)
           setBio(profile.data.bio)
           setEmailVerified(myResponse.data.email_verified)
-          setOwner(profile.data)
-          setViewer(myResponse.data)
-          console.log(viewer)
         }
         getPosts()
         setIsLoading(false)
@@ -121,7 +119,7 @@ function ProfilePage(props) {
     return () => {
       didCancel = true
     }
-  }, [refresh])
+  }, [refresh, props.isMe])
 
   const classes = useStyles()
 
@@ -132,7 +130,7 @@ function ProfilePage(props) {
         owner && viewer ? (
           email_verified ? (
             <div>
-              {console.log(viewer)}
+              {console.log(owner, viewer, props.isMe)}
               <ProfileBanner
                 bio={bio}
                 name={name}
@@ -164,17 +162,23 @@ function ProfilePage(props) {
                       />
                     </>
                   ) : null}
-                  {posts && posts.length > 0 ? (
-                    <PostScrollview
-                      posts={posts}
-                      viewer={viewer}
-                      refresh={refresh}
-                      setRefresh={setRefresh}
-                      isProfile={true}></PostScrollview>
+                  {posts ? (
+                    posts.length > 0 ? (
+                      <PostScrollview
+                        posts={posts}
+                        viewer={viewer}
+                        owner={owner}
+                        refresh={refresh}
+                        setRefresh={setRefresh}
+                        isProfile={true}
+                        getPosts={getPosts}></PostScrollview>
+                    ) : (
+                      <Paper className={classes.noPosts}>
+                        <h2>You have no posts to display</h2>
+                      </Paper>
+                    )
                   ) : (
-                    <Paper className={classes.noPosts}>
-                      <h2>You have no posts to display</h2>
-                    </Paper>
+                    <Loading />
                   )}
                 </div>
                 <div style={{ width: '100%' }}>
@@ -190,6 +194,7 @@ function ProfilePage(props) {
                           activities={activities}
                           setRefresh={setRefresh}
                           refresh={refresh}
+                          getPosts={getPosts}
                         />
                       )}
                     </div>

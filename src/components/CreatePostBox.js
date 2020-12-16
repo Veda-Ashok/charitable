@@ -80,6 +80,7 @@ export default function CreatePostBox({
   const [photo, setPhoto] = useState(null)
   const classes = useStyles()
   const [open, setOpen] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleClose = () => {
     setOpen(false)
@@ -97,6 +98,10 @@ export default function CreatePostBox({
   const handleSubmit = (e) => {
     e.preventDefault()
     if (input === '' || input === undefined || input === null) {
+      setErrorMessage('Please type something to share :)')
+      handleOpen()
+    } else if (input.length > 3000) {
+      setErrorMessage('Posts should be under 3000 characters, this post is too long')
       handleOpen()
     } else {
       setInput('')
@@ -127,8 +132,13 @@ export default function CreatePostBox({
             if (getPosts) {
               getPosts()
             }
+          } else {
+            setErrorMessage(response.data.errorMessage)
+            handleOpen()
           }
         } catch (error) {
+          setErrorMessage('Sorry, something went wrong')
+          handleOpen()
           console.error(error)
         }
       }
@@ -211,7 +221,7 @@ export default function CreatePostBox({
       <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
         <div className={classes.root}>
           <DialogTitle>
-            <Typography> Please type something to share :) </Typography>
+            <Typography>{errorMessage}</Typography>
           </DialogTitle>
         </div>
       </Dialog>

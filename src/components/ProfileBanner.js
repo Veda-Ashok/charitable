@@ -91,7 +91,6 @@ export default function ProfileBanner(props) {
         setFollowMessage('Follow')
         setIcon(addIcon)
         setFollowColor('primary')
-        console.log(response.data)
       }
     }
   }
@@ -127,7 +126,7 @@ export default function ProfileBanner(props) {
                 <EditProfile
                   setRefresh={props.setRefresh}
                   refresh={props.refresh}
-                  userInfo={props}
+                  userInfo={props.viewer}
                   open={open}
                   onClose={handleClose}
                 />

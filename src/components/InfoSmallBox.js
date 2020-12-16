@@ -5,7 +5,15 @@ import SearchDialog from './SearchDialog'
 import OrgDialog from './OrgDialog'
 import TrendingListItems from './TrendingListItems'
 
-export default function InfoSmallBox({ result, type, charitUser, showPopup, refresh, setRefresh }) {
+export default function InfoSmallBox({
+  result,
+  type,
+  charitUser,
+  showPopup,
+  refresh,
+  setRefresh,
+  getPosts,
+}) {
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
@@ -37,6 +45,7 @@ export default function InfoSmallBox({ result, type, charitUser, showPopup, refr
               charitUser={charitUser}
               refresh={refresh}
               setRefresh={setRefresh}
+              getPosts={getPosts}
             />
           )}
         </>
@@ -52,4 +61,5 @@ InfoSmallBox.propTypes = {
   showPopup: PropTypes.bool,
   setRefresh: PropTypes.func,
   refresh: PropTypes.bool,
+  getPosts: PropTypes.any,
 }

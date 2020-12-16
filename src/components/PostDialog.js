@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PostDialog(props) {
   const classes = useStyles()
-  const { onClose, open, result, type, charitUser, handleSuccessOpen } = props
+  const { onClose, open, result, type, charitUser, handleSuccessOpen, getPosts } = props
   const typeDisplay = type === 'trending' || type === 'organizations' ? 'organization' : 'activity'
 
   const handleClose = () => {
@@ -49,6 +49,7 @@ export default function PostDialog(props) {
             charitUser={charitUser}
             closePostDialog={handleClose}
             handleSuccessOpen={handleSuccessOpen}
+            getPosts={getPosts}
           />
         </DialogContent>
       </div>
@@ -63,4 +64,5 @@ PostDialog.propTypes = {
   type: PropTypes.string,
   charitUser: PropTypes.object,
   handleSuccessOpen: PropTypes.func,
+  getPosts: PropTypes.any,
 }
