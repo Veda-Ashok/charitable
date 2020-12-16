@@ -46,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
 export default function EditProfile(props) {
   const classes = useStyles()
   const { onClose, open, userInfo } = props
-  const [icon, setIcon] = useState(userInfo.icon)
-  const [banner, setBanner] = useState(userInfo.banner)
+  const [icon, setIcon] = useState(userInfo.profile_picture)
+  const [banner, setBanner] = useState(userInfo.banner_picture)
   const [uploadBanner, setUploadBanner] = useState({
     text: 'Upload Banner Picture',
     color: 'default',

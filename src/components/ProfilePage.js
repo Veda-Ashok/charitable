@@ -82,10 +82,23 @@ function ProfilePage(props) {
     let didCancel = false
     async function fetchData() {
       !didCancel && setIsLoading(true)
+      /*
+      setOwner(response.data)
+      setViewer(response.data)
+      setOrgs(response.data.saved_orgs_docs)
+      setActivities(null)
+      setIcon(null)
+      setName(null)
+      setBanner(null)
+      setBio(null)
+      setEmailVerified(false)
+       */
       try {
         setIsLoading(true)
         if (props.isMe) {
           const response = await axios.get(`/api/searchUserSavedInfo/${props.user.nickname}`)
+          setOwner(response.data)
+          setViewer(response.data)
           setOrgs(response.data.saved_orgs_docs)
           setActivities(response.data.saved_activities_docs)
           setIcon(response.data.profile_picture)
@@ -93,11 +106,11 @@ function ProfilePage(props) {
           setBanner(response.data.banner_picture)
           setBio(response.data.bio)
           setEmailVerified(response.data.email_verified)
-          setOwner(response.data)
-          setViewer(response.data)
         } else {
           const profile = await axios.get(`/api/searchUserSavedInfo/${props.pid}`)
           const myResponse = await axios.get(`/api/searchUserByNickname/${props.user.nickname}`)
+          setOwner(profile.data)
+          setViewer(myResponse.data)
           setOrgs(profile.data.saved_orgs_docs)
           setActivities(profile.data.saved_activities_docs)
           setIcon(profile.data.profile_picture)
@@ -105,8 +118,6 @@ function ProfilePage(props) {
           setBanner(profile.data.banner_picture)
           setBio(profile.data.bio)
           setEmailVerified(myResponse.data.email_verified)
-          setOwner(profile.data)
-          setViewer(myResponse.data)
         }
         getPosts()
         setIsLoading(false)
@@ -120,7 +131,7 @@ function ProfilePage(props) {
     return () => {
       didCancel = true
     }
-  }, [refresh])
+  }, [refresh, props.isMe])
 
   const classes = useStyles()
 
@@ -131,6 +142,7 @@ function ProfilePage(props) {
         owner && viewer ? (
           email_verified ? (
             <div>
+              {console.log(owner, viewer, props.isMe)}
               <ProfileBanner
                 bio={bio}
                 name={name}

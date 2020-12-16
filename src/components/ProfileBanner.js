@@ -126,7 +126,9 @@ export default function ProfileBanner(props) {
                 <EditProfile
                   setRefresh={props.setRefresh}
                   refresh={props.refresh}
-                  userInfo={props}
+                  userInfo={props.viewer}
+                  // banner={props.banner}
+                  // icon={props.icon}
                   open={open}
                   onClose={handleClose}
                 />
