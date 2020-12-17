@@ -4,9 +4,11 @@ Delete: deletePost
 Description: Allows a user to delete a post they have made. We accept post _id to 
 ensure we are deleting a unique post. 
 
-To test in Postman, hit the endpoint, then select Body, and select x-www-form-urlencoded, then make the key postId 
-and the value the _id of the post you want to delete. 
-For example, to delete one of Sam's posts: 
+You can also test in Postman!
+Using the endpoint: https://charitable.vercel.app/api/deletePost
+Select Body, then select x-www-form-urlencoded, and make the key postId. The value of postId is the _id of the post 
+you want to delete. For example, to delete one of Sam's posts: 
+
 postId: 5fd94ef7d6cd09c8567372cc
 
 You can also test this by going through our front-end on either timeline or profile page, 
@@ -18,7 +20,7 @@ Return Value: JSON Object: nModified field indicates if deletion succeeded
 
 Query:
     db.posts.deleteOne(
-        {_id: ObjectId('5fd3e9d75a10770008905f6f')})
+        {_id: ObjectId('5fda9bede08cc90008fb1568')});
 */
 
 import { connectToDatabase } from '../../utils/mongodb'

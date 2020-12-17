@@ -3,9 +3,10 @@ User-readable search function:  returnUsersPost
 
 Description: Query to search for posts by nickname
 
-Test in PostMan by hitting the endpoint api/returnUsersPosts/sam
+You can also test in Postman!
+Using the endpoint: https://charitable.vercel.app/api/returnUsersPosts/sam
 
-Function Parameters: pid: user nickname
+Function Parameters: String: user nickname
 
 Return Value: Array of posts made by user
 
@@ -42,7 +43,7 @@ db.posts.aggregate([
     },
     {$sort: {date_posted: -1}
      }
-])
+]);
 */
 
 import { connectToDatabase, checkInputs, arrayFromCursor } from '../../../utils/mongodb'

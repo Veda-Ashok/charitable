@@ -3,9 +3,10 @@ Get-one-entity-by-ID:  getPostById
 
 Description: Find and get a specific post by the post ID.
 
-Test in PostMan by by hitting the endpoint api/getPostByID/5fd95958d6cd09c8567372d2
+You can also test in Postman!
+Using the endpoint: https://charitable.vercel.app/api/getPostByID/5fd95958d6cd09c8567372d2
 
-Function Parameters: String of post ID
+Function Parameters: String: post ID
 
 Return Value: JSON object that represents the post, poster, image, organization id,
 activity id
@@ -13,7 +14,7 @@ activity id
 Query:
 db.posts.findOne({
     _id: ObjectId('5fd95958d6cd09c8567372d2')
-})
+});
 */
 
 import { connectToDatabase } from '../../../utils/mongodb'
@@ -30,6 +31,9 @@ export default async (req, res) => {
     const id = ObjectId(pid.replace(/['"]+/g, ''))
 
     const post = await db.collection('posts').findOne({ _id: id })
+    if (!post) {
+      throw new Error("Post doesn't exist")
+    }
 
     res.json(post)
   } catch (error) {

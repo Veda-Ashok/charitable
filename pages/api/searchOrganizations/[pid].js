@@ -2,7 +2,7 @@
 Description: Search call for organizations; returns organization search results that match query to organization name, 
 theme, and country.
 
-Parameters: pid: string that can be specifying either an organization name, theme, or country.
+Parameters: String: string that specifies either an organization name, theme, or country.
 
 Type: GET
 */

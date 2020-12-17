@@ -4,9 +4,9 @@ Query  #1: getTimelinePosts
 Description: Query to search for the current user by nickname and get all of the posts that user
 has made as well as those made by the people they are following.
 
-To test in postman, hit the endpoint /api/getTimelinePosts/sam
+To test in postman, hit the endpoint https://charitable.vercel.app/api/getTimelinePosts/sam
 
-Function Parameters: string: pid: user nickname
+Function Parameters: String: user nickname
 
 Return Value: post_docs: Array of post objects, attached_orgs_docs: array of organization objects, attached_activities_docs: array of activity objects, and 
 poster_docs: an array of user objects
@@ -73,7 +73,7 @@ db.users.aggregate([{$match: {
     },
 },
     {$sort: {'post_docs.date_posted': -1}},
-])
+]);
 */
 
 import { connectToDatabase, checkInputs, arrayFromCursor } from '../../../utils/mongodb'

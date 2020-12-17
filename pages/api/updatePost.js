@@ -3,7 +3,9 @@ Update: updatePost
 
 Description: Allows user to update the typed content of a post. 
 
-To test in Postman, hit the endpoint api/updatePost, then select Body, and x-www-form-urlencoded with the keys as postId and 
+You can also test in Postman!
+Using the endpoint: https://charitable.vercel.app/api/updatePost
+Select Body, and select x-www-form-urlencoded. Enter the keys as postId and 
 newContent. The value for newContent is the string you want to be the new text and the value of the postId is the id of the 
 post as a string.
 
@@ -11,7 +13,7 @@ Example:
 Test in PostMan by by hitting the endpoint with the following body: 
 key: postId, value: 5fd95ad9d6cd09c8567372d3
 
-Function Parameters: String(postId), String(newContent)
+Function Parameters: String: postId, String: newContent
 
 Return Value: JSON Object: nModified field indicates if modification succeeded
 
@@ -22,7 +24,7 @@ db.posts.updateOne(
         typed_content: "does this update? : )"
     }
     }
-)
+);
 */
 
 import { connectToDatabase } from '../../utils/mongodb'

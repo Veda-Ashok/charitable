@@ -4,6 +4,11 @@ Transaction: deleteActivity
 Description: If an activity is ever deleted, this query will subsequently delete any posts made about the deleted activity, 
 and it will also remove the activity from a user's Saved Activities if they had saved it.
 
+Function Parameters: String: activity id
+
+You can also test in Postman!
+Using the endpoint: https://charitable.vercel.app/api/deleteActivity/5fd41347466167d5dfd6dbec
+
 To test in Mongo Shell, run this:
 session = db.getMongo().startSession( { readPreference: { mode: "primary" } } );
  

@@ -1,7 +1,7 @@
 /*
 Description: Search call for users; returns user search results that match query to user name.
 
-Parameters: pid: string that specifies a user name
+Parameters: String: user's name
 
 Type: GET
 */

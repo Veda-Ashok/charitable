@@ -1,7 +1,7 @@
 /*
 Description: Get all the ids of the organizations that a user has saved using user _id.
 
-Parameters: pid: user _id
+Parameters: String: user _id
 
 Type: GET
 */

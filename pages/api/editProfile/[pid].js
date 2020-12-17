@@ -2,7 +2,7 @@
 Description: Allows users to edit their profile (including display name, icon photo, banner photo, and bio) 
 based on their nickname.
 
-Parameters: pid: nickname of user to edit, name: new display name of user, icon : image, banner: image
+Parameters: String: nickname of user to edit, name: new display name of user, icon : image, banner: image
 
 Type: POST
 */

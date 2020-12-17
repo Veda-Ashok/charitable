@@ -1,7 +1,7 @@
 /*
 Description: Search call for user by nickname; returns user search results that match user's nickname
 
-Parameters: pid: user nickname
+Parameters: String: user nickname
 
 Type: GET
 */

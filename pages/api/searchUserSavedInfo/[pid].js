@@ -5,9 +5,9 @@ Description: Query to find one user based on their nickname,
 and return all the info for that user, including all the info for the organizations
 they have saved and the activities they have saved.
 
-To test in postman, hit the endpoint /api/searchUserSavedInfo/timmyu
+To test in postman, hit the endpoint https://charitable.vercel.app/api/searchUserSavedInfo/timmyu
 
-Function Parameters: string: user nickname
+Function Parameters: String: user nickname
 
 Return Value: A JSON object with all the user's info
 
@@ -31,7 +31,7 @@ db.users.aggregate([
         as: 'saved_activities_docs',
     },
     },
-])
+]);
 */
 
 import { connectToDatabase, checkInputs, arrayFromCursor } from '../../../utils/mongodb'

@@ -13,13 +13,14 @@ will be easy to make sure the input is form-data as expected. Also, our frontend
 and provides some text limitations, and also has a modal that shows up when the user doesn't input any text.
 
 You can also test in Postman!
+Using the endpoint: https://charitable.vercel.app/api/createPost
 Select body, then form data, and enter in all the fields 
 (NOTE: All fields except for the image should be text value, so no quotes):
 poster: krys
 image: *You can choose to attach an image if you would like using the 'Select File' option in the image field of Postman*
 organization_id: null OR 62
 activity_id: null OR 5fba1bd390f1ca3ae93a5ffc 
-typed_content: my first post!
+typed_content: Dondi's first post!
 
 Function Parameters: Array formData that contains the String fields: poster, image, organization_id, activity_id, typed_content
 
@@ -33,7 +34,7 @@ db.posts.insertOne({
     activity_id: null,
     typed_content: 'found a new amazing opportunity! : )',
     date_posted: new Date(),
-})
+});
 */
 
 import { connectToDatabase, checkInputs } from '../../utils/mongodb'
